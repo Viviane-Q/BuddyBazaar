@@ -14,7 +14,6 @@ export default function App() {
         // </View>
 
     <View style={styles.container}>
-        <Text>TEST</Text>
         <LoginPage/>
     </View>
     );
