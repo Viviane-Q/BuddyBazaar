@@ -1,14 +1,6 @@
+/** @type {import('ts-jest').JestConfigWithTsJest} */
 module.exports = {
-    testTimeout: 50000,
-
-    projects: [
-        {
-            displayName: 'spec',
-            testMatch: ['**/*.spec.ts'],
-        },
-        {
-            displayName: 'e2e',
-            testMatch: ['**/*.test.js'],
-        },
-    ],
+  preset: "ts-jest",
+  testEnvironment: "node",
+  testTimeout: 50000,
 };
