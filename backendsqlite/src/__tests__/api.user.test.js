@@ -1,4 +1,4 @@
-const app = require('../app')
+const app = require('../adapters/driving/app')
 const request = require('supertest')
 
 describe('GET /api/users', () => {

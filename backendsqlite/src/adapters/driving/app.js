@@ -6,7 +6,7 @@ const express = require('express')
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const helmet = require('helmet')
-const logger = require('./util/logger')
+const logger = require('../../util/logger')
 
 // Instantiate an Express Application
 const app = express()
@@ -26,7 +26,7 @@ app.use('/frontend', express.static('./src/frontend'))
 
 // Swagger Documentation
 const swaggerUi = require('swagger-ui-express')
-const swaggerFile = require('../swagger_output.json')
+const swaggerFile = require('../../../swagger_output.json')
 app.use('/doc', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 // This middleware adds the json header to every response

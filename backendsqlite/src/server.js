@@ -9,7 +9,7 @@ require('mandatoryenv').load(['PORT'])
 const { PORT } = process.env
 
 // Instantiate an Express Application
-const app = require('./app')
+const app = require('./adapters/driving/app.js')
 // Open Server on selected Port
 app.listen(
   PORT,
