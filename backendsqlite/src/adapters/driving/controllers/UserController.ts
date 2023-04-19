@@ -1,18 +1,14 @@
-import { Request } from "express";
 import User from "../../../domain/entities/User";
 import RegisterUser from "../../../core/usecases/User/RegisterUser";
-import UserRepositorySQLite from "../../driven/repositories/UserRepositorySQLite";
-import EncryptionBcrypt from "../../driven/EncryptionBcrypt";
 import CodeError from "../../../util/CodeError";
-
-const userRepository = new UserRepositorySQLite();
-const encryption = new EncryptionBcrypt();
+import { Services } from "../../config/services";
+import { CustomRequest } from "../types/CustomRequest";
 
 function validPassword (password: string): boolean {
     return /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/.test(password);
 }
 
-const registerUser = async (req: Request): Promise<boolean> => {
+const registerUser = async (req: CustomRequest): Promise<boolean> => {
     // #swagger.tags = ['Users']
     // #swagger.summary = 'Register a new user'
     // #swagger.parameters['obj'] = { in: 'body', description:'Name and email', schema: { $name: 'John Doe', $email: 'John.Doe@acme.com', $password: '1m02P@SsF0rt!'}}
@@ -26,11 +22,12 @@ const registerUser = async (req: Request): Promise<boolean> => {
 
     const userToRegister = new User(undefined, name, email);
 
+    const services = req.context.services as Services;
     const registerResult = await RegisterUser({
         user: userToRegister,
         password,
-        userRepository,
-        encryption,
+        userRepository: services.userRepository,
+        encryption: services.encryption,
     });
     return registerResult;
 };

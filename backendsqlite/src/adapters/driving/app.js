@@ -1,3 +1,5 @@
+import servicesBuilder from '../config/services'
+
 // Patches
 const { inject, errorHandler } = require('express-custom-error')
 inject() // Patch express in order to use async / await syntax
@@ -21,8 +23,13 @@ app.use(cookieParser())
 app.use(cors())
 app.use(helmet())
 
-// Frontend code access in static mode
-app.use('/frontend', express.static('./src/frontend'))
+// Express context
+app.use(async (req, res, next) => {
+  req.context = {
+    services: servicesBuilder(),
+  };
+  next();
+});
 
 // Swagger Documentation
 const swaggerUi = require('swagger-ui-express')

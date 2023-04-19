@@ -1,12 +1,13 @@
 import { Request, Response, Router } from 'express';
 import UserController from '../controllers/UserController';
 import CodeError from '../../../util/CodeError';
+import { CustomRequest } from '../types/CustomRequest';
 
 const router = Router();
 
 router.post('/', async (req: Request, res: Response) => {
     try {
-        const result = await UserController.registerUser(req);
+        const result = await UserController.registerUser(req as CustomRequest);
         if (!result) {
             res.status(400).json({
                 message: 'User not registered',
