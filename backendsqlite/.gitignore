@@ -60,3 +60,5 @@ typings/
 node_modules
 
 swagger_output.json
+
+/dist

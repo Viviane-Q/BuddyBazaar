@@ -7,10 +7,11 @@
     "setup": "npm install && npm run doc && npm run updatedb",
     "updatedb": "node src/util/updatedb.js",
     "doc": "node src/util/swagger.js",
-    "start": "npm run doc && npm run updatedb  && node src/server.js",
-    "dev": "npm run doc && nodemon src/server.js",
-    "test:e2e": "DB=bmttest.sqlite npm run updatedb && DB=bmttest.sqlite jest --runInBand --testMatch='**/*.test.js'",
-    "test:spec": "npx jest --runInBand --testMatch='**/*.spec.ts'"
+    "start": "npm run doc && npm run updatedb  && node dist/index.js",
+    "dev": "npm run doc && nodemon --watch src -e js,ts --exec \"ts-node src/server.js\"",
+    "test:e2e": "DB=bmttest.sqlite npm run updatedb && DB=bmttest.sqlite npx jest --runInBand --testMatch='**/*.test.js'",
+    "test:spec": "npx jest --runInBand --testMatch='**/*.spec.ts'",
+    "build": "tsup src/server.js --format cjs --clean"
   },
   "keywords": [
     "express",
@@ -39,6 +40,8 @@
     "swagger-ui-express": "^4.3.0"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.11",
     "eslint": "^7.32.0",
@@ -51,6 +54,9 @@
     "nodemon": "^2.0.22",
     "supertest": "^6.2.2",
     "ts-jest": "^29.1.0",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.2.0",
+    "tsup": "^6.7.0",
     "typescript": "^5.0.4"
   }
 }

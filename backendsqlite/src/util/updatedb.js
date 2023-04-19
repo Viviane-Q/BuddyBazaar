@@ -10,7 +10,6 @@ const db = require("../adapters/driven/models/database.js");
   console.log("Base de données créée.");
   // Initialise la base avec quelques données
   const passhash = await bcrypt.hash("123456", 2);
-  console.log(passhash);
   await models.users.create({
     name: "Sebastien Viardot",
     email: "Sebastien.Viardot@grenoble-inp.fr",
