@@ -5,7 +5,7 @@ import { CustomRequest } from '../types/CustomRequest';
 
 const router = Router();
 
-router.post('/', async (req: Request, res: Response) => {
+router.post('/register', async (req: Request, res: Response) => {
     try {
         const result = await UserController.registerUser(req as CustomRequest);
         if (!result) {
