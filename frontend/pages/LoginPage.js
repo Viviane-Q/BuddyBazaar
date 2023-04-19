@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import {TextInput} from 'react-native-paper';
+import PrimaryButton from '../components/global/PrimaryButton';
 
 const LoginPage = () => {
     const [username, setUsername] = useState('');
@@ -15,21 +17,23 @@ const LoginPage = () => {
         <View style={styles.container}>
             <Text style={styles.title}>Connexion</Text>
             <TextInput
-                style={styles.input}
+                label="Nom d'utilisateur"
                 placeholder="Nom d'utilisateur"
                 onChangeText={setUsername}
                 value={username}
             />
             <TextInput
-                style={styles.input}
+                label="Mot de passe"
                 placeholder="Mot de passe"
                 secureTextEntry={true}
                 onChangeText={setPassword}
                 value={password}
             />
-            <TouchableOpacity style={styles.button} onPress={handleLogin}>
-                <Text style={styles.buttonText}>Se connecter</Text>
-            </TouchableOpacity>
+            <PrimaryButton
+            label="Se connecter"
+            onPress={handleLogin}
+            icon="login"
+            />
         </View>
     );
 };
@@ -44,14 +48,6 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         marginBottom: 30,
-    },
-    input: {
-        borderWidth: 1,
-        borderColor: '#ccc',
-        padding: 8,
-        marginVertical: 10,
-        width: '80%',
-        borderRadius: 5,
     },
     button: {
         backgroundColor: '#2196F3',
