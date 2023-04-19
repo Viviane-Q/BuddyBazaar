@@ -1,26 +1,31 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import {TextInput} from 'react-native-paper';
+import { View, StyleSheet } from 'react-native';
+import { TextInput, Text } from 'react-native-paper';
 import PrimaryButton from '../components/global/PrimaryButton';
+import SecondaryButton from '../components/global/SecondaryButton';
+import auth from '../gateways/auth';
 
 const LoginPage = () => {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
-        // Fonction pour gérer la connexion
-        console.log("username => ", username)
-        console.log("password => ", password)
-    }
+        console.log('Login');
+        auth.login(email, password);
+    };
+    const handleRegister = () => {
+        console.log('Register');
+        auth.register(email, password);
+    };
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Connexion</Text>
             <TextInput
-                label="Nom d'utilisateur"
-                placeholder="Nom d'utilisateur"
-                onChangeText={setUsername}
-                value={username}
+                label="Adresse email"
+                placeholder="Adresse email"
+                onChangeText={setEmail}
+                value={email}
             />
             <TextInput
                 label="Mot de passe"
@@ -29,10 +34,15 @@ const LoginPage = () => {
                 onChangeText={setPassword}
                 value={password}
             />
+            <SecondaryButton
+                label="S'inscrire"
+                onPress={handleRegister}
+                icon="account-multiple-plus"
+            />
             <PrimaryButton
-            label="Se connecter"
-            onPress={handleLogin}
-            icon="login"
+                label="Se connecter"
+                onPress={handleLogin}
+                icon="login"
             />
         </View>
     );
@@ -59,6 +69,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
     },
+
 });
 
 export default LoginPage;

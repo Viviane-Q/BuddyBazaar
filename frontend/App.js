@@ -6,6 +6,8 @@ import { Provider } from 'react-redux';
 import { MD3LightTheme as DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import store from './store/store';
 
+// For icons:  https://oblador.github.io/react-native-vector-icons/
+
 const theme = {
 	...DefaultTheme,
 	colors: {
