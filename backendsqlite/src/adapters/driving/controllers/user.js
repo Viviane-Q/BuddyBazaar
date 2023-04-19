@@ -28,17 +28,6 @@ module.exports = {
     const data = await userModel.findAll({ attributes: ['id', 'name', 'email'] })
     res.json({ status: true, message: 'Returning users', data })
   },
-  async newUser (req, res) {
-    // #swagger.tags = ['Users']
-    // #swagger.summary = 'New User'
-    // #swagger.parameters['obj'] = { in: 'body', description:'Name and email', schema: { $name: 'John Doe', $email: 'John.Doe@acme.com', $password: '1m02P@SsF0rt!'}}
-    if (!has(req.body, ['name', 'email', 'password'])) throw new CodeError('You must specify the name and email', status.BAD_REQUEST)
-    const { name, email, password } = req.body
-    console.log(req.body)
-    if (!validPassword(password)) throw new CodeError('Weak password!', status.BAD_REQUEST)
-    await userModel.create({ name, email, passhash: await bcrypt.hash(password, 2) })
-    res.json({ status: true, message: 'User Added' })
-  },
   async updateUser (req, res) {
     // TODO : verify if the user that wants to update this user is an admin or the user himself (using token...)
     // #swagger.tags = ['Users']
