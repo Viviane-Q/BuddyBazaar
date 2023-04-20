@@ -1,9 +1,0 @@
-stages:
-  - install dependencies
-  - lint
-  - build
-  - test
-  - badges
-
-include:
-  - local: 'backendsqlite/.gitlab-ci.back.yml'

@@ -5,7 +5,5 @@ stages:
   - test
   - badges
 
-install back dependencies:
-  stage: install dependencies
-  script:
-    - echo 'dummy pipeline'
+include:
+  - local: '/backendsqlite/.gitlab-ci.back.yml'
