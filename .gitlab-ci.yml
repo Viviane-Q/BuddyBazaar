@@ -1,0 +1,11 @@
+stages:
+  - install dependencies
+  - lint
+  - build
+  - test
+  - badges
+
+install back dependencies:
+  stage: install dependencies
+  script:
+    - echo 'dummy pipeline'
