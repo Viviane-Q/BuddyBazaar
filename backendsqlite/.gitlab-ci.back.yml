@@ -3,7 +3,6 @@ stages:
   - lint
   - build
   - test
-  - badges
 
 .ci-back:
   image: node
@@ -38,10 +37,7 @@ lint back:
   extends: .ci-back-read-cache
   stage: lint
   script:
-    - npm run lint > lint_report.txt
-  artifacts:
-    paths:
-      - lint_report.txt
+    - npm run lint
 
 build back:
   extends: .ci-back-read-cache
@@ -53,38 +49,10 @@ test-unit back:
   stage: test
   extends: .ci-back-read-cache
   script:
-    - npm run test:spec > test_unit_report.txt
-  artifacts:
-    paths:
-      - test_unit_report.txt
+    - npm run test:spec
 
 test-e2e back:
   stage: test
   extends: .ci-back-read-cache
   script:
-    - npm run test:e2e > test_e2e_report.txt
-  artifacts:
-    paths:
-      - test_e2e_report.txt
-
-badges:
-  stage: badges
-  image: python:latest
-  script:
-    - pip install anybadge
-    - cd backendsqlite/src/util
-    - chmod badgeGenerator.sh # Script de génération des badges
-    - ./badgeGenerator.sh lint 
-    - ./badgeGenerator.sh test_unit
-    - ./badgeGenerator.sh test_e2e
-  dependencies:         # Les badges sont générés à partir des rapports s'ils sont disponibles
-    - lint back
-    - test-unit back
-    - test-e2e back
-  artifacts:
-    paths:
-      - lint.svg  # Ce fichier est généré par le script badgeGenerator.sh
-      - test_unit.svg  # et  mis à disposition pour mise en évidence sur la page du dépôt
-      - test_e2e.svg
-  when: always          # Et quoiqu'il arrive la génération des badges devra se faire.
-                      # Le script de génération de badge doit tenir compte du fait de disposer ou non des rapports 
+    - npm run test:e2e
