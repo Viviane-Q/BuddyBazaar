@@ -6,11 +6,9 @@ let anUser;
 
 describe('e2e: /api/users', () => {
   beforeAll(async () => {
+    await cleanDb();
     const data = await seedDb();
     anUser = data.anUser;
-  });
-  afterAll(async () => {
-    await cleanDb();
   });
   describe('POST /api/users/register', () => {
     test('Example: sends a request with name, email and password', async () => {
