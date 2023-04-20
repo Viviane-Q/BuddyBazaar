@@ -7,13 +7,13 @@ const userRepository = new UserRepositorySQLite();
 const encryption = new EncryptionLib();
 
 export interface Services {
-    userRepository: UserRepository;
-    encryption: Encryption;
+  userRepository: UserRepository;
+  encryption: Encryption;
 }
 
 export default () => {
-    return {
-        userRepository,
-        encryption,
-    };
+  return {
+    userRepository,
+    encryption,
+  };
 };
