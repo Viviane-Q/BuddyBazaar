@@ -12,14 +12,30 @@ stages:
   before_script:
     - cd backendsqlite
 
-install back dependencies:
+.ci-back-write-cache:
   extends: .ci-back
+  cache:
+    key: back-$CI_COMMIT_REF_SLUG
+    paths:
+      - backendsqlite/node_modules/
+    policy: push
+
+.ci-back-read-cache:
+  extends: .ci-back
+  cache:
+    key: back-$CI_COMMIT_REF_SLUG
+    paths:
+      - backendsqlite/node_modules/
+    policy: pull
+
+install back dependencies:
+  extends: .ci-back-write-cache
   stage: install dependencies
   script:
     - npm ci --prefer-offline
 
 lint back:
-  extends: .ci-back
+  extends: .ci-back-read-cache
   stage: lint
   script:
     - npm run lint > lint_report.txt
@@ -28,14 +44,14 @@ lint back:
       - lint_report.txt
 
 build back:
-  extends: .ci-back
+  extends: .ci-back-read-cache
   stage: build
   script:
     - npm run build
 
 test-unit back:
   stage: test
-  extends: .ci-back
+  extends: .ci-back-read-cache
   script:
     - npm run test:spec > test_unit_report.txt
   artifacts:
@@ -44,7 +60,7 @@ test-unit back:
 
 test-e2e back:
   stage: test
-  extends: .ci-back
+  extends: .ci-back-read-cache
   script:
     - npm run test:e2e > test_e2e_report.txt
   artifacts:
@@ -56,10 +72,11 @@ badges:
   image: python:latest
   script:
     - pip install anybadge
-    - chmod u+x src/util/badgeGenerator.sh # Script de génération des badges
-    - ./src/util/badgeGenerator.sh lint 
-    - ./src/util/badgeGenerator.sh test_unit
-    - ./src/util/badgeGenerator.sh test_e2e
+    - cd backendsqlite/src/util
+    - chmod badgeGenerator.sh # Script de génération des badges
+    - ./badgeGenerator.sh lint 
+    - ./badgeGenerator.sh test_unit
+    - ./badgeGenerator.sh test_e2e
   dependencies:         # Les badges sont générés à partir des rapports s'ils sont disponibles
     - lint back
     - test-unit back
