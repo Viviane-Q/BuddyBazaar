@@ -11,7 +11,8 @@
     "dev": "npm run doc && nodemon --watch src -e js,ts --exec \"ts-node src/server.js\"",
     "test:e2e": "npx jest --runInBand --testMatch='**/*.test.js'",
     "test:spec": "npx jest --runInBand --testMatch='**/*.spec.ts'",
-    "build": "tsup src/server.js --format cjs --clean"
+    "build": "tsup src/server.js --format cjs --clean",
+    "lint": "npx eslint src --ext .js,.ts"
   },
   "keywords": [
     "express",

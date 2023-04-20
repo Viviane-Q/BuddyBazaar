@@ -1,0 +1,72 @@
+stages:
+  - install dependencies
+  - lint
+  - build
+  - test
+  - badges
+
+.ci-back:
+  image: node
+  tags:
+    - docker
+  before_script:
+    - cd backendsqlite
+
+install back dependencies:
+  extends: .ci-back
+  stage: install dependencies
+  script:
+    - npm ci --prefer-offline
+
+lint back:
+  extends: .ci-back
+  stage: lint
+  script:
+    - npm run lint > lint_report.txt
+  artifacts:
+    paths:
+      - lint_report.txt
+
+build back:
+  extends: .ci-back
+  stage: build
+  script:
+    - npm run build
+
+test-unit back:
+  stage: test
+  extends: .ci-back
+  script:
+    - npm run test:spec > test_unit_report.txt
+  artifacts:
+    paths:
+      - test_unit_report.txt
+
+test-e2e back:
+  stage: test
+  extends: .ci-back
+  script:
+    - npm run test:e2e > test_e2e_report.txt
+  artifacts:
+    paths:
+      - test_e2e_report.txt
+
+badges:
+  stage: badges
+  image: python:latest
+  script:
+    - pip install anybadge
+    - chmod u+x src/util/badgeGenerator.sh # Script de génération des badges
+    - ./src/util/badgeGenerator.sh lint 
+    - ./src/util/badgeGenerator.sh test_unit
+    - ./src/util/badgeGenerator.sh test_e2e
+  dependencies:         # Les badges sont générés à partir des rapports s'ils sont disponibles
+    - lint
+    - tests
+  artifacts:
+    paths:
+      - lint.svg  # Ce fichier est généré par le script badgeGenerator.sh
+      - test_unit.svg  # et  mis à disposition pour mise en évidence sur la page du dépôt
+      - test_e2e.svg
+  when: always          # Et quoiqu'il arrive la génération des badges devra se faire.
+                      # Le script de génération de badge doit tenir compte du fait de disposer ou non des rapports 
