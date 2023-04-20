@@ -1,4 +1,4 @@
-import Encryption from "../../domain/interfaces/Encryption";
+import Encryption from '../../domain/interfaces/Encryption';
 
 const bcrypt = require('bcrypt');
 const jwt = require('jws');

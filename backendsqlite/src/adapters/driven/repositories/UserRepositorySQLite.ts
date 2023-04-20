@@ -1,6 +1,6 @@
-import UserRepository from "../../../domain/interfaces/repositories/UserRepository";
-import User from "../../../domain/entities/User";
-import models from "../models";
+import UserRepository from '../../../domain/interfaces/repositories/UserRepository';
+import User from '../../../domain/entities/User';
+import models from '../models';
 class UserRepositorySQLite implements UserRepository {
   getByEmail(email: string): Promise<User | null> {
     return models.users.findOne({

@@ -1,4 +1,4 @@
-import Encryption from "../../domain/interfaces/Encryption";
+import Encryption from '../../domain/interfaces/Encryption';
 
 class EncryptionInMemory implements Encryption {
   sign(header: { alg: string }, payload: string, secret: string): string { // eslint-disable-line
