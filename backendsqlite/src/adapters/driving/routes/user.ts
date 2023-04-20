@@ -30,4 +30,29 @@ router.post('/register', async (req: Request, res: Response) => {
     }
 });
 
+router.post('/signin', async (req: Request, res: Response) => {
+    try {
+        const token = await UserController.signInUser(req as CustomRequest);
+        if (!token) {
+            res.status(403).json({
+                message: 'Wrong email or password',
+            });
+        } else {
+            res.status(200).json({
+                message: 'User signed in',
+            });
+        }
+    } catch (err) {
+        if (err instanceof CodeError) {
+            res.status(err.code).json({
+                message: err.message,
+            });
+        } else {
+            res.status(500).json({
+                message: 'Internal server error',
+            });
+        }
+    }
+});
+
 export default router;

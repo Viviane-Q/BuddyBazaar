@@ -3,7 +3,11 @@ import User from "../../../domain/entities/User";
 import models from "../models";
 class UserRepositorySQLite implements UserRepository {
     getByEmail (email: string): Promise<User | null> {
-        throw new Error("Method not implemented.");
+        return models.users.findOne({
+            where: {
+                email,
+            },
+        });
     }
     
     create (user: User): Promise<User> {
