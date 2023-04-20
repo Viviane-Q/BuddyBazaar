@@ -1,7 +1,7 @@
 import UserRepositorySQLite from "../driven/repositories/UserRepositorySQLite";
 import EncryptionLib from "../driven/EncryptionBcrypt";
-import UserRepository from "../../core/interfaces/repositories/UserRepository";
-import Encryption from "../../core/interfaces/Encryption";
+import UserRepository from "../../domain/interfaces/repositories/UserRepository";
+import Encryption from "../../domain/interfaces/Encryption";
 
 const userRepository = new UserRepositorySQLite();
 const encryption = new EncryptionLib();

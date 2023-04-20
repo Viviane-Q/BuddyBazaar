@@ -1,6 +1,6 @@
 import User from "../../../domain/entities/User";
-import Encryption from "../../interfaces/Encryption";
-import UserRepository from "../../interfaces/repositories/UserRepository";
+import Encryption from "../../../domain/interfaces/Encryption";
+import UserRepository from "../../../domain/interfaces/repositories/UserRepository";
 
 export default async ({ user, password, userRepository, encryption }: {
     user: User,

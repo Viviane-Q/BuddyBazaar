@@ -1,4 +1,4 @@
-import UserRepository from "../../../core/interfaces/repositories/UserRepository";
+import UserRepository from "../../../domain/interfaces/repositories/UserRepository";
 import User from "../../../domain/entities/User";
 import models from "../models";
 class UserRepositorySQLite implements UserRepository {
