@@ -4,7 +4,8 @@ module.exports = {
   testEnvironment: "node",
   testTimeout: 50000,
   transform: {
-    '^.+\\.js?$': 'ts-jest',
-    '^.+\\.ts?$': 'ts-jest',
+    "^.+\\.js?$": "ts-jest",
+    "^.+\\.ts?$": "ts-jest",
   },
+  setupFiles: ["dotenv/config"],
 };

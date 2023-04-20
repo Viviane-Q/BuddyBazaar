@@ -5,7 +5,7 @@ issu du dépôt
 */
 
 // Load Enviroment Variables to process.env (if not present take variables defined in .env file)
-require('mandatoryenv').load(['PORT'])
+require('dotenv').config()
 const { PORT } = process.env
 
 // Instantiate an Express Application
