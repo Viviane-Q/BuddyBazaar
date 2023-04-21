@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit"
 import User from "../../entities/User"
-import { registerUser } from "../thunks/authThunk";
 
 const initialUser = new User('', '', '');
 

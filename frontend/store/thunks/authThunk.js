@@ -1,7 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BACKEND_URL } from "@env";
-import User from '../../entities/User'
-import { setAuthToken } from '../slices/authSlice';
 
 export const registerUser = createAsyncThunk('users/registerUser', async (args, thunkAPI) => {
   const { name, email } = thunkAPI.getState().auth;

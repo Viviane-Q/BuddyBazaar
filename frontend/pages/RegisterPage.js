@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Text } from 'react-native-paper';
 import PrimaryButton from '../components/global/PrimaryButton';
-import SecondaryButton from '../components/global/SecondaryButton';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail } from '../store/slices/authSlice';
 import { setName } from '../store/slices/authSlice';
