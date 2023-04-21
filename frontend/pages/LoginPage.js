@@ -3,9 +3,9 @@ import { View, StyleSheet } from 'react-native';
 import { TextInput, Text } from 'react-native-paper';
 import PrimaryButton from '../components/global/PrimaryButton';
 import SecondaryButton from '../components/global/SecondaryButton';
-import auth from '../gateways/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail } from '../store/slices/authSlice';
+import { signInUser } from '../store/thunks/authThunk';
 
 const LoginPage = ({navigation}) => {
     const dispatch = useDispatch();
@@ -13,8 +13,7 @@ const LoginPage = ({navigation}) => {
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
-        console.log('Login');
-        auth.login(email, password);
+        dispatch(signInUser({password}))
     };
     const handleRegister = () => {
         navigation.navigate('Register');

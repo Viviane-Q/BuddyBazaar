@@ -3,7 +3,6 @@ import { View, StyleSheet } from 'react-native';
 import { TextInput, Text } from 'react-native-paper';
 import PrimaryButton from '../components/global/PrimaryButton';
 import SecondaryButton from '../components/global/SecondaryButton';
-import auth from '../gateways/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail } from '../store/slices/authSlice';
 import { setName } from '../store/slices/authSlice';
@@ -14,12 +13,8 @@ const RegisterPage = ({navigation}) => {
     const { email, name } = useSelector((state) => state.auth);
     const [password, setPassword] = useState('');
 
-    const handleLogin = () => {
-        console.log('Login');
-        auth.login(email, password);
-    };
     const handleRegister = () => {
-        dispatch(registerUser({name, email, password}));
+        dispatch(registerUser({password}));
     };
 
     const handleEmail = (text) => {
