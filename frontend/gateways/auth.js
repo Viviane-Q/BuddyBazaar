@@ -1,8 +1,8 @@
-import {authURL} from "@env";
+import {BACKEND_URL} from "@env";
 
 const login = async (email, password) => {
     console.log(`login: ${email} ${password}`);
-    const response = await fetch(`${authURL}/signin`, {
+    const response = await fetch(`${BACKEND_URL}/signin`, {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
@@ -15,7 +15,7 @@ const login = async (email, password) => {
 
 const register = async (email, password) => {
     console.log(`register: ${email} ${password}`);
-    const response = await fetch(`${authURL}/register`, {
+    const response = await fetch(`${BACKEND_URL}/register`, {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',
