@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "checkJs": true,
+    "jsx": "react",
+    "noImplicitAny": false,
+  },
+  "exclude": ["node_modules"]
+}

@@ -1,11 +1,14 @@
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import LoginPage from "./pages/LoginPage";
+import React, { Component } from 'react';
+import { StyleSheet, Text, View, AppRegistry } from 'react-native';
 import { Provider } from 'react-redux';
 import { Provider as PaperProvider } from 'react-native-paper';
-import store from './store/store';
+import { store } from './store/store';
 import theme from './theme';
+
+//import Routes from './Routes';
+import Stacks from './pages/Stacks';
 // For icons:  https://oblador.github.io/react-native-vector-icons/
 
 
@@ -14,7 +17,7 @@ export default function App() {
 		<PaperProvider theme={theme}>
 			<Provider store={store}>
 				<View style={styles.container}>
-					<LoginPage />
+					<Stacks />
 				</View>
 			</Provider>
 		</PaperProvider>

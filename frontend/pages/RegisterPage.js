@@ -6,10 +6,12 @@ import SecondaryButton from '../components/global/SecondaryButton';
 import auth from '../gateways/auth';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail } from '../store/slices/authSlice';
+import { setName } from '../store/slices/authSlice';
+import { registerUser } from '../store/thunks/authThunk';
 
-const LoginPage = ({navigation}) => {
+const RegisterPage = ({navigation}) => {
     const dispatch = useDispatch();
-    const { email } = useSelector((state) => state.auth);
+    const { email, name } = useSelector((state) => state.auth);
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
@@ -17,16 +19,25 @@ const LoginPage = ({navigation}) => {
         auth.login(email, password);
     };
     const handleRegister = () => {
-        navigation.navigate('Register');
+        dispatch(registerUser({name, email, password}));
     };
 
     const handleEmail = (text) => {
         dispatch(setEmail(text));
     };
+    const handleName = (text) => {
+        dispatch(setName(text));
+    };
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Connexion</Text>
+            <Text style={styles.title}>Inscription</Text>
+            <TextInput
+                label="Votre nom"
+                placeholder="Votre nom"
+                onChangeText={handleName}
+                value={name}
+            />
             <TextInput
                 label="Adresse email"
                 placeholder="Adresse email"
@@ -40,15 +51,10 @@ const LoginPage = ({navigation}) => {
                 onChangeText={setPassword}
                 value={password}
             />
-            <SecondaryButton
+            <PrimaryButton
                 label="S'inscrire"
                 onPress={handleRegister}
                 icon="account-multiple-plus"
-            />
-            <PrimaryButton
-                label="Se connecter"
-                onPress={handleLogin}
-                icon="login"
             />
         </View>
     );
@@ -78,4 +84,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default LoginPage;
+export default RegisterPage;
