@@ -1,4 +1,5 @@
-import { StyleSheet, View } from 'react-native';
+import React from 'react';
+import { View } from 'react-native';
 import { Button } from 'react-native-paper';
 
 
@@ -11,7 +12,3 @@ export default function PrimaryButton({ label, onPress, icon }) {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    
-});

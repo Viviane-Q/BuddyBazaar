@@ -7,7 +7,7 @@ import { setEmail } from '../store/slices/authSlice';
 import { setName } from '../store/slices/authSlice';
 import { registerUser } from '../store/thunks/authThunk';
 
-const RegisterPage = ({navigation}) => {
+const RegisterPage = () => {
     const dispatch = useDispatch();
     const { email, name } = useSelector((state) => state.auth);
     const [password, setPassword] = useState('');
