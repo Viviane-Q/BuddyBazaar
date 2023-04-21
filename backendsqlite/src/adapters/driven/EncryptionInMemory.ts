@@ -1,14 +1,16 @@
-import Encryption from "../../domain/interfaces/Encryption";
+import Encryption from '../../domain/interfaces/Encryption';
 
 class EncryptionInMemory implements Encryption {
-  sign (header: { alg: string; }, payload: string, secret: string): string {
+  sign(header: { alg: string }, payload: string, secret: string): string { // eslint-disable-line
     return 'token';
   }
-  compare (password: string, passhash: string): unknown {
+
+  compare(password: string, passhash: string): unknown {
     return password === '123456' && passhash === 'hash';
   }
-  hash(password: string): Promise<string> {
-    return Promise.resolve("hash");
+
+  hash(password: string): Promise<string> { // eslint-disable-line
+    return Promise.resolve('hash');
   }
 }
 

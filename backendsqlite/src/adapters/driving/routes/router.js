@@ -1,7 +1,7 @@
-import user from './user'
+import user from './user';
 
-const router = require('express').Router()
+const router = require('express').Router();
 
-router.use('/api/users/', user)
+router.use('/api/users/', user);
 
-module.exports = router
+module.exports = router;
