@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { TextInput, Text } from 'react-native-paper';
-import PrimaryButton from '../components/global/PrimaryButton';
+import { TextInput, Text, Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail } from '../store/slices/authSlice';
 import { setName } from '../store/slices/authSlice';
@@ -45,11 +44,11 @@ const RegisterPage = () => {
                 onChangeText={setPassword}
                 value={password}
             />
-            <PrimaryButton
-                label="S'inscrire"
+            <Button
                 onPress={handleRegister}
-                icon="account-multiple-plus"
-            />
+                mode="outlined"
+                icon="account-multiple-plus"   
+            >S'inscrire</Button>
         </View>
     );
 };

@@ -1,22 +1,17 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { TextInput, Text } from 'react-native-paper';
-import PrimaryButton from '../components/global/PrimaryButton';
-import SecondaryButton from '../components/global/SecondaryButton';
+import { TextInput, Text, Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail } from '../store/slices/authSlice';
 import { signInUser } from '../store/thunks/authThunk';
 
-const LoginPage = ({navigation}) => {
+const LoginPage = () => {
     const dispatch = useDispatch();
     const { email } = useSelector((state) => state.auth);
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
         dispatch(signInUser({password}))
-    };
-    const handleRegister = () => {
-        navigation.navigate('Register');
     };
 
     const handleEmail = (text) => {
@@ -39,16 +34,11 @@ const LoginPage = ({navigation}) => {
                 onChangeText={setPassword}
                 value={password}
             />
-            <SecondaryButton
-                label="S'inscrire"
-                onPress={handleRegister}
-                icon="account-multiple-plus"
-            />
-            <PrimaryButton
-                label="Se connecter"
+            <Button
                 onPress={handleLogin}
+                mpde="contained"
                 icon="login"
-            />
+            >Se connecter</Button>
         </View>
     );
 };
