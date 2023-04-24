@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { BACKEND_URL } from "@env";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setToken } from '../slices/authSlice'
 export const registerUser = createAsyncThunk('users/registerUser', async (args, thunkAPI) => {
   const { name, email } = thunkAPI.getState().auth;
   const { password } = args;
@@ -18,7 +19,6 @@ export const registerUser = createAsyncThunk('users/registerUser', async (args, 
 export const signInUser = createAsyncThunk('users/signInUser', async (args, thunkAPI) => {
   const { email } = thunkAPI.getState().auth;
   const { password } = args;
-  console.log('sign in', email, password)
   const response = await fetch(`${BACKEND_URL}/api/users/signin`, {
     method: 'POST',
     headers: {
@@ -28,8 +28,10 @@ export const signInUser = createAsyncThunk('users/signInUser', async (args, thun
   });
   const data = await response.json();
   if (data.token) {
-    // set token in users cookies
-    window.document.cookie = `token=${data.token}`;
+    // set token in asyncstorage
+    AsyncStorage.setItem('token', data.token);
+    // update store
+    thunkAPI.dispatch(setToken(data.token));
   }
   return Promise.resolve(data.message);
 });

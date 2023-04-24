@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit"
 import User from "../../entities/User"
 
-const initialUser = new User('', '', '');
+const initialUser = new User('', '');
 
 const authSlice = createSlice({
     name: "auth",
     initialState: {
         ...initialUser,
+        token: ''
     },
     reducers: {
         setName: (state, action) => {
@@ -15,6 +16,9 @@ const authSlice = createSlice({
         setEmail: (state, action) => {
             state.email = action.payload
         },
+        setToken: (state, action) => {
+            state.token = action.payload
+        }
     },
     // extraReducers: (builder) => {
     //     builder.addCase(registerUser.fulfilled, (state, action) => {
@@ -25,6 +29,6 @@ const authSlice = createSlice({
 })
 
 
-export const { setAuthToken, setName, setEmail } = authSlice.actions
+export const { setToken, setName, setEmail } = authSlice.actions
 
 export default authSlice.reducer

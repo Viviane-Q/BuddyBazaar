@@ -25,30 +25,34 @@ const RegisterPage = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Inscription</Text>
-            <TextInput
-                label="Votre nom"
-                placeholder="Votre nom"
-                onChangeText={handleName}
-                value={name}
-            />
-            <TextInput
-                label="Adresse email"
-                placeholder="Adresse email"
-                onChangeText={handleEmail}
-                value={email}
-            />
-            <TextInput
-                label="Mot de passe"
-                placeholder="Mot de passe"
-                secureTextEntry={true}
-                onChangeText={setPassword}
-                value={password}
-            />
-            <Button
-                onPress={handleRegister}
-                mode="outlined"
-                icon="account-multiple-plus"   
-            >S'inscrire</Button>
+            <View style={styles.form}>
+                <View style={styles.inputContainer}>
+                    <TextInput
+                        label="Votre nom"
+                        placeholder="Votre nom"
+                        onChangeText={handleName}
+                        value={name}
+                    />
+                    <TextInput
+                        label="Adresse email"
+                        placeholder="Adresse email"
+                        onChangeText={handleEmail}
+                        value={email}
+                    />
+                    <TextInput
+                        label="Mot de passe"
+                        placeholder="Mot de passe"
+                        secureTextEntry={true}
+                        onChangeText={setPassword}
+                        value={password}
+                    />
+                </View>
+                <Button
+                    onPress={handleRegister}
+                    mode="outlined"
+                    icon="account-multiple-plus"   
+                >S'inscrire</Button>
+            </View>
         </View>
     );
 };
@@ -64,15 +68,15 @@ const styles = StyleSheet.create({
         fontSize: 24,
         marginBottom: 30,
     },
-    button: {
-        backgroundColor: '#2196F3',
-        padding: 10,
-        borderRadius: 5,
+    form: {
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        height: '50%',
     },
-    buttonText: {
-        color: '#fff',
-        fontWeight: 'bold',
-        textAlign: 'center',
+    button: {
+        width: '100%',
     },
 
 });

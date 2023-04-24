@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Text, Button } from 'react-native-paper';
+import { Text, Button} from 'react-native-paper';
+import Icon from 'react-native-paper/src/components/Icon';
+import {useDispatch, useSelector} from 'react-redux';
 
 
 const LandingPage = ({navigation}) => {
+    const { token } = useSelector((state) => state.auth);
+	useEffect(() => {
+        if (token) {
+          navigation.navigate('Home'); 
+        }
+    }, [token]);
     return (
         <View style={styles.container}>
+            <Icon source="account-group" size={30}/>
             <Text style={styles.title}>BuddyBazaar</Text>
-            <div style={styles.options}>
+            <View style={styles.options}>
                 <Button
                     onPress={() => navigation.navigate('Register')}
                     mode="outlined"
@@ -26,7 +35,7 @@ const LandingPage = ({navigation}) => {
                     icon="map-search"
                     style={styles.button}
                 >Découvrir</Button>
-            </div>
+            </View>
         </View>
     );
 };
