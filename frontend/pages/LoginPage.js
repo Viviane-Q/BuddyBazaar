@@ -63,7 +63,7 @@ const LoginPage = ({ navigation }) => {
                     onDismiss={() => setSnackbarVisible(false)}
                     style={snackbarType === 'error' ? styles.error : styles.success}
                     action={{
-                        label: 'x',
+                        label: '⨯',
                         onPress: () => {
                             setSnackbarVisible(false)
                         },

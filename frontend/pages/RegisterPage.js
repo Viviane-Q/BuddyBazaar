@@ -70,7 +70,7 @@ const RegisterPage = () => {
                     onDismiss={() => setSnackbarVisible(false)}
                     style={snackbarType === 'error' ? styles.error : styles.success}
                     action={{
-                        label: 'x',
+                        label: '⨯',
                         onPress: () => {
                             setSnackbarVisible(false)
                         },
