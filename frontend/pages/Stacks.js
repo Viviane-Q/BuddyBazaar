@@ -54,7 +54,7 @@ const Stacks = () => {
         <Stack.Screen
           name="Home"
           component={HomePage}
-          
+          options={{title: 'Accueil'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

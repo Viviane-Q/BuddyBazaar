@@ -22,13 +22,13 @@ const LandingPage = ({navigation}) => {
                     mode="outlined"
                     icon="account-multiple-plus"
                     style={styles.button}
-                >S'inscrire</Button>
+                >Inscription</Button>
                 <Button
                     onPress={() => navigation.navigate('Login')}
                     mode="contained"
                     icon="login"
                     style={styles.button}
-                >Se connecter</Button>
+                >Connexion</Button>
                 <Button
                     onPress={() => navigation.navigate('Home')}
                     mode="outlined"
