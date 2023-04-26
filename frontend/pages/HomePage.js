@@ -1,12 +1,13 @@
-import { View, Text} from 'react-native';
+import { View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 import { setToken } from '../store/slices/authSlice'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const HomePage = ({navigation}) => {
+const HomePage = ({ navigation }) => {
     const dispatch = useDispatch();
+    const token = useSelector((state) => state.auth.token);
     const disconnect = () => {
         dispatch(setToken(null));
         AsyncStorage.removeItem('token');
@@ -15,13 +16,15 @@ const HomePage = ({navigation}) => {
     return (
         <View>
             <Text>Home Page</Text>
-            <Button
-            onPress={disconnect}
-            mode="contained"
-            >Se déconnecter</Button>
+            {token &&
+                <Button
+                    onPress={disconnect}
+                    mode="contained"
+                >Se déconnecter</Button>
+            }
         </View>
     );
 };
-            
+
 
 export default HomePage;
