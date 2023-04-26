@@ -38,7 +38,8 @@ lint front:
   stage: lint
   script:
     - npm run lint
-  needs: install front dependencies
+  needs:
+    - install front dependencies
 
 # build front:
 #   extends: .ci-front-read-cache
@@ -51,4 +52,5 @@ test-e2e front:
   extends: .ci-front-read-cache
   script:
     - npm run test
-  needs: install front dependencies
+  needs:
+    - install front dependencies
