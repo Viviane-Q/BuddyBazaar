@@ -1,7 +1,11 @@
 import Encryption from '../../domain/interfaces/Encryption';
 
 class EncryptionInMemory implements Encryption {
-  sign(header: { alg: string }, payload: string, secret: string): string { // eslint-disable-line
+  verify(token: string, secret: string): string | null { // eslint-disable-line
+    throw new Error('Method not implemented.');
+  }
+
+  sign(payload: string, secret: string): string { // eslint-disable-line
     return 'token';
   }
 
