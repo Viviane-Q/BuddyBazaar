@@ -62,5 +62,6 @@ test-e2e front:
   needs:
     - install front dependencies
   artifacts:
+    when: always
     paths:
-      - frontend/cypress/videos/
+      - frontend/cypress/videos/*
