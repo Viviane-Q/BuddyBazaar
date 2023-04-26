@@ -64,7 +64,6 @@ const RegisterPage = () => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Inscription</Text>
             <Snackbar
                     visible={snackbarVisible}
                     onDismiss={() => setSnackbarVisible(false)}
@@ -116,10 +115,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#fff',
-    },
-    title: {
-        fontSize: 24,
-        marginBottom: 30,
     },
     form: {
         display: 'flex',

@@ -44,10 +44,12 @@ const Stacks = () => {
         <Stack.Screen
           name="Login"
           component={LoginPage}
+          options={{title: 'Connexion'}}
         />
         <Stack.Screen
           name="Register"
           component={RegisterPage}
+          options={{title: 'Inscription'}}
         />
         <Stack.Screen
           name="Home"
