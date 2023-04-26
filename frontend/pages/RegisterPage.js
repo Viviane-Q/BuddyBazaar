@@ -15,18 +15,18 @@ const RegisterPage = () => {
     const [password, setPassword] = useState('');
 
     const handleRegister = () => {
-        // Check if password is valid (at least 8 characters, one uppercase, one lowercase, one number and one special character)
-        if(/^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/.test(password) === false){
-            setSnackbarVisible(true);
-            setSnackbarType('error');
-            setSnackbarMessage('Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial');
-            return;
-        }
         // Check if all fields are filled
         if(!email || !name || !password){
             setSnackbarVisible(true);
             setSnackbarType('error');
             setSnackbarMessage('Tous les champs doivent être remplis');
+            return;
+        }
+        // Check if password is valid (at least 8 characters, one uppercase, one lowercase, one number and one special character)
+        if(/^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/.test(password) === false){
+            setSnackbarVisible(true);
+            setSnackbarType('error');
+            setSnackbarMessage('Le mot de passe doit contenir au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial');
             return;
         }
         const res = dispatch(registerUser({password}));
