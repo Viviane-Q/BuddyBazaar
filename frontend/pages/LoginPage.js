@@ -59,6 +59,7 @@ const LoginPage = ({ navigation }) => {
         <View style={styles.container}>
                 <Snackbar
                     visible={snackbarVisible}
+                    duration={10000}
                     onDismiss={() => setSnackbarVisible(false)}
                     style={snackbarType === 'error' ? styles.error : styles.success}
                     action={{
