@@ -1,10 +1,10 @@
 /// <reference types="cypress" />
 
 
-describe('Test de la page de login', () => {
+describe('Test de la page de connexion', () => {
   beforeEach(() => {
     cy.intercept('POST', '/api/users/signin', (req) => {
-      if(req.body.email === 'Sebastien.Viardot@grenoble-inp.fr' && req.body.password === '123456') {
+      if (req.body.email === 'Sebastien.Viardot@grenoble-inp.fr' && req.body.password === '123456') {
         req.reply({
           statusCode: 200,
           body: {
@@ -31,7 +31,7 @@ describe('Test de la page de login', () => {
     cy.get('div').contains('Tous les champs doivent être remplis').should('be.visible')
   })
 
-  it('Doit afficher un message d\'erreur quand le mail n\'est pas renseigné', () => {
+  it('Doit afficher un message d\'erreur quand l\' email n\'est pas renseigné', () => {
     cy.get('input').last().type('123456')
     cy.get('div').contains('Se connecter').click()
     // check a snackbar containing the error message is displayed

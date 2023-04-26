@@ -39,7 +39,7 @@ const RegisterPage = () => {
             }
             if(res.payload.error){
                 setSnackbarType('error');
-                setSnackbarMessage(res.payload.message);
+                setSnackbarMessage("L'adresse email est déjà utilisée");
                 return;
             }
             if(!res.payload.error){
