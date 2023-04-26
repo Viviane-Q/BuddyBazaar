@@ -1,9 +1,10 @@
 const app = require('../adapters/driving/app');
 const request = require('supertest');
 const { cleanDb, seedDb } = require('../util/dbUtils');
-const { login } = require('./utils');
+const { login, authTest } = require('./utils');
 
 let anUser;
+let anActivity;
 let token;
 
 describe('e2e: /api/activities', () => {
@@ -11,23 +12,12 @@ describe('e2e: /api/activities', () => {
     await cleanDb();
     const data = await seedDb();
     anUser = data.anUser;
+    anActivity = data.anActivity;
     token = await login(request(app), anUser);
   });
   describe('POST /api/activities', () => {
     describe('Rbac rules', () => {
-      test('Example: request without token', async () => {
-        const response = await request(app).post('/api/activities').send({});
-        expect(response.statusCode).toBe(400);
-        expect(response.body.message).toBe('You must specify the token');
-      });
-      test('Example: request with fake token', async () => {
-        const response = await request(app)
-          .post('/api/activities')
-          .send({})
-          .set({ token: 'fake' });
-        expect(response.statusCode).toBe(401);
-        expect(response.body.message).toBe('Invalid token');
-      });
+      authTest(request(app), 'post', '/api/activities')();
     });
     test('Example: sends a request with title, description, start date, end date, number of person max, cost, place and category', async () => {
       const response = await request(app)
@@ -82,6 +72,22 @@ describe('e2e: /api/activities', () => {
       expect(response.body.message).toBe(
         'The end date must be after the start date'
       );
+    });
+  });
+
+  describe('GET /api/activities/by-user', () => {
+    describe('Rbac rules', () => {
+      authTest(request(app), 'get', '/api/activities/by-user')();
+    });
+    test('Example: sends a successful request', async () => {
+      const response = await request(app)
+        .get('/api/activities/by-user')
+        .set({ token });
+      expect(response.statusCode).toBe(200);
+      expect(response.body).toEqual({
+        message: 'Activities retrieved',
+        activities: [JSON.parse(JSON.stringify(anActivity))],
+      });
     });
   });
 });

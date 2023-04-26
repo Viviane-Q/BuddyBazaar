@@ -1,4 +1,5 @@
 import CreateActivity from '../../../core/usecases/Activity/CreateActivity';
+import GetActivitiesByUser from '../../../core/usecases/Activity/GetActivitiesByUser';
 import Activity from '../../../domain/entities/Activity';
 import CodeError from '../../../util/CodeError';
 import { Services } from '../../config/services';
@@ -53,4 +54,12 @@ const createActivity = (req: CustomRequest): Promise<boolean> => {
   });
 };
 
-export default { createActivity };
+const getActivitiesByUser = (req: CustomRequest): Promise<Activity[]> => {
+  const services = req.context.services as Services;
+  return GetActivitiesByUser({
+    userId: req.user.id as number,
+    activityRepository: services.activityRepository,
+  });
+};
+
+export default { createActivity, getActivitiesByUser };

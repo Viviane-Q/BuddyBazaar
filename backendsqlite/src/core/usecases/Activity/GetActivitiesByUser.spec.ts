@@ -2,7 +2,7 @@ import Activity from '../../../domain/entities/Activity';
 import ActivityRepositoryInMemory from '../../../adapters/driven/repositories/ActivityRepositoryInMemory';
 import ActivityFixtures from '../../../domain/entities/Activity.fixtures';
 import User from '../../../domain/entities/User';
-import GetActivitiesByUserId from './GetActivitiesByUserId';
+import GetActivitiesByUserId from './GetActivitiesByUser';
 import UserFixtures from '../../../domain/entities/User.fixtures';
 
 const activityRepository = new ActivityRepositoryInMemory();

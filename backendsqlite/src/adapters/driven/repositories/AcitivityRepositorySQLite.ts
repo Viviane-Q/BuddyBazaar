@@ -9,5 +9,23 @@ class ActivityRepositorySQLite implements ActivityRepository {
   getAll(): Promise<Activity[]> {
     throw new Error('Method not implemented.');
   }
+
+  async getAllByUserId(userId: number): Promise<Activity[]> {
+    const seqActivities = models.activities.findAll({ where: { userId } });
+    return seqActivities.map((seqActivity: any) => {
+      return new Activity(
+        seqActivity.id,
+        seqActivity.title,
+        seqActivity.description,
+        seqActivity.startDate,
+        seqActivity.endDate,
+        seqActivity.numberPersonMax,
+        seqActivity.cost,
+        seqActivity.place,
+        seqActivity.category,
+        seqActivity.userId
+      );
+    });
+  }
 }
 export default ActivityRepositorySQLite;

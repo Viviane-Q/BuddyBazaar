@@ -90,6 +90,21 @@ class Activity {
   get userId(): number {
     return this._userId;
   }
+
+  toObject(): any {
+    return {
+      id: this._id,
+      title: this._title,
+      description: this._description,
+      startDate: this._startDate.toISOString(),
+      endDate: this._endDate.toJSON(),
+      numberPersonMax: this._numberPersonMax,
+      cost: this._cost,
+      place: this._place,
+      category: this._category,
+      userId: this._userId,
+    };
+  }
 }
 
 export default Activity;

@@ -7,5 +7,8 @@ export default {
     [Actions.CREATE]: (req: CustomRequest): boolean => {
       return !!req.user;
     },
+    [Actions.READ]: (req: CustomRequest): boolean => {
+      return !!req.user;
+    }
   },
 };
