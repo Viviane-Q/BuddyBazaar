@@ -1,7 +1,7 @@
 import Activity, { Category } from './Activity';
 import UserFixtures from './User.fixtures';
-const dateBeginning = new Date('2023-04-25');
-const dateEnd = new Date('2023-04-26');
+const dateBeginning = new Date('2024-04-25');
+const dateEnd = new Date('2024-04-26');
 
 export default class ActivityFixtures {
   static activityClimbing = new Activity(
@@ -15,5 +15,18 @@ export default class ActivityFixtures {
     'ev3',
     Category.Sport,
     UserFixtures.userJean.id as number
+  );
+
+  static activityHiking = new Activity(
+    1,
+    'Randonnée',
+    'Montée de la Bastille',
+    dateBeginning,
+    dateEnd,
+    4,
+    0,
+    'Bastille',
+    Category.Sport,
+    UserFixtures.userMartin.id as number
   );
 }
