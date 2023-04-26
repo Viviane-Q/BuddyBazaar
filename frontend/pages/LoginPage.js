@@ -14,9 +14,15 @@ const LoginPage = ({ navigation }) => {
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
+        // Check if all fields are filled
+        if(!email || !password){
+            setSnackbarVisible(true);
+            setSnackbarType('error');
+            setSnackbarMessage('Tous les champs doivent être remplis');
+            return;
+        }
         const res = dispatch(signInUser({ password }));
         res.then((res) => {
-            console.log(res);
             if(!res.payload){
                 setSnackbarVisible(true);
                 setSnackbarType('error');
@@ -26,7 +32,7 @@ const LoginPage = ({ navigation }) => {
             if(res.payload.error){
                 setSnackbarVisible(true);
                 setSnackbarType('error');
-                setSnackbarMessage(res.payload.message);
+                setSnackbarMessage("L'adresse email ou le mot de passe est incorrect");
                 return;
             }
             if(!res.payload.error){
@@ -52,7 +58,6 @@ const LoginPage = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Connexion</Text>
-            <View style={styles.form}>
                 <Snackbar
                     visible={snackbarVisible}
                     onDismiss={() => setSnackbarVisible(false)}
@@ -66,6 +71,7 @@ const LoginPage = ({ navigation }) => {
                    >
                     {snackbarMessage}
                 </Snackbar>
+            <View style={styles.form}>
                 <View style={styles.inputContainer}>
                     <TextInput
                         label="Adresse email"
