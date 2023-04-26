@@ -48,9 +48,13 @@ lint front:
 #     - npm run build
 
 test-e2e front:
+  tags:
+    - docker 
+  image: cypress/base:16.18.1
   stage: test
   extends: .ci-front-read-cache
   script:
+    - npm ci --prefer-offline
     - npm run test
   needs:
     - install front dependencies
