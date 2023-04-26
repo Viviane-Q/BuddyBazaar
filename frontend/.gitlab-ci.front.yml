@@ -56,18 +56,7 @@ test-e2e front:
   script:
     - npm ci --prefer-offline
     - npm run web &
-    - |
-      # Wait for the server to be up and running
-      count=0
-      until wget --spider http://localhost:19006 2>/dev/null; do
-        if [ $count -eq 60 ]; then
-          echo "Server not available after 1 minute, exiting"
-          exit 1
-        fi
-        printf '.'
-        sleep 1
-        count=$((count+1))
-      done
+    - wait-on http://localhost:19006
     - npm run test
   needs:
     - install front dependencies
