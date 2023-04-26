@@ -11,9 +11,6 @@ const activities = db.define(
     },
     title: {
       type: Sequelize.STRING(128),
-      validate: {
-        is: /^[a-z\-'\s]{1,128}$/i,
-      },
     },
     description: {
       type: Sequelize.STRING(500),
