@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const db = require('./database.js');
-const { Category } = require('../../../domain/entities/Activity');
 
 const activities = db.define(
   'activities',
@@ -19,7 +18,13 @@ const activities = db.define(
     description: {
       type: Sequelize.STRING(500),
     },
-    dateTime: {
+    startDate: {
+      type: Sequelize.DATE,
+      validate: {
+        isDate: true,
+      },
+    },
+    endDate: {
       type: Sequelize.DATE,
       validate: {
         isDate: true,
@@ -27,27 +32,41 @@ const activities = db.define(
     },
     numberPersonMax: {
       type: Sequelize.INTEGER,
+      validate: {
+        isInt: true,
+        min: 1,
+      },
     },
     cost: {
-      type: Sequelize.INTEGER,
+      type: Sequelize.FLOAT,
+      validate: {
+        isFloat: true,
+        min: 0,
+      },
     },
     place: {
-      type: Sequelize.STRING(128),
-      validate: {
-        is: /^[a-z\-'\s]{1,128}$/i,
-      },
+      type: Sequelize.STRING,
     },
     category: {
-      type: Category,
-    },
-    duration: {
-      type: Sequelize.DATE,
+      type: Sequelize.STRING,
       validate: {
-        isDate: true,
+        isIn: [
+          [
+            'Sport',
+            'Livre',
+            'Art',
+            'Bar',
+            'Cinema',
+            'Jeux de société',
+            'MUsique',
+            'Travaux manuels',
+            'Autre',
+          ],
+        ],
       },
     },
-
   },
   { timestamps: false }
 );
+
 module.exports = activities;

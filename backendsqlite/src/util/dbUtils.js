@@ -11,8 +11,21 @@ module.exports.seedDb = async () => {
   });
   anUser.password = '123456';
 
+  const anActivity = await models.activities.create({
+    title: 'Une activité',
+    description: 'Une description',
+    startDate: new Date('2021-01-01'),
+    endDate: '2021-01-02',
+    numberPersonMax: 5,
+    cost: 10,
+    place: 'Grenoble',
+    category: 'Sport',
+    userId: anUser.id,
+  });
+
   return {
     anUser: anUser,
+    anActivity: anActivity,
   };
 };
 
