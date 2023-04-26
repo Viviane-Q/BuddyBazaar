@@ -44,15 +44,18 @@ build back:
   stage: build
   script:
     - npm run build
+  needs: install back dependencies
 
 test-unit back:
   stage: test
   extends: .ci-back-read-cache
   script:
     - npm run test:spec
+  needs: install back dependencies
 
 test-e2e back:
   stage: test
   extends: .ci-back-read-cache
   script:
     - npm run test:e2e
+  needs: install back dependencies
