@@ -1,8 +1,8 @@
-import React, {useEffect, useState } from 'react';
+import React, {useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Text, Button} from 'react-native-paper';
 import Icon from 'react-native-paper/src/components/Icon';
-import {useDispatch, useSelector} from 'react-redux';
+import { useSelector} from 'react-redux';
 
 
 const LandingPage = ({navigation}) => {

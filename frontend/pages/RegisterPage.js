@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { TextInput, Text, Button, Snackbar } from 'react-native-paper';
+import { TextInput, Button, Snackbar } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail } from '../store/slices/authSlice';
 import { setName } from '../store/slices/authSlice';
@@ -103,7 +103,7 @@ const RegisterPage = () => {
                     onPress={handleRegister}
                     mode="outlined"
                     icon="account-multiple-plus"   
-                >S'inscrire</Button>
+                >S&apos;inscrire</Button>
             </View>
         </View>
     );

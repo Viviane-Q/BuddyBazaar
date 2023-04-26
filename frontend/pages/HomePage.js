@@ -1,3 +1,4 @@
+import React from 'react';
 import { View, Text } from 'react-native';
 import { Button } from 'react-native-paper';
 import { setToken } from '../store/slices/authSlice'

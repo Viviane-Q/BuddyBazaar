@@ -1,0 +1,52 @@
+stages:
+  - install dependencies
+  - lint
+  # - build
+  - test
+
+.ci-front:
+  image: node
+  tags:
+    - docker
+  before_script:
+    - cd frontend
+
+.ci-front-write-cache:
+  extends: .ci-front
+  cache:
+    key: front-$CI_COMMIT_REF_SLUG
+    paths:
+      - frontend/node_modules/
+    policy: push
+
+.ci-front-read-cache:
+  extends: .ci-front
+  cache:
+    key: front-$CI_COMMIT_REF_SLUG
+    paths:
+      - frontend/node_modules/
+    policy: pull
+
+install front dependencies:
+  extends: .ci-front-write-cache
+  stage: install dependencies
+  script:
+    - npm ci --prefer-offline
+
+lint front:
+  extends: .ci-front-read-cache
+  stage: lint
+  script:
+    - npm run lint
+
+# build front:
+#   extends: .ci-front-read-cache
+#   stage: build
+#   script:
+#     - npm run build
+
+test-e2e front:
+  stage: test
+  extends: .ci-front-read-cache
+  script:
+    - npm run test

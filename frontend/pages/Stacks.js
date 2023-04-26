@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -12,7 +12,6 @@ import { setToken } from '../store/slices/authSlice';
 const Stack = createNativeStackNavigator();
 
 const Stacks = () => {
-  const [initialRoute, setInitialRoute] = useState('Landing');
   const dispatch = useDispatch();
 	useEffect(() => {
     async function retrieveToken() {
@@ -28,7 +27,7 @@ const Stacks = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName={initialRoute}
+        initialRouteName='Landing'
         screenOptions={{
           headerTitleStyle: {
             fontWeight: 'bold',
