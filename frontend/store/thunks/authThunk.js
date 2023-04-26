@@ -12,8 +12,9 @@ export const registerUser = createAsyncThunk('users/registerUser', async (args, 
     },
     body: JSON.stringify({ name, email, password }),
   });
+
   const data = await response.json();
-  return Promise.resolve(data.message);
+  return Promise.resolve({error:!response.ok,"message":data.message});
 });
 
 export const signInUser = createAsyncThunk('users/signInUser', async (args, thunkAPI) => {

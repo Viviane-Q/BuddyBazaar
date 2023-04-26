@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { TextInput, Text, Button } from 'react-native-paper';
+import { TextInput, Text, Button, Snackbar } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail } from '../store/slices/authSlice';
 import { setName } from '../store/slices/authSlice';
@@ -8,11 +8,33 @@ import { registerUser } from '../store/thunks/authThunk';
 
 const RegisterPage = () => {
     const dispatch = useDispatch();
+    const [ snackbarVisible, setSnackbarVisible ] = useState(false);
+    const [ snackbarType, setSnackbarType ] = useState('error');
+    const [ snackbarMessage, setSnackbarMessage ] = useState('Une erreur est survenue');
     const { email, name } = useSelector((state) => state.auth);
     const [password, setPassword] = useState('');
 
     const handleRegister = () => {
-        dispatch(registerUser({password}));
+        const res = dispatch(registerUser({password}));
+        res.then((res) => {
+            setSnackbarVisible(true);
+            if(!res.payload){
+                setSnackbarType('error');
+                setSnackbarMessage('Une erreur est survenue');
+                return;
+            }
+            if(res.payload.error){
+                setSnackbarType('error');
+                setSnackbarMessage(res.payload.message);
+                return;
+            }
+            if(!res.payload.error){
+                setSnackbarType('success');
+                setSnackbarMessage(res.payload.message);
+                return;
+            }
+
+        });
     };
 
     const handleEmail = (text) => {
@@ -26,6 +48,19 @@ const RegisterPage = () => {
         <View style={styles.container}>
             <Text style={styles.title}>Inscription</Text>
             <View style={styles.form}>
+            <Snackbar
+                    visible={snackbarVisible}
+                    onDismiss={() => setSnackbarVisible(false)}
+                    style={snackbarType === 'error' ? styles.error : styles.success}
+                    action={{
+                        label: 'x',
+                        onPress: () => {
+                            setSnackbarVisible(false)
+                        },
+                    }}
+                   >
+                    {snackbarMessage}
+                </Snackbar>
                 <View style={styles.inputContainer}>
                     <TextInput
                         label="Votre nom"
@@ -78,6 +113,12 @@ const styles = StyleSheet.create({
     button: {
         width: '100%',
     },
+    error: {
+        backgroundColor: '#e35d6a',
+    },
+    success: {
+        backgroundColor: '#479f76',
+    }
 
 });
 
