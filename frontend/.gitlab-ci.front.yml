@@ -63,4 +63,4 @@ test-e2e front:
     - install front dependencies
   artifacts:
     paths:
-      - /builds/grenoble-inp-ensimag/4MM1CAW/ProjetCAW/BuddyBazaar_antoine_klein3_david_gelinotte_viviane_qian/frontend/cypress/screenshots/login.cy.js/
+      - frontend/cypress/videos/
