@@ -2,10 +2,13 @@ import { Request, Response, Router } from 'express';
 import CodeError from '../../../util/CodeError';
 import { CustomRequest } from '../types/CustomRequest';
 import ActivityController from '../controllers/ActivityController';
+import { Resources } from '../../../core/security/Resources';
+import { Actions } from '../../../core/security/Actions';
+import can from '../../../core/security/can';
 
 const router = Router();
 
-router.post('/activities', async (req: Request, res: Response) => {
+router.post('/activities', can(Resources.ACTIVITY, Actions.CREATE), async (req: Request, res: Response) => {
   try {
     const result = await ActivityController.createActivity(req as CustomRequest);
     if (!result) {
