@@ -59,7 +59,7 @@ test-e2e front:
     - |
       # Wait for the server to be up and running
       count=0
-      until $(curl --output /dev/null --silent --head --fail http://localhost:19006); do
+      until wget --spider http://localhost:19006 2>/dev/null; do
         if [ $count -eq 60 ]; then
           echo "Server not available after 1 minute, exiting"
           exit 1
