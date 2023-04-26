@@ -27,12 +27,14 @@ export const signInUser = createAsyncThunk('users/signInUser', async (args, thun
     body: JSON.stringify({ email, password }),
   });
   const data = await response.json();
+  let error = true;
   if (data.token) {
+    error = false;
     // set token in asyncstorage
     AsyncStorage.setItem('token', data.token);
     // update store
     thunkAPI.dispatch(setToken(data.token));
   }
-  return Promise.resolve(data.message);
+  return Promise.resolve({error,"message":data.message});
 });
 

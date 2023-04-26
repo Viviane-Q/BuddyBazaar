@@ -1,17 +1,42 @@
 import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import {TextInput, Text, Button } from 'react-native-paper';
+import { TextInput, Text, Button, Snackbar } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEmail } from '../store/slices/authSlice';
 import { signInUser } from '../store/thunks/authThunk';
 
-const LoginPage = ({navigation}) => {
+const LoginPage = ({ navigation }) => {
     const dispatch = useDispatch();
-    const { email,token } = useSelector((state) => state.auth);
+    const [ snackbarVisible, setSnackbarVisible ] = useState(false);
+    const [ snackbarType, setSnackbarType ] = useState('error');
+    const [ snackbarMessage, setSnackbarMessage ] = useState('Une erreur est survenue');
+    const { email, token } = useSelector((state) => state.auth);
     const [password, setPassword] = useState('');
 
     const handleLogin = () => {
-        dispatch(signInUser({password}))
+        const res = dispatch(signInUser({ password }));
+        res.then((res) => {
+            console.log(res);
+            if(!res.payload){
+                setSnackbarVisible(true);
+                setSnackbarType('error');
+                setSnackbarMessage('Une erreur est survenue');
+                return;
+            }
+            if(res.payload.error){
+                setSnackbarVisible(true);
+                setSnackbarType('error');
+                setSnackbarMessage(res.payload.message);
+                return;
+            }
+            if(!res.payload.error){
+                setSnackbarVisible(true);
+                setSnackbarType('success');
+                setSnackbarMessage(res.payload.message);
+                return;
+            }
+
+        });
     };
 
     const handleEmail = (text) => {
@@ -19,7 +44,7 @@ const LoginPage = ({navigation}) => {
     };
     useEffect(
         () => {
-            if(token) {
+            if (token) {
                 navigation.navigate('Home');
             }
         }, [token]
@@ -28,6 +53,19 @@ const LoginPage = ({navigation}) => {
         <View style={styles.container}>
             <Text style={styles.title}>Connexion</Text>
             <View style={styles.form}>
+                <Snackbar
+                    visible={snackbarVisible}
+                    onDismiss={() => setSnackbarVisible(false)}
+                    style={snackbarType === 'error' ? styles.error : styles.success}
+                    action={{
+                        label: 'x',
+                        onPress: () => {
+                            setSnackbarVisible(false)
+                        },
+                    }}
+                   >
+                    {snackbarMessage}
+                </Snackbar>
                 <View style={styles.inputContainer}>
                     <TextInput
                         label="Adresse email"
@@ -42,15 +80,15 @@ const LoginPage = ({navigation}) => {
                         secureTextEntry={true}
                         onChangeText={setPassword}
                         value={password}
-                        style={{width: '100%'}}
-                        contentContainerStyle={{flexGrow: 1}}
+                        style={{ width: '100%' }}
+                        contentContainerStyle={{ flexGrow: 1 }}
                     />
                 </View>
-            <Button style={styles.button}
-                onPress={handleLogin}
-                mode="contained"
-                icon="login"
-            >Se connecter</Button>
+                <Button style={styles.button}
+                    onPress={handleLogin}
+                    mode="contained"
+                    icon="login"
+                >Se connecter</Button>
             </View>
         </View>
     );
@@ -80,6 +118,12 @@ const styles = StyleSheet.create({
     button: {
         width: '100%',
     },
+    error: {
+        backgroundColor: '#e35d6a',
+    },
+    success: {
+        backgroundColor: '#479f76',
+    }
 });
 
 export default LoginPage;
