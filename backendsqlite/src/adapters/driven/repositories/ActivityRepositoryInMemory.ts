@@ -12,6 +12,10 @@ class ActivityRepositoryInMemory implements ActivityRepository {
     this.activities.push(activity);
     return Promise.resolve(activity);
   }
+
+  getAll(): Promise<Activity[]> {
+    return Promise.resolve(this.activities);
+  }
 }
 
 export default ActivityRepositoryInMemory;

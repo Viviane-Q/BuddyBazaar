@@ -3,13 +3,11 @@ import ActivityRepository from '../../../domain/interfaces/repositories/Activity
 
 export default async ({
   activity,
-  activityRepository
+  activityRepository,
 }: {
-    activity: Activity;
-    activityRepository: ActivityRepository;
+  activity: Activity;
+  activityRepository: ActivityRepository;
 }): Promise<boolean> => {
-  const newActivity = await activityRepository.create(
-    activity
-  );
+  const newActivity = await activityRepository.create(activity);
   return !!newActivity;
 };
