@@ -49,7 +49,7 @@ lint front:
 test-e2e front:
   tags:
     - docker 
-  image: cypress/base:latest
+  image: cypress/base:12.10.0
   stage: test
   extends: .ci-front-read-cache
   script:
