@@ -5,7 +5,7 @@ class UserRepositoryInMemory implements UserRepository {
   private readonly users: User[] = [];
 
   getByEmail(email: string): Promise<User | null> {
-    const user = this.users.find((user) => user.email === email);
+    const user = this.users.find((user) => user.email.toLowerCase() === email.toLowerCase());
     return Promise.resolve(user ?? null);
   }
 

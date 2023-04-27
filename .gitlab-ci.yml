@@ -6,3 +6,4 @@ stages:
 
 include:
   - local: '/backendsqlite/.gitlab-ci.back.yml'
+  - local: '/frontend/.gitlab-ci.front.yml'

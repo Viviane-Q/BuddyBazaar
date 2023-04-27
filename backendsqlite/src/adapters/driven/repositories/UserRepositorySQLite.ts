@@ -1,11 +1,14 @@
 import UserRepository from '../../../domain/interfaces/repositories/UserRepository';
 import User from '../../../domain/entities/User';
 import models from '../models';
+import Sequelize from 'sequelize';
 class UserRepositorySQLite implements UserRepository {
   getByEmail(email: string): Promise<User | null> {
     return models.users.findOne({
       where: {
-        email,
+        email: {
+          [Sequelize.Op.like]: email,
+        },
       },
     });
   }

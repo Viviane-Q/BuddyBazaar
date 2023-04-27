@@ -38,21 +38,29 @@ lint back:
   stage: lint
   script:
     - npm run lint
+  needs:
+    - install back dependencies
 
 build back:
   extends: .ci-back-read-cache
   stage: build
   script:
     - npm run build
+  needs:
+    - install back dependencies
 
 test-unit back:
   stage: test
   extends: .ci-back-read-cache
   script:
     - npm run test:spec
+  needs:
+    - install back dependencies
 
 test-e2e back:
   stage: test
   extends: .ci-back-read-cache
   script:
     - npm run test:e2e
+  needs:
+    - install back dependencies

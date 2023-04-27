@@ -49,6 +49,7 @@ describe('e2e: /api/users', () => {
       });
       expect(response.statusCode).toBe(200);
       expect(response.body.message).toBe('User signed in');
+      expect(response.body.token).toBeDefined();
     });
     test('Example: sends a request with correct email and wrong password', async () => {
       const response = await request(app).post('/api/users/signin').send({
