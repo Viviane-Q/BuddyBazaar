@@ -10,6 +10,7 @@ npm-debug.*
 *.orig.*
 web-build/
 .env
+cypress/videos/
 
 # macOS
 .DS_Store

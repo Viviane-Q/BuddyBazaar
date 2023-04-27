@@ -44,7 +44,6 @@ router.post('/signin', async (req: Request, res: Response) => {
       });
     }
   } catch (err) {
-    console.log(err);
     if (err instanceof CodeError) {
       res.status(err.code).json({
         message: err.message,
