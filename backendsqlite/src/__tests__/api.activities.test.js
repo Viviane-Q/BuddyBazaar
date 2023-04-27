@@ -90,4 +90,31 @@ describe('e2e: /api/activities', () => {
       });
     });
   });
+
+  describe('PUT /api/activities/update/:id', () => {
+    describe('Rbac rules', () => {
+      authTest(request(app), 'put', '/api/activities/update/:id')();
+    });
+    test('Example: sends a successful request', async () => {
+      const response = await request(app)
+        .put('/api/activities/update/1')
+        .send({
+          id: 1,
+          title: 'An activity update',
+          description: 'An activity description',
+          startDate: '2024-01-01 10:00:00',
+          endDate: '2024-01-01 12:00:00',
+          numberPersonMax: 5,
+          cost: 10,
+          place: 'Grenoble',
+          category: 'Sport',
+        })
+        .set({ token });
+      expect(response.statusCode).toBe(201);
+      expect(response.body).toEqual({
+        message: 'Activities updated',
+        activities: [JSON.parse(JSON.stringify(anActivity))],
+      });
+    });
+  });
 });

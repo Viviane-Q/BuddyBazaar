@@ -27,5 +27,9 @@ class ActivityRepositorySQLite implements ActivityRepository {
       );
     });
   }
+
+  update(activity: Activity): Promise<Activity | null> {
+    throw new Error('Method not implemented.');
+  }
 }
 export default ActivityRepositorySQLite;

@@ -20,6 +20,10 @@ class ActivityRepositoryInMemory implements ActivityRepository {
   getAllByUserId(userId: number): Promise<Activity[]> {
     return Promise.resolve(this.activities.filter((activity) => activity.userId === userId));
   }
+
+  update(activity: Activity): Promise<Activity | null> {
+    return Promise.resolve(activity);
+  }
 }
 
 export default ActivityRepositoryInMemory;

@@ -65,4 +65,35 @@ router.get(
   }
 );
 
+router.put(
+  '/activities/update/:id',
+  can(Resources.ACTIVITY, Actions.UPDATE),
+  async (req: Request, res: Response) => {
+    try {
+      const result = await ActivityController.updateActivity(
+            req as CustomRequest
+      );
+      if (!result) {
+        res.status(400).json({
+          message: 'Activity not updated',
+        });
+      } else {
+        res.status(201).json({
+          message: 'Activity updated',
+        });
+      }
+    } catch (err) {
+      if (err instanceof CodeError) {
+        res.status(err.code).json({
+          message: err.message,
+        });
+      } else {
+        res.status(500).json({
+          message: 'Internal server error',
+        });
+      }
+    }
+  }
+);
+
 export default router;

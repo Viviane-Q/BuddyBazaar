@@ -17,6 +17,19 @@ export default class ActivityFixtures {
     UserFixtures.userJean.id as number
   );
 
+  static activityClimbingUpdated = new Activity(
+    1,
+    'Escalade updated',
+    'Grimpe à ev3',
+    dateBeginning,
+    dateEnd,
+    2,
+    15,
+    'ev3',
+    Category.Sport,
+      UserFixtures.userJean.id as number
+  );
+
   static activityHiking = new Activity(
     1,
     'Randonnée',
