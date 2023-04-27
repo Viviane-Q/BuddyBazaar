@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BACKEND_URL } from "@env";
+// import { BACKEND_URL } from "@env";
+const BACKEND_URL = "http://localhost:3000";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setToken } from '../slices/authSlice'
 export const registerUser = createAsyncThunk('users/registerUser', async (args, thunkAPI) => {
