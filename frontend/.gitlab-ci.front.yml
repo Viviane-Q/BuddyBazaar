@@ -46,7 +46,6 @@ lint front:
 #   stage: build
 #   script:
 #     - npm run build
-
 test-e2e front:
   tags:
     - docker 
