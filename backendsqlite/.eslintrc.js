@@ -22,6 +22,7 @@ module.exports = {
     'comma-dangle': 'off',
     '@typescript-eslint/comma-dangle': 'off',
     'space-before-function-paren': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
   root: true,
 };
