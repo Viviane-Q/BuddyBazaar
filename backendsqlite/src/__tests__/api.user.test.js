@@ -39,6 +39,17 @@ describe('e2e: /api/users', () => {
         'You must specify the name, email and password'
       );
     });
+    test('Example: sends a request with name, used email and password', async () => {
+      const response = await request(app).post('/api/users/register').send({
+        name: 'test',
+        email: anUser.email,
+        password: 'MyPassw0rd!',
+      });
+      expect(response.statusCode).toBe(409);
+      expect(response.body.message).toBe(
+        'Email already registered'
+      );
+    });
   });
 
   describe('POST /api/users/signin', () => {

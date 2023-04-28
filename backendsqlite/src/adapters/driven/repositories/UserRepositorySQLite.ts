@@ -14,7 +14,7 @@ class UserRepositorySQLite implements UserRepository {
   }
 
   create(user: User): Promise<User> {
-    return models.users.create(user);
+    return models.users.create(user.serialize());
   }
 
   getAll(): Promise<User[]> {

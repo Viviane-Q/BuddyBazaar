@@ -31,6 +31,15 @@ class User {
   get passhash(): string | undefined {
     return this._passhash;
   }
+
+  serialize(): any {
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      passhash: this.passhash,
+    };
+  }
 }
 
 export default User;
