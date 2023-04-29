@@ -4,14 +4,13 @@ import { Button, BottomNavigation, Text } from 'react-native-paper';
 import { setToken } from '../store/slices/authSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MyActivitiesRoute from './MyActivitiesPage';
 
 const DiscoverRoute = () => <Text>Que faire??</Text>;
 
 const SearchRoute = () => <Text>Chercher ici</Text>;
 
-const MyActivitiesRoute = ()  => {
-    return ( <Text>Mes activités ici</Text>);
-};
+
 
 const MessagesRoute = () => <Text>Mes messages</Text>;
 
@@ -45,7 +44,7 @@ const HomePage = ({ navigation }) => {
     });
 
     return (
-        <View style={{ flex: 1, justifyContent: 'flex-end' }}>
+        <View style={{ flex: 1, overflow:'scroll', justifyContent: 'flex-end' }}>
             {token &&
                 <Button
                     onPress={disconnect}
@@ -64,7 +63,7 @@ const HomePage = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     navigationBar: {
-        borderTopWidth: 0.5,
+        borderTopWidth: 0.5
     },
 });
         
