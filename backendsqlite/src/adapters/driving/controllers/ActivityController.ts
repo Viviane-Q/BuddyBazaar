@@ -5,6 +5,7 @@ import CodeError from '../../../util/CodeError';
 import { Services } from '../../config/services';
 import { CustomRequest } from '../types/CustomRequest';
 import UpdateActivity from '../../../core/usecases/Activity/UpdateActivity';
+import GetActivityById from '../../../core/usecases/Activity/GetActivityById';
 
 const createActivity = (req: CustomRequest): Promise<boolean> => {
   if (
@@ -63,18 +64,26 @@ const getActivitiesByUser = (req: CustomRequest): Promise<Activity[]> => {
   });
 };
 
+const getActivityById = (req: CustomRequest): Promise<Activity | null> => {
+  const services = req.context.services as Services;
+  return GetActivityById({
+    activityId: parseInt(req.params.id),
+    activityRepository: services.activityRepository,
+  });
+};
+
 const updateActivity = (req: CustomRequest): Promise<boolean> => {
   if (
     !(
       'id' in req.body &&
-            'title' in req.body &&
-            'description' in req.body &&
-            'startDate' in req.body &&
-            'endDate' in req.body &&
-            'numberPersonMax' in req.body &&
-            'cost' in req.body &&
-            'place' in req.body &&
-            'category' in req.body
+      'title' in req.body &&
+      'description' in req.body &&
+      'startDate' in req.body &&
+      'endDate' in req.body &&
+      'numberPersonMax' in req.body &&
+      'cost' in req.body &&
+      'place' in req.body &&
+      'category' in req.body
     )
   ) {
     throw new CodeError(
@@ -104,14 +113,19 @@ const updateActivity = (req: CustomRequest): Promise<boolean> => {
     cost,
     place,
     category,
-        req.user.id as number
+    req.user.id as number
   );
 
   const services = req.context.services as Services;
   return UpdateActivity({
     activity: activityToUpdate,
-    activityRepository: services.activityRepository
+    activityRepository: services.activityRepository,
   });
 };
 
-export default { createActivity, getActivitiesByUser, updateActivity };
+export default {
+  createActivity,
+  getActivitiesByUser,
+  updateActivity,
+  getActivityById,
+};

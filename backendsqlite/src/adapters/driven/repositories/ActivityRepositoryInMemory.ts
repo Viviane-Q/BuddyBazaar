@@ -8,7 +8,13 @@ class ActivityRepositoryInMemory implements ActivityRepository {
     this.activities.push(...activities);
   }
 
-  create(activity: Activity): Promise<Activity|null> {
+  getById(activityId: number): Promise<Activity | null> {
+    return Promise.resolve(
+      this.activities.find((activity) => activity.id === activityId) ?? null
+    );
+  }
+
+  create(activity: Activity): Promise<Activity | null> {
     this.activities.push(activity);
     return Promise.resolve(activity);
   }
@@ -18,7 +24,9 @@ class ActivityRepositoryInMemory implements ActivityRepository {
   }
 
   getAllByUserId(userId: number): Promise<Activity[]> {
-    return Promise.resolve(this.activities.filter((activity) => activity.userId === userId));
+    return Promise.resolve(
+      this.activities.filter((activity) => activity.userId === userId)
+    );
   }
 
   update(activity: Activity): Promise<Activity | null> {

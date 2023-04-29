@@ -5,6 +5,7 @@ const { login, authTest } = require('./utils');
 
 let anUser;
 let anActivity;
+let anActivity2;
 let token;
 
 describe('e2e: /api/activities', () => {
@@ -13,6 +14,7 @@ describe('e2e: /api/activities', () => {
     const data = await seedDb();
     anUser = data.anUser;
     anActivity = data.anActivity;
+    anActivity2 = data.anActivity2;
     token = await login(request(app), anUser);
   });
   describe('POST /api/activities', () => {
@@ -87,6 +89,31 @@ describe('e2e: /api/activities', () => {
       expect(response.body).toEqual({
         message: 'Activities retrieved',
         activities: [JSON.parse(JSON.stringify(anActivity))],
+      });
+    });
+  });
+
+  describe('GET /api/activities/:id', () => {
+    describe('Rbac rules', () => {
+      authTest(request(app), 'get', '/api/activities/:id')();
+      test('Example: sends a request with an id not belonging to the user', async () => {
+        const response = await request(app)
+          .get(`/api/activities/${anActivity2.id}}`)
+          .set({ token });
+        expect(response.statusCode).toBe(401);
+        expect(response.body.message).toBe(
+          'You are not authorized to do this action'
+        );
+      });
+    });
+    test('Example: retrieves an ancivity belonging to the suser', async () => {
+      const response = await request(app)
+        .get(`/api/activities/${anActivity.id}}`)
+        .set({ token });
+      expect(response.statusCode).toBe(200);
+      expect(response.body).toEqual({
+        message: 'Activity retrieved',
+        activity: JSON.parse(JSON.stringify(anActivity)),
       });
     });
   });

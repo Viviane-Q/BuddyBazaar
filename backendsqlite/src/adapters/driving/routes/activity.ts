@@ -65,6 +65,38 @@ router.get(
   }
 );
 
+router.get(
+  '/activities/:id',
+  can(Resources.ACTIVITY, Actions.READONE),
+  async (req: Request, res: Response) => {
+    try {
+      const activity = await ActivityController.getActivityById(
+        req as CustomRequest
+      );
+      if (!activity) {
+        res.status(404).json({
+          message: 'Activity not found',
+        });
+      } else {
+        res.status(200).json({
+          message: 'Activity retrieved',
+          activity: activity.toObject(),
+        });
+      }
+    } catch (err) {
+      if (err instanceof CodeError) {
+        res.status(err.code).json({
+          message: err.message,
+        });
+      } else {
+        res.status(500).json({
+          message: 'Internal server error',
+        });
+      }
+    }
+  }
+);
+
 router.put(
   '/activities/update/:id',
   can(Resources.ACTIVITY, Actions.UPDATE),
