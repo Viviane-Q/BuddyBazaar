@@ -21,8 +21,23 @@ class ActivityRepositorySQLite implements ActivityRepository {
     );
   }
 
-  create(activity: Activity): Promise<Activity | null> {
-    return models.activities.create(activity);
+  async create(activity: Activity): Promise<Activity | null> {
+    const seqActivity = await models.activities.create(activity.toObject());
+    if (!seqActivity) {
+      return null;
+    }
+    return new Activity(
+      seqActivity.id,
+      seqActivity.title,
+      seqActivity.description,
+      seqActivity.startDate,
+      seqActivity.endDate,
+      seqActivity.numberPersonMax,
+      seqActivity.cost,
+      seqActivity.place,
+      seqActivity.category,
+      seqActivity.userId
+    );
   }
 
   getAll(): Promise<Activity[]> {
@@ -55,7 +70,9 @@ class ActivityRepositorySQLite implements ActivityRepository {
   }
 
   async delete(activityId: number): Promise<boolean> {
-    const result = await models.activities.destroy({ where: { id: activityId } });
+    const result = await models.activities.destroy({
+      where: { id: activityId },
+    });
     return result === 1;
   }
 }
