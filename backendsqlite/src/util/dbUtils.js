@@ -40,10 +40,10 @@ module.exports.seedDb = async () => {
   });
 
   return {
-    anUser: anUser,
-    anUser2: anUser2,
-    anActivity: anActivity,
-    anActivity2: anActivity2,
+    anUser,
+    anUser2,
+    anActivity,
+    anActivity2,
   };
 };
 
