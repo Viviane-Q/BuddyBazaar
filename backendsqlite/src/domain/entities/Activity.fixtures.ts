@@ -31,7 +31,7 @@ export default class ActivityFixtures {
   );
 
   static activityHiking = new Activity(
-    1,
+    2,
     'Randonnée',
     'Montée de la Bastille',
     dateBeginning,

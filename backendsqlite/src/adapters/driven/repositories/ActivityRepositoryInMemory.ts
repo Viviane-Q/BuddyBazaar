@@ -8,6 +8,10 @@ class ActivityRepositoryInMemory implements ActivityRepository {
     this.activities.push(...activities);
   }
 
+  clear(): void {
+    this.activities.splice(0, this.activities.length);
+  }
+
   getById(activityId: number): Promise<Activity | null> {
     return Promise.resolve(
       this.activities.find((activity) => activity.id === activityId) ?? null
@@ -41,6 +45,7 @@ class ActivityRepositoryInMemory implements ActivityRepository {
     const index = this.activities.findIndex(
       (activityToFind) => activityToFind.id === activityId
     );
+    if (index === -1) return Promise.resolve(false);
     this.activities.splice(index, 1);
     return Promise.resolve(true);
   }
