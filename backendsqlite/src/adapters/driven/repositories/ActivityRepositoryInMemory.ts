@@ -29,8 +29,12 @@ class ActivityRepositoryInMemory implements ActivityRepository {
     );
   }
 
-  update(activity: Activity): Promise<Activity | null> {
-    return Promise.resolve(activity);
+  update(activity: Activity): Promise<boolean> {
+    const index = this.activities.findIndex(
+      (activityToFind) => activityToFind.id === activity.id
+    );
+    this.activities[index] = activity;
+    return Promise.resolve(true);
   }
 }
 

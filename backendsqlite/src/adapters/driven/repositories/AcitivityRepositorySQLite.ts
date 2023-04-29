@@ -47,8 +47,11 @@ class ActivityRepositorySQLite implements ActivityRepository {
     });
   }
 
-  update(activity: Activity): Promise<Activity | null> {
-    throw new Error('Method not implemented.');
+  async update(activity: Activity): Promise<boolean> {
+    const result = await models.activities.update(activity.toObject(), {
+      where: { id: activity.id },
+    });
+    return result[0] === 1;
   }
 }
 export default ActivityRepositorySQLite;

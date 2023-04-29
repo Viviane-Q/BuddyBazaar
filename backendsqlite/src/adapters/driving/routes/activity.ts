@@ -98,19 +98,19 @@ router.get(
 );
 
 router.put(
-  '/activities/update/:id',
+  '/activities/:id',
   can(Resources.ACTIVITY, Actions.UPDATE),
   async (req: Request, res: Response) => {
     try {
       const result = await ActivityController.updateActivity(
-            req as CustomRequest
+        req as CustomRequest
       );
       if (!result) {
         res.status(400).json({
           message: 'Activity not updated',
         });
       } else {
-        res.status(201).json({
+        res.status(200).json({
           message: 'Activity updated',
         });
       }

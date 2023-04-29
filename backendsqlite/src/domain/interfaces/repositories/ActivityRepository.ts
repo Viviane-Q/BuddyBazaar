@@ -5,7 +5,7 @@ interface ActivityRepository {
     create(activity: Activity): Promise<Activity|null>;
     getAll(): Promise<Activity[]>;
     getAllByUserId(userId: number): Promise<Activity[]>;
-    update(activity: Activity): Promise<Activity|null>;
+    update(activity: Activity): Promise<boolean>;
 }
 
 export default ActivityRepository;

@@ -9,7 +9,7 @@ let anActivity2;
 let token;
 
 describe('e2e: /api/activities', () => {
-  beforeAll(async () => {
+  beforeEach(async () => {
     await cleanDb();
     const data = await seedDb();
     anUser = data.anUser;
@@ -95,7 +95,7 @@ describe('e2e: /api/activities', () => {
 
   describe('GET /api/activities/:id', () => {
     describe('Rbac rules', () => {
-      authTest(request(app), 'get', '/api/activities/:id')();
+      authTest(request(app), 'get', '/api/activities/1')();
       test('Example: sends a request with an id not belonging to the user', async () => {
         const response = await request(app)
           .get(`/api/activities/${anActivity2.id}}`)
@@ -118,29 +118,31 @@ describe('e2e: /api/activities', () => {
     });
   });
 
-  describe('PUT /api/activities/update/:id', () => {
+  describe('PUT /api/activities/:id', () => {
     describe('Rbac rules', () => {
-      authTest(request(app), 'put', '/api/activities/update/:id')();
+      authTest(request(app), 'put', '/api/activities/1')();
+      test('Example: sends a request with an id not belonging to the user', async () => {
+        const response = await request(app)
+          .put(`/api/activities/${anActivity2.id}}`)
+          .set({ token });
+        expect(response.statusCode).toBe(401);
+        expect(response.body.message).toBe(
+          'You are not authorized to do this action'
+        );
+      });
     });
-    test('Example: sends a successful request', async () => {
+    test('Example: updates an activity belonging to the user', async () => {
+      const activityUpdates = {
+        ...JSON.parse(JSON.stringify(anActivity)),
+        title: 'An activity update',
+      };
       const response = await request(app)
-        .put('/api/activities/update/1')
-        .send({
-          id: 1,
-          title: 'An activity update',
-          description: 'An activity description',
-          startDate: '2024-01-01 10:00:00',
-          endDate: '2024-01-01 12:00:00',
-          numberPersonMax: 5,
-          cost: 10,
-          place: 'Grenoble',
-          category: 'Sport',
-        })
+        .put(`/api/activities/${anActivity.id}`)
+        .send(activityUpdates)
         .set({ token });
-      expect(response.statusCode).toBe(201);
+      expect(response.statusCode).toBe(200);
       expect(response.body).toEqual({
-        message: 'Activities updated',
-        activities: [JSON.parse(JSON.stringify(anActivity))],
+        message: 'Activity updated',
       });
     });
   });

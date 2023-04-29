@@ -8,6 +8,5 @@ export default async ({
   activity: Activity;
   activityRepository: ActivityRepository;
 }): Promise<boolean> => {
-  const newActivity = await activityRepository.update(activity);
-  return !!newActivity;
+  return activityRepository.update(activity);
 };
