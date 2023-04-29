@@ -146,4 +146,28 @@ describe('e2e: /api/activities', () => {
       });
     });
   });
+
+  describe('DELETE /api/activities/:id', () => {
+    describe('Rbac rules', () => {
+      authTest(request(app), 'delete', '/api/activities/1')();
+      test('Example: sends a request with an id not belonging to the user', async () => {
+        const response = await request(app)
+          .delete(`/api/activities/${anActivity2.id}}`)
+          .set({ token });
+        expect(response.statusCode).toBe(401);
+        expect(response.body.message).toBe(
+          'You are not authorized to do this action'
+        );
+      });
+    });
+    test('Example: deletes an activity belonging to the user', async () => {
+      const response = await request(app)
+        .delete(`/api/activities/${anActivity.id}`)
+        .set({ token });
+      expect(response.statusCode).toBe(200);
+      expect(response.body).toEqual({
+        message: 'Activity deleted',
+      });
+    });
+  });
 });

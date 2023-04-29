@@ -9,7 +9,7 @@ import can from '../../../core/security/can';
 const router = Router();
 
 router.post(
-  '/activities',
+  '/',
   can(Resources.ACTIVITY, Actions.CREATE),
   async (req: Request, res: Response) => {
     try {
@@ -40,7 +40,7 @@ router.post(
 );
 
 router.get(
-  '/activities/by-user',
+  '/by-user',
   can(Resources.ACTIVITY, Actions.READ),
   async (req: Request, res: Response) => {
     try {
@@ -66,7 +66,7 @@ router.get(
 );
 
 router.get(
-  '/activities/:id',
+  '/:id',
   can(Resources.ACTIVITY, Actions.READONE),
   async (req: Request, res: Response) => {
     try {
@@ -98,7 +98,7 @@ router.get(
 );
 
 router.put(
-  '/activities/:id',
+  '/:id',
   can(Resources.ACTIVITY, Actions.UPDATE),
   async (req: Request, res: Response) => {
     try {
@@ -112,6 +112,37 @@ router.put(
       } else {
         res.status(200).json({
           message: 'Activity updated',
+        });
+      }
+    } catch (err) {
+      if (err instanceof CodeError) {
+        res.status(err.code).json({
+          message: err.message,
+        });
+      } else {
+        res.status(500).json({
+          message: 'Internal server error',
+        });
+      }
+    }
+  }
+);
+
+router.delete(
+  '/:id',
+  can(Resources.ACTIVITY, Actions.DELETE),
+  async (req: Request, res: Response) => {
+    try {
+      const result = await ActivityController.deleteActivity(
+        req as CustomRequest
+      );
+      if (!result) {
+        res.status(400).json({
+          message: 'Activity not deleted',
+        });
+      } else {
+        res.status(200).json({
+          message: 'Activity deleted',
         });
       }
     } catch (err) {

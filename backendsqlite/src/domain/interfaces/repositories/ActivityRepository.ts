@@ -6,6 +6,7 @@ interface ActivityRepository {
     getAll(): Promise<Activity[]>;
     getAllByUserId(userId: number): Promise<Activity[]>;
     update(activity: Activity): Promise<boolean>;
+    delete(activityId: number): Promise<boolean>;
 }
 
 export default ActivityRepository;

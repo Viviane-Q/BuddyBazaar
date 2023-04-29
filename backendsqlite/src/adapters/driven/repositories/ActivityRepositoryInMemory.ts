@@ -36,6 +36,14 @@ class ActivityRepositoryInMemory implements ActivityRepository {
     this.activities[index] = activity;
     return Promise.resolve(true);
   }
+
+  delete(activityId: number): Promise<boolean> {
+    const index = this.activities.findIndex(
+      (activityToFind) => activityToFind.id === activityId
+    );
+    this.activities.splice(index, 1);
+    return Promise.resolve(true);
+  }
 }
 
 export default ActivityRepositoryInMemory;

@@ -53,5 +53,10 @@ class ActivityRepositorySQLite implements ActivityRepository {
     });
     return result[0] === 1;
   }
+
+  async delete(activityId: number): Promise<boolean> {
+    const result = await models.activities.destroy({ where: { id: activityId } });
+    return result === 1;
+  }
 }
 export default ActivityRepositorySQLite;

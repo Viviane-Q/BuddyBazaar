@@ -123,9 +123,15 @@ const updateActivity = (req: CustomRequest): Promise<boolean> => {
   });
 };
 
+const deleteActivity = (req: CustomRequest): Promise<boolean> => {
+  const services = req.context.services as Services;
+  return services.activityRepository.delete(parseInt(req.params.id));
+};
+
 export default {
   createActivity,
   getActivitiesByUser,
   updateActivity,
   getActivityById,
+  deleteActivity,
 };
