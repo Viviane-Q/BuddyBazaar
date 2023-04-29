@@ -22,7 +22,7 @@ const can =
       if (!user) {
         throw new CodeError('User not found', 404);
       }
-      (req as CustomRequest).user = user;
+      (req as CustomRequest).user = user.toObject();
       const rbacCheck = await rbacRules[resource][action](req as CustomRequest);
       if (!rbacCheck) {
         res.status(401).json({

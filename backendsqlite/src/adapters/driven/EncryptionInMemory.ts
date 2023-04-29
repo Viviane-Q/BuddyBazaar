@@ -10,11 +10,11 @@ class EncryptionInMemory implements Encryption {
   }
 
   compare(password: string, passhash: string): unknown {
-    return password === '123456' && passhash === 'hash';
+    return password === '123456' && passhash === '$2b$04$RxEd75FD9YpSR9f/1RILIOD/iA4TMqTNlCOgjtmCELbx0h5U7YAXS';
   }
 
   hash(password: string): Promise<string> { // eslint-disable-line
-    return Promise.resolve('hash');
+    return Promise.resolve('$2b$04$RxEd75FD9YpSR9f/1RILIOD/iA4TMqTNlCOgjtmCELbx0h5U7YAXS');
   }
 }
 

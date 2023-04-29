@@ -11,6 +11,7 @@
     "dev": "npm run updatedb && npm run doc && nodemon --watch src -e js,ts --exec \"ts-node src/server.js\"",
     "test:e2e": "DB=bmttest.sqlite npm run updatedb && DB=bmttest.sqlite npx jest --runInBand --testMatch='**/*.test.js'",
     "test:spec": "npx jest --runInBand --testMatch='**/*.spec.ts'",
+    "test:integ": "DB=bmttest.sqlite npm run updatedb && DB=bmttest.sqlite npx jest --runInBand --testMatch='**/*.integ.ts'",
     "build": "tsup src/server.js --format cjs --clean",
     "lint": "npx eslint src --ext .js,.ts"
   },
