@@ -5,15 +5,17 @@ import { setToken } from '../store/slices/authSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const MusicRoute = () => <Text>Music</Text>;
+const DiscoverRoute = () => <Text>Que faire??</Text>;
 
-const AlbumsRoute = () => <Text>Albums</Text>;
+const SearchRoute = () => <Text>Chercher ici</Text>;
 
-const RecentsRoute = ()  => {
-    return ( <Text>Recents</Text>);
+const MyActivitiesRoute = ()  => {
+    return ( <Text>Mes activités ici</Text>);
 };
 
-const NotificationsRoute = () => <Text>Notifications</Text>;
+const MessagesRoute = () => <Text>Mes messages</Text>;
+
+const ProfileRoute = () => <Text>Mon profil</Text>;
 
 
 const HomePage = ({ navigation }) => {
@@ -27,32 +29,34 @@ const HomePage = ({ navigation }) => {
 
     const [index, setIndex] = React.useState(0);
     const [routes] = React.useState([
-        { key: 'discover', title: 'Favorites', focusedIcon: 'heart', unfocusedIcon: 'heart-outline' },
-        { key: 'albums', title: 'Albums', focusedIcon: 'message', badge: 10 },
-        { key: 'recents', title: 'Recents', focusedIcon: 'history', badge: true },
-        { key: 'notifications', title: 'Notifications', focusedIcon: 'bell', unfocusedIcon: 'bell-outline' },
+        { key: 'discover', title: 'Découvrir', focusedIcon: 'compass', unfocusedIcon: 'compass-outline' },
+        { key: 'search', title: 'Chercher', focusedIcon: 'map-search', unfocusedIcon: 'map-search-outline' },
+        { key: 'myactivities', title: 'Mes activités', focusedIcon: 'clipboard-text', unfocusedIcon: 'clipboard-text-outline',badge: true },
+        { key: 'messages', title: 'Chat', focusedIcon: 'chat', unfocusedIcon: 'chat-outline', badge: 10},
+        { key: 'profile', title: 'Profil', focusedIcon: 'account', unfocusedIcon: 'account-outline'},
     ]);
 
     const renderScene = BottomNavigation.SceneMap({
-        music: MusicRoute,
-        albums: AlbumsRoute,
-        recents: RecentsRoute,
-        notifications: NotificationsRoute,
+        discover: DiscoverRoute,
+        search: SearchRoute,
+        myactivities: MyActivitiesRoute,
+        messages: MessagesRoute,
+        profile: ProfileRoute,
     });
 
     return (
         <View style={{ flex: 1, justifyContent: 'flex-end' }}>
-            <Text>Home Page</Text>
             {token &&
                 <Button
                     onPress={disconnect}
-                    mode="contained"
+                    mode="outlined"
                 >Se déconnecter</Button>
             }
-            <BottomNavigation style={styles.navigationBar}
+            <BottomNavigation
                 navigationState={{ index, routes }}
                 onIndexChange={setIndex}
                 renderScene={renderScene}
+                barStyle={styles.navigationBar}
             />
         </View>
     );
@@ -60,8 +64,7 @@ const HomePage = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     navigationBar: {
-        borderTopWidth: 4   
-
+        borderTopWidth: 0.5,
     },
 });
         
