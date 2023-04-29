@@ -23,7 +23,8 @@ const can =
         throw new CodeError('User not found', 404);
       }
       (req as CustomRequest).user = user;
-      if (!rbacRules[resource][action](req as CustomRequest)) {
+      const rbacCheck = await rbacRules[resource][action](req as CustomRequest);
+      if (!rbacCheck) {
         res.status(401).json({
           message: 'You are not authorized to do this action',
         });
