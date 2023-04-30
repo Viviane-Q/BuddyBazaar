@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Text, View, ScrollView, StyleSheet } from 'react-native';
-import { Button } from 'react-native-paper';
+import { Text, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import {getOwnActivities} from '../store/thunks/activitiesThunk';
 import ActivityCard from '../components/ActivityCard';
@@ -12,10 +11,10 @@ const mockActivities = [
 const MyActivitiesRoute = ()  => {
     const [activities, setActivities] = useState(mockActivities);
     const dispatch = useDispatch();
+    const token = useSelector((state) => state.auth.token);
     const refreshActivities = () => {
-        const res = dispatch(getOwnActivities());
+        const res = dispatch(getOwnActivities({token}));
         res.then((res) => {
-            console.log(res);
             if(!res.payload){
                 console.log('no payload');
                 return;
@@ -27,16 +26,15 @@ const MyActivitiesRoute = ()  => {
             setActivities(res.payload.res.activities);
         });
     };
-    // refreshActivities(); // fonctionne mais boucle infinie
     useEffect(() => {
-        refreshActivities(); // ne fonctionne pas car 'Invalid hook call' 
+        refreshActivities();
     }, []);
 
     return( 
             <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
             <Text>Mes activités ici</Text>
                 {activities.map((activity) => {
-                    return <ActivityCard key={activity.key} activity={activity} />;
+                    return <ActivityCard key={activity.id} activity={activity} />;
                 })}
             </ScrollView>
     );
