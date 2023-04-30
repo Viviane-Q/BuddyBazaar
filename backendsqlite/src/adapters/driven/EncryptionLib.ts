@@ -1,11 +1,19 @@
 import Encryption from '../../domain/interfaces/Encryption';
 
 const bcrypt = require('bcrypt');
-const jwt = require('jws');
+const jwt = require('jsonwebtoken');
 
 class EncryptionLib implements Encryption {
-  sign(header: { alg: string }, payload: string, secret: string): string {
-    return jwt.sign({ header, payload, secret });
+  sign(payload: string, secret: string): string {
+    return jwt.sign(payload, secret, { algorithm: 'HS256' });
+  }
+
+  verify(token: string, secret: string): string | null {
+    try {
+      return jwt.verify(token, secret, { algorithms: ['HS256'] });
+    } catch (error) {
+      return null;
+    }
   }
 
   compare(password: string, passhash: string): boolean {

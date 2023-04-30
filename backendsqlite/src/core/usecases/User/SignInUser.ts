@@ -16,7 +16,7 @@ export default async ({
   const user = await userRepository.getByEmail(email);
   if (user && user.passhash && TOKENSECRET) {
     if (await encryption.compare(password, user.passhash)) {
-      const token = encryption.sign({ alg: 'HS256' }, email, TOKENSECRET);
+      const token = encryption.sign(email, TOKENSECRET);
       return token;
     }
   }

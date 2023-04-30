@@ -3,18 +3,21 @@ import User from '../../../domain/entities/User';
 import models from '../models';
 import Sequelize from 'sequelize';
 class UserRepositorySQLite implements UserRepository {
-  getByEmail(email: string): Promise<User | null> {
-    return models.users.findOne({
+  async getByEmail(email: string): Promise<User | null> {
+    const seqUser = await models.users.findOne({
       where: {
         email: {
           [Sequelize.Op.like]: email,
         },
       },
     });
+    if (!seqUser) return null;
+    return new User(seqUser.id, seqUser.name, seqUser.email, seqUser.passhash);
   }
 
-  create(user: User): Promise<User> {
-    return models.users.create(user.serialize());
+  async create(user: User): Promise<User> {
+    const seqUser = await models.users.create(user.toObject());
+    return new User(seqUser.id, seqUser.name, seqUser.email);
   }
 
   getAll(): Promise<User[]> {

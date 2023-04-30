@@ -32,7 +32,7 @@ class User {
     return this._passhash;
   }
 
-  serialize(): any {
+  toObject(): any {
     return {
       id: this.id,
       name: this.name,

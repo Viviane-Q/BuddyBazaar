@@ -44,7 +44,7 @@ router.post('/signin', async (req: Request, res: Response) => {
     } else {
       res.status(200).json({
         message: 'User signed in',
-        token
+        token,
       });
     }
   } catch (err) {

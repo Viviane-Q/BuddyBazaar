@@ -1,16 +1,20 @@
 import Encryption from '../../domain/interfaces/Encryption';
 
 class EncryptionInMemory implements Encryption {
-  sign(header: { alg: string }, payload: string, secret: string): string { // eslint-disable-line
+  verify(token: string, secret: string): string | null { // eslint-disable-line
+    throw new Error('Method not implemented.');
+  }
+
+  sign(payload: string, secret: string): string { // eslint-disable-line
     return 'token';
   }
 
   compare(password: string, passhash: string): unknown {
-    return password === '123456' && passhash === 'hash';
+    return password === '123456' && passhash === '$2b$04$RxEd75FD9YpSR9f/1RILIOD/iA4TMqTNlCOgjtmCELbx0h5U7YAXS';
   }
 
   hash(password: string): Promise<string> { // eslint-disable-line
-    return Promise.resolve('hash');
+    return Promise.resolve('$2b$04$RxEd75FD9YpSR9f/1RILIOD/iA4TMqTNlCOgjtmCELbx0h5U7YAXS');
   }
 }
 
