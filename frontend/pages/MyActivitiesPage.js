@@ -70,8 +70,7 @@ const MyActivitiesRoute = () => {
         );
     };
     const onCostChange = (text) => {
-        // if the text doesnt contain € at the end and 
-        text = text.replace(/[^0-9\.]/g, '');// + '€';
+        text = text.replace(/[^0-9]/g, '');
         setCost(text);
     };
 
