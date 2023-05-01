@@ -12,6 +12,20 @@ export const getOwnActivities = createAsyncThunk('activities/getOwnActivities', 
         },
     });
     const data = await response.json();
-    return Promise.resolve({res:data, error:!response.ok});
+    return Promise.resolve({ res: data, error: !response.ok });
 });
 
+export const postNewActivity = createAsyncThunk('activities/postNewActivity', async (args) => {
+    const { token, activity } = args;
+    const response = await fetch(`${BACKEND_URL}/api/activities`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'token': `${token}`
+        },
+        body: JSON.stringify(activity)
+    });
+    const data = await response.json();
+    return Promise.resolve({ res: data, error: !response.ok });
+}
+);

@@ -14,7 +14,7 @@ const ActivityCard = ({ activity }) => {
         <Text variant="bodyMedium">{activity.description}</Text>
         <Text variant="bodySmall">{activity.place}</Text>
       </Card.Content>
-      <Card.Cover source={{ uri: `https://picsum.photos/700?id=` + activity.key }} />
+      <Card.Cover source={{ uri: `https://picsum.photos/700?id=` + activity.id }} />
       <Card.Actions>
         <Button>Cancel</Button>
         <Button>Ok</Button>
