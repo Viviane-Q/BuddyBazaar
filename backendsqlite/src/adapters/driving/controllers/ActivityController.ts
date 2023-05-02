@@ -6,6 +6,21 @@ import { Services } from '../../config/services';
 import { CustomRequest } from '../types/CustomRequest';
 import UpdateActivity from '../../../core/usecases/Activity/UpdateActivity';
 import GetActivityById from '../../../core/usecases/Activity/GetActivityById';
+import GetActivities from '../../../core/usecases/Activity/GetActivities';
+
+const getActivities = (req: CustomRequest): Promise<Activity[]> => {
+  const services = req.context.services as Services;
+  return GetActivities({
+    activityRepository: services.activityRepository,
+    querySearch: req.query.querySearch as string,
+    startDate: new Date(req.query.startDate as string),
+    endDate: new Date(req.query.endDate as string),
+    numberPersonMax: parseInt(req.query.numberPersonMax as string),
+    cost: parseInt(req.query.cost as string),
+    place: req.query.place as string,
+    category: req.query.category as string,
+  });
+};
 
 const createActivity = (req: CustomRequest): Promise<boolean> => {
   if (
@@ -129,6 +144,7 @@ const deleteActivity = (req: CustomRequest): Promise<boolean> => {
 };
 
 export default {
+  getActivities,
   createActivity,
   getActivitiesByUser,
   updateActivity,

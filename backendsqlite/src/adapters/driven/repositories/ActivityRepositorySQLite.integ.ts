@@ -1,7 +1,7 @@
 import Activity, { Category } from '../../../domain/entities/Activity';
 import User from '../../../domain/entities/User';
 import { cleanDb, seedDb } from '../../../util/dbUtils';
-import ActivityRepositorySQLite from './AcitivityRepositorySQLite';
+import ActivityRepositorySQLite from './ActivityRepositorySQLite';
 
 const activityRepository = new ActivityRepositorySQLite();
 

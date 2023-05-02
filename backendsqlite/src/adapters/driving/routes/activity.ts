@@ -8,6 +8,31 @@ import can from '../../../core/security/can';
 
 const router = Router();
 
+router.get(
+  '/',
+  async (req: Request, res: Response) => {
+    try {
+      const activities = await ActivityController.getActivities(
+        req as CustomRequest
+      );
+      res.status(200).json({
+        message: 'Activities retrieved',
+        activities: activities.map((activity) => activity.toObject()),
+      });
+    } catch (err) {
+      if (err instanceof CodeError) {
+        res.status(err.code).json({
+          message: err.message,
+        });
+      } else {
+        res.status(500).json({
+          message: 'Internal server error',
+        });
+      }
+    }
+  }
+);
+
 router.post(
   '/',
   can(Resources.ACTIVITY, Actions.CREATE),

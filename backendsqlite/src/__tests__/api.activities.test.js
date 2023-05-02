@@ -6,6 +6,7 @@ const { login, authTest } = require('./utils');
 let anUser;
 let anActivity;
 let anActivity2;
+let anActivity3;
 let token;
 
 describe('e2e: /api/activities', () => {
@@ -15,6 +16,7 @@ describe('e2e: /api/activities', () => {
     anUser = data.anUser;
     anActivity = data.anActivity;
     anActivity2 = data.anActivity2;
+    anActivity3 = data.anActivity3;
     token = await login(request(app), anUser);
   });
   describe('POST /api/activities', () => {
@@ -167,6 +169,43 @@ describe('e2e: /api/activities', () => {
       expect(response.statusCode).toBe(200);
       expect(response.body).toEqual({
         message: 'Activity deleted',
+      });
+    });
+  });
+
+  describe('GET /api/activities/', () => {
+    test('Example: get all activities on the platform', async () => {
+      const response = await request(app).get('/api/activities');
+      expect(response.statusCode).toBe(200);
+      expect(response.body).toEqual({
+        message: 'Activities retrieved',
+        activities: JSON.parse(
+          JSON.stringify([anActivity, anActivity2, anActivity3])
+        ),
+      });
+    });
+    test('Example: get all activities with title or description containing "activité"', async () => {
+      const response = await request(app).get(
+        '/api/activities?querySearch=activité'
+      );
+      expect(response.statusCode).toBe(200);
+      expect(response.body).toEqual({
+        message: 'Activities retrieved',
+        activities: JSON.parse(JSON.stringify([anActivity, anActivity2])),
+      });
+    });
+    test('Example: get all activities with title or description containing "ciné" and between 2024-01-01 18:00:00 and 2024-01-02 22:00:00', async () => {
+      const response = await request(app).get(
+        `/api/activities?querySearch=ciné&startDate=${new Date(
+          '2024-01-01 18:00:00'
+        ).toISOString()}&endDate=${new Date(
+          '2024-01-02 22:00:00'
+        ).toISOString()}`
+      );
+      expect(response.statusCode).toBe(200);
+      expect(response.body).toEqual({
+        message: 'Activities retrieved',
+        activities: JSON.parse(JSON.stringify([anActivity3])),
       });
     });
   });
