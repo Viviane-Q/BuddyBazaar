@@ -142,6 +142,10 @@ const MyActivitiesRoute = () => {
                     startDate={startDate}
                     endDate={endDate}
                     onConfirm={onConfirm}
+                    saveLabel="Confirmer"
+                    startLabel='Début'
+                    endLabel='Fin'
+                    label="Sélectionnez deux dates"
                 />
                 <TextInput
                     label="Nombre de participants maximum"
@@ -173,9 +177,9 @@ const MyActivitiesRoute = () => {
                     <Picker.Item label="Livre" value="Livre" />
                     <Picker.Item label="Art" value="Art" />
                     <Picker.Item label="Bar" value="Bar" />
-                    <Picker.Item label="Cinema" value="Cinema" />
+                    <Picker.Item label="Cinéma" value="Cinéma" />
                     <Picker.Item label="Jeux de société" value="Jeux de société" />
-                    <Picker.Item label="Musique" value="MUsique" />
+                    <Picker.Item label="Musique" value="Musique" />
                     <Picker.Item label="Travaux manuels" value="Travaux manuels" />
                     <Picker.Item label="Autre" value="Autre" />
                 </Picker>
