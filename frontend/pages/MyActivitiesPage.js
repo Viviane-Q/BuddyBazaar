@@ -203,9 +203,11 @@ const MyActivitiesRoute = () => {
 
 const styles = StyleSheet.create({
     newActivityButton: {
-        position: 'absolute',
+        position: 'sticky',
+        backgroundColor: 'white',
         bottom: 10,
         right: 10,
+        alignSelf: 'flex-end',
         shadowRadius: 5,
         shadowOffset: { width: 0, height: 1 },
     },
