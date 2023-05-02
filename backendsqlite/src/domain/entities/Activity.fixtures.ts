@@ -27,7 +27,7 @@ export default class ActivityFixtures {
     15,
     'ev3',
     Category.Sport,
-      UserFixtures.userJean.id as number
+    UserFixtures.userJean.id as number
   );
 
   static activityHiking = new Activity(
@@ -40,6 +40,19 @@ export default class ActivityFixtures {
     0,
     'Bastille',
     Category.Sport,
+    UserFixtures.userMartin.id as number
+  );
+
+  static activityCinema = new Activity(
+    3,
+    'Ciné',
+    'Petit film à Pathé Gaumont Chavant',
+    new Date('2024-05-02 14:00:00'),
+    new Date('2024-05-02 16:00:00'),
+    2,
+    10,
+    'Grenoble',
+    Category.Cinema,
     UserFixtures.userMartin.id as number
   );
 }
