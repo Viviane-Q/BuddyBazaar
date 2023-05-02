@@ -34,6 +34,7 @@ const MyActivitiesPage = ({ navigation }) => {
         size={30}
         onPress={createActivity}
         style={styles.newActivityButton}
+        nativeID='newActivityButton'
       />
     </View>
   );

@@ -111,6 +111,7 @@ const ActivityForm = ({ navigation }) => {
         onChangeText={setTitle}
         value={title}
         style={styles.textInput}
+        nativeID='titleInput'
       />
       <TextInput
         label="Description"
@@ -120,12 +121,14 @@ const ActivityForm = ({ navigation }) => {
         multiline={true}
         numberOfLines={4}
         style={styles.textInput}
+        nativeID='descriptionInput'
       />
       <Button
         onPress={() => setOpen(true)}
         uppercase={false}
         mode="outlined"
         icon="calendar"
+        nativeID='datePickerButton'
       >
         {!!startDate && !!endDate
           ? `${startDate.toLocaleDateString(
@@ -154,6 +157,7 @@ const ActivityForm = ({ navigation }) => {
         onChangeText={onNumberPersonMaxChange}
         value={numberPersonMax}
         style={styles.textInput}
+        nativeID='numberPersonMaxInput'
       />
       <TextInput
         label="Coût"
@@ -162,6 +166,7 @@ const ActivityForm = ({ navigation }) => {
         onChangeText={onCostChange}
         value={cost}
         style={styles.textInput}
+        nativeID='costInput'
       />
       <TextInput
         label="Lieu"
@@ -169,6 +174,7 @@ const ActivityForm = ({ navigation }) => {
         onChangeText={setPlace}
         value={place}
         style={styles.textInput}
+        nativeID='placeInput'
       />
       <Picker
         label="Catégorie"
@@ -176,13 +182,14 @@ const ActivityForm = ({ navigation }) => {
         onValueChange={setCategory}
         selectedValue={category}
         style={styles.textInput}
+        nativeID='categoryPicker'
       >
         {Object.values(Category).map((category, key) => (
           <Picker.Item label={category} value={category} key={key} />
         ))}
       </Picker>
       <View style={styles.modalButtonsContainer}>
-        <Button onPress={sendActivity} mode="contained" icon="check">
+        <Button onPress={sendActivity} mode="contained" icon="check" nativeID='validateButtonNewActivity'>
           Valider
         </Button>
       </View>
