@@ -16,7 +16,7 @@ const whenUserRetrievesActivity = (activityId: number) => {
   });
 };
 
-describe('Feature: an user creeate an activity', () => {
+describe('Feature: an user retrieves one activity', () => {
   beforeEach(() => {
     activityRepository.clear();
   });
