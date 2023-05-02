@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View, Picker, SafeAreaView } from 'react-native';
+import { ScrollView, StyleSheet, View, Picker } from 'react-native';
 import { Button, IconButton, Modal, Text, TextInput } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
 
