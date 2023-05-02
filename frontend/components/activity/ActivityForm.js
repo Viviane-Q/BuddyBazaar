@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Picker } from 'react-native';
-import { Button, Modal, Text, TextInput, Snackbar } from 'react-native-paper';
+import { Button, TextInput, Snackbar } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
 import { useDispatch } from 'react-redux';
 import { postNewActivity } from '../../store/thunks/activitiesThunk';
 import Category from '../../entities/Category';
 
-const ActivityForm = ({ setModalVisible, modalVisible }) => {
+const ActivityForm = ({ navigation }) => {
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarType, setSnackbarType] = useState('error');
   const [snackbarMessage, setSnackbarMessage] = useState(
@@ -17,9 +17,10 @@ const ActivityForm = ({ setModalVisible, modalVisible }) => {
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [numberPersonMax, setNumberPersonMax] = useState(1);
-  const [cost, setCost] = useState(0);
+  const [cost, setCost] = useState('0');
   const [place, setPlace] = useState('');
   const [category, setCategory] = useState(Category.Sport);
+  const [open, setOpen] = React.useState(false);
 
   const dispatch = useDispatch();
   const onDismiss = React.useCallback(() => {
@@ -44,6 +45,17 @@ const ActivityForm = ({ setModalVisible, modalVisible }) => {
     if (text < 0) text = 0;
     setCost(text);
   };
+  const resetForm = () => {
+    setTitle('');
+    setDescription('');
+    setStartDate();
+    setEndDate();
+    setNumberPersonMax(1);
+    setCost('0');
+    setPlace('');
+    setCategory(Category.Sport);
+  };
+
   const sendActivity = () => {
     const activity = {
       title,
@@ -84,28 +96,15 @@ const ActivityForm = ({ setModalVisible, modalVisible }) => {
         setSnackbarMessage("L'adresse email ou le mot de passe est incorrect");
         return;
       }
-      hideModal();
+      resetForm();
+      navigation.navigate('MyActivitiesPage');
     });
   };
 
-  const hideModal = () => {
-    setModalVisible(false);
-  };
-
-  const [open, setOpen] = React.useState(false);
-
   return (
-    <Modal
-      visible={modalVisible}
+    <View
       style={styles.newActivityForm}
-      onDismiss={hideModal}
     >
-      <Text
-        variant="titleLarge"
-        style={{ textAlign: 'center', fontWeight: 'bold' }}
-      >
-        Nouvelle activité
-      </Text>
       <TextInput
         label="Titre"
         placeholder="Titre"
@@ -183,9 +182,6 @@ const ActivityForm = ({ setModalVisible, modalVisible }) => {
         ))}
       </Picker>
       <View style={styles.modalButtonsContainer}>
-        <Button onPress={hideModal} mode="outlined" icon="close">
-          Annuler
-        </Button>
         <Button onPress={sendActivity} mode="contained" icon="check">
           Valider
         </Button>
@@ -203,7 +199,7 @@ const ActivityForm = ({ setModalVisible, modalVisible }) => {
       >
         {snackbarMessage}
       </Snackbar>
-    </Modal>
+    </View>
   );
 };
 
@@ -217,7 +213,6 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     margin: 20,
-    marginTop: 100,
     height: 'fit-content',
   },
   textInput: {

@@ -1,50 +1,40 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
 import { IconButton } from 'react-native-paper';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { getOwnActivities } from '../store/thunks/activitiesThunk';
-
 import ActivityCard from '../components/activity/ActivityCard';
-import ActivityForm from '../components/activity/ActivityForm';
 
-const MyActivitiesPage = () => {
+const MyActivitiesPage = ({ navigation }) => {
   const userActivities = useSelector(
     (state) => state.activities.userActivities
   );
-  const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getOwnActivities());
   }, []);
 
-  const displayActivityModal = () => {
-    setModalVisible(true);
+  const createActivity = () => {
+    navigation.navigate('ActivityForm');
   };
 
   return (
     <View style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View visible={!modalVisible}>
+        <View>
           {userActivities &&
             userActivities.map((activity) => {
               return <ActivityCard key={activity.id} activity={activity} />;
             })}
         </View>
       </ScrollView>
-      <ActivityForm
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
+      <IconButton
+        icon="plus"
+        size={30}
+        onPress={createActivity}
+        style={styles.newActivityButton}
       />
-      {!modalVisible && (
-        <IconButton
-          icon="plus"
-          size={30}
-          onPress={displayActivityModal}
-          style={styles.newActivityButton}
-        />
-      )}
     </View>
   );
 };
