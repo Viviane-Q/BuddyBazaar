@@ -33,9 +33,20 @@ module.exports.seedDb = async () => {
     startDate: new Date('2024-01-01'),
     endDate: new Date('2024-01-02'),
     numberPersonMax: 2,
+    cost: 5,
+    place: 'Paris',
+    category: 'Art',
+    userId: anUser2.id,
+  });
+  const anActivity3 = await models.activities.create({
+    title: 'Un ciné',
+    description: 'Un ciné au Pathé',
+    startDate: new Date('2024-01-01 20:00:00'),
+    endDate: new Date('2024-01-02 22:00:00'),
+    numberPersonMax: 4,
     cost: 15,
     place: 'Grenoble',
-    category: 'Art',
+    category: 'Cinéma',
     userId: anUser2.id,
   });
 
@@ -44,6 +55,7 @@ module.exports.seedDb = async () => {
     anUser2,
     anActivity,
     anActivity2,
+    anActivity3,
   };
 };
 
