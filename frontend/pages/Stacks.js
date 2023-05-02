@@ -53,7 +53,7 @@ const Stacks = () => {
         <Stack.Screen
           name="Home"
           component={HomePage}
-          options={{title: 'Accueil'}}
+          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>

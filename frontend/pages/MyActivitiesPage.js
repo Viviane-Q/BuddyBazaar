@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, StyleSheet, View, Picker } from 'react-native';
+import { ScrollView, StyleSheet, View, Picker, SafeAreaView } from 'react-native';
 import { Button, IconButton, Modal, Text, TextInput } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
 
@@ -8,6 +8,18 @@ import { getOwnActivities, postNewActivity } from '../store/thunks/activitiesThu
 
 import ActivityCard from '../components/ActivityCard';
 
+
+const categories = [
+    "Sport",
+    "Livre",
+    "Art",
+    "Bar",
+    "Cinéma",
+    "Jeux de société",
+    "Musique",
+    "Travaux manuels",
+    "Autre"
+]
 const MyActivitiesRoute = () => {
     const [activities, setActivities] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
@@ -20,8 +32,7 @@ const MyActivitiesRoute = () => {
     const [numberPersonMax, setNumberPersonMax] = useState(1);
     const [cost, setCost] = useState();
     const [place, setPlace] = useState('');
-    const [category, setCategory] = useState('');
-
+    const [category, setCategory] = useState(categories[0]);
     const dispatch = useDispatch();
     const token = useSelector((state) => state.auth.token);
     const refreshActivities = () => {
@@ -43,6 +54,7 @@ const MyActivitiesRoute = () => {
     }, []);
 
     const displayActivityModal = () => {
+        console.log('display modal');
         setModalVisible(true);
     };
 
@@ -65,12 +77,15 @@ const MyActivitiesRoute = () => {
         [setOpen, setStartDate, setEndDate]
     );
     const onNumberPersonMaxChange = (text) => {
-        setNumberPersonMax(
-            text.replace(/[^0-9]/g, '')
-        );
+        text = text.replace(/[^0-9]/g, '');
+        if(text < 1)
+            text = 1;
+        setNumberPersonMax(text);
     };
     const onCostChange = (text) => {
         text = text.replace(/[^0-9]/g, '');
+        if(text < 0)
+            text = 0;
         setCost(text);
     };
 
@@ -106,30 +121,26 @@ const MyActivitiesRoute = () => {
     };
 
     return (
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-            <Text>Mes activités ici</Text>
-            {activities.map((activity) => {
-                return <ActivityCard key={activity.id} activity={activity} />;
-            })}
-            <IconButton
-                icon="plus"
-                size={30}
-                onPress={displayActivityModal}
-                style={styles.newActivityButton}
-            />
-            <Modal visible={modalVisible} style={{ backgroundColor: 'white' }}>
-                <Text variant="titleLarge" style={{ textAlign: 'center' }}>Nouvelle activité</Text>
+        <View style={{flex: 1}}>
+        <ScrollView contentContainerStyle={{flexGrow: 1, backgroundColor: 'white'}}>            
+            <Modal visible={modalVisible} style={styles.newActivityForm} onDismiss={hideModal}>
+                <Text variant="titleLarge" style={{ textAlign: 'center' , fontWeight: 'bold'}}>Nouvelle activité</Text>
                 <TextInput
                     label="Titre"
                     placeholder="Titre"
                     onChangeText={setTitle}
                     value={title}
+                    style={styles.textInput}
                 />
                 <TextInput
                     label="Description"
                     placeholder="Description"
                     onChangeText={setDescription}
                     value={description}
+                    multiline={true}
+                    numberOfLines={4}
+                    style={styles.textInput}
+
                 />
                 <Button onPress={() => setOpen(true)} uppercase={false} mode="outlined" icon='calendar'>
                     {!!startDate && !!endDate ? `${startDate.toLocaleDateString()} - ${endDate.toLocaleDateString()}` : 'Choissisez une date'}
@@ -146,6 +157,8 @@ const MyActivitiesRoute = () => {
                     startLabel='Début'
                     endLabel='Fin'
                     label="Sélectionnez deux dates"
+                    style={styles.textInput}
+
                 />
                 <TextInput
                     label="Nombre de participants maximum"
@@ -153,6 +166,7 @@ const MyActivitiesRoute = () => {
                     keyboardType='numeric'
                     onChangeText={onNumberPersonMaxChange}
                     value={numberPersonMax}
+                    style={styles.textInput}
                 />
                 <TextInput
                     label="Coût"
@@ -160,54 +174,62 @@ const MyActivitiesRoute = () => {
                     keyboardType='numeric'
                     onChangeText={onCostChange}
                     value={cost}
+                    style={styles.textInput}
                 />
                 <TextInput
                     label="Lieu"
                     placeholder="Lieu"
                     onChangeText={setPlace}
                     value={place}
+                    style={styles.textInput}
                 />
                 <Picker
                     label="Catégorie"
                     placeholder="Catégorie"
                     onValueChange={setCategory}
                     selectedValue={category}
+                    style={styles.textInput}
                 >
-                    <Picker.Item label="Sport" value="Sport" />
-                    <Picker.Item label="Livre" value="Livre" />
-                    <Picker.Item label="Art" value="Art" />
-                    <Picker.Item label="Bar" value="Bar" />
-                    <Picker.Item label="Cinéma" value="Cinéma" />
-                    <Picker.Item label="Jeux de société" value="Jeux de société" />
-                    <Picker.Item label="Musique" value="Musique" />
-                    <Picker.Item label="Travaux manuels" value="Travaux manuels" />
-                    <Picker.Item label="Autre" value="Autre" />
+                    {categories.map((category, key) => (
+                        <Picker.Item label={category} value={category} key={key}/>
+                    ))}
                 </Picker>
                 <View style={styles.modalButtonsContainer}>
                     <Button onPress={hideModal}
                         mode="outlined"
-                        icon="cancel">
+                        icon="close">
                         Annuler
                     </Button>
                     <Button onPress={sendActivity}
                         mode="contained"
-                        icon="login"
+                        icon="check"
                     >
                         Valider
                     </Button>
                 </View>
             </Modal>
+            <Modal visible={!modalVisible} style={{backgroundColor:'white'}}>
+                {activities.map((activity) => {
+                    return <ActivityCard key={activity.id} activity={activity} />;
+                })}
+            </Modal>
         </ScrollView>
+        <IconButton
+            icon="plus"
+            size={30}
+            onPress={displayActivityModal}
+            style={styles.newActivityButton}
+                />
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     newActivityButton: {
-        position: 'sticky',
+        position: 'absolute',
         backgroundColor: 'white',
         bottom: 10,
         right: 10,
-        alignSelf: 'flex-end',
         shadowRadius: 5,
         shadowOffset: { width: 0, height: 1 },
     },
@@ -215,7 +237,17 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-evenly',
     },
-
+    newActivityForm: {
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 10,
+        margin: 20,
+        marginTop: 100,
+        height: 'fit-content',
+    },
+    textInput: {
+        margin: 10,
+    },
 });
 
 export default MyActivitiesRoute;

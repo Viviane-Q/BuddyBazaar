@@ -34,6 +34,9 @@ const HomePage = ({ navigation }) => {
         { key: 'messages', title: 'Chat', focusedIcon: 'chat', unfocusedIcon: 'chat-outline', badge: 10},
         { key: 'profile', title: 'Profil', focusedIcon: 'account', unfocusedIcon: 'account-outline'},
     ]);
+    if(!token) {
+        routes.splice(2, 3);
+    }
 
     const renderScene = BottomNavigation.SceneMap({
         discover: DiscoverRoute,
@@ -45,7 +48,7 @@ const HomePage = ({ navigation }) => {
 
     return (
         <View style={{ flex: 1, overflow:'scroll', justifyContent: 'flex-end' }}>
-            {token &&
+            { token &&
                 <Button
                     onPress={disconnect}
                     mode="outlined"
