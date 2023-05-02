@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { postNewActivity } from '../../store/thunks/activitiesThunk';
 import Category from '../../entities/Category';
 
-const ActivityForm = ({ setModalVisible, modalVisible, refreshActivities }) => {
+const ActivityForm = ({ setModalVisible, modalVisible }) => {
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarType, setSnackbarType] = useState('error');
   const [snackbarMessage, setSnackbarMessage] = useState(
@@ -85,7 +85,6 @@ const ActivityForm = ({ setModalVisible, modalVisible, refreshActivities }) => {
         return;
       }
       hideModal();
-      refreshActivities();
     });
   };
 

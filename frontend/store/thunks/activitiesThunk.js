@@ -37,6 +37,9 @@ export const postNewActivity = createAsyncThunk(
       body: JSON.stringify(activity),
     });
     const data = await response.json();
+    if (response.ok) {
+      thunkAPI.dispatch(getOwnActivities());
+    }
     return Promise.resolve({ res: data, error: !response.ok });
   }
 );

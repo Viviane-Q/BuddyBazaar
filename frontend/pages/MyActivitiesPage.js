@@ -15,12 +15,8 @@ const MyActivitiesPage = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const dispatch = useDispatch();
 
-  const refreshActivities = () => {
-    dispatch(getOwnActivities());
-  };
-
   useEffect(() => {
-    refreshActivities();
+    dispatch(getOwnActivities());
   }, []);
 
   const displayActivityModal = () => {
@@ -40,7 +36,6 @@ const MyActivitiesPage = () => {
       <ActivityForm
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}
-        refreshActivities={refreshActivities}
       />
       {!modalVisible && (
         <IconButton
