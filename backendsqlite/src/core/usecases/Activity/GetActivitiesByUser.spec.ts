@@ -18,8 +18,8 @@ const whenUserRetrievesActivities = (user: User) => {
   return GetActivitiesByUserId({ userId: user.id, activityRepository });
 };
 
-describe('Feature: an user creeate an activity', () => {
-  test('Example: User wants to create his first activity', async () => {
+describe('Feature: an user retrieves their activities', () => {
+  test('Example: User retrieves their 2 registered activities', async () => {
     givenActivities([
       ActivityFixtures.activityClimbing,
       ActivityFixtures.activityHiking,
