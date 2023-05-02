@@ -23,8 +23,42 @@ class ActivityRepositoryInMemory implements ActivityRepository {
     return Promise.resolve(activity);
   }
 
-  getAll(): Promise<Activity[]> {
-    return Promise.resolve(this.activities);
+  getAll(
+    querySearch?: string,
+    startDate?: Date,
+    endDate?: Date,
+    numberPersonMax?: number,
+    cost?: number,
+    place?: string,
+    category?: string
+  ): Promise<Activity[]> {
+    let activities = this.activities;
+    if (category) {
+      activities = activities.filter(
+        (activity) => activity.category === category
+      );
+    }
+    if (querySearch) {
+      activities = activities.filter(
+        (activity) =>
+          activity.title.includes(querySearch) ||
+          activity.description.includes(querySearch)
+      );
+    }
+    if (cost) {
+      activities = activities.filter((activity) => activity.cost <= cost);
+    }
+    if (startDate) {
+      activities = activities.filter(
+        (activity) => activity.startDate >= startDate
+      );
+    }
+    if (endDate) {
+      activities = activities.filter(
+        (activity) => activity.endDate.getTime() <= endDate.getTime()
+      );
+    }
+    return Promise.resolve(activities);
   }
 
   getAllByUserId(userId: number): Promise<Activity[]> {
