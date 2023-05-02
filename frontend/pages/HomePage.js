@@ -5,8 +5,7 @@ import { setToken } from '../store/slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MyActivitiesPage from './MyActivitiesPage';
-
-const DiscoverRoute = () => <Text>Que faire??</Text>;
+import DiscoverPage from './DiscoverPage';
 
 const SearchRoute = () => <Text>Chercher ici</Text>;
 
@@ -65,7 +64,7 @@ const HomePage = ({ navigation }) => {
   const renderScene = ({ route, jumpTo }) => {
     switch (route.key) {
       case 'discover':
-        return <DiscoverRoute jumpTo={jumpTo} />;
+        return <DiscoverPage jumpTo={jumpTo} navigation={navigation}/>;
       case 'myactivities':
         return <MyActivitiesPage jumpTo={jumpTo} navigation={navigation} />;
       case 'search':

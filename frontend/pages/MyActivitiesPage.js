@@ -22,7 +22,7 @@ const MyActivitiesPage = ({ navigation }) => {
   return (
     <View style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <View>
+        <View style={styles.activitiesContainer}>
           {userActivities &&
             userActivities.map((activity) => {
               return <ActivityCard key={activity.id} activity={activity} />;
@@ -48,6 +48,10 @@ const styles = StyleSheet.create({
     right: 10,
     shadowRadius: 5,
     shadowOffset: { width: 0, height: 1 },
+  },
+  activitiesContainer: {
+    margin: 18,
+    gap: 15 ,
   },
 });
 

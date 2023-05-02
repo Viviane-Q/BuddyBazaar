@@ -21,9 +21,6 @@ const ActivityCard = ({ activity }) => {
 
 const styles = StyleSheet.create({
   activityCard: {
-    margin: 10,
-    marginLeft: 30,
-    marginRight: 30,
     shadowRadius: 5,
     shadowOffset: { width: 0, height: 1 },
     borderRadius: 20,
