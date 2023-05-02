@@ -6,6 +6,8 @@ import ActivityRepositorySQLite from './AcitivityRepositorySQLite';
 const activityRepository = new ActivityRepositorySQLite();
 
 let anActivity: Activity;
+let anActivity2: Activity;
+let anActivity3: Activity;
 let anUser: User;
 
 const buildActivity = (objActivity: any) => {
@@ -32,6 +34,8 @@ describe('ActivityRepositorySQLite integration tests', () => {
     await cleanDb();
     const data = await seedDb();
     anActivity = buildActivity(data.anActivity);
+    anActivity2 = buildActivity(data.anActivity2);
+    anActivity3 = buildActivity(data.anActivity3);
     anUser = buildUser(data.anUser);
   });
 
@@ -122,6 +126,37 @@ describe('ActivityRepositorySQLite integration tests', () => {
     test('should not delete anything because the activity does not exist', async () => {
       const result = await activityRepository.delete(999);
       expect(result).toBe(false);
+    });
+  });
+
+  describe('geAll', () => {
+    test('should get all activities', async () => {
+      const activies = await activityRepository.getAll();
+      expect(activies).toEqual([anActivity, anActivity2, anActivity3]);
+    });
+    test('should get all activities with title or description containing "activité"', async () => {
+      const activies = await activityRepository.getAll('Activité');
+      expect(activies).toEqual([anActivity, anActivity2]);
+    });
+    test('should get all activities with title or description containing "ciné" and between 2024-01-01 18:00:00 and 2024-01-02 22:00:00', async () => {
+      const activies = await activityRepository.getAll('ciné', new Date('2024-01-01 18:00:00'), new Date('2024-01-02 22:00:00'));
+      expect(activies).toEqual([anActivity3]);
+    });
+    test('should get all activities with numberPersonMax of 4 or under', async () => {
+      const activies = await activityRepository.getAll(undefined, undefined, undefined, 4);
+      expect(activies).toEqual([anActivity2, anActivity3]);
+    });
+    test('should get all activities with cost of 5 or under', async () => {
+      const activies = await activityRepository.getAll(undefined, undefined, undefined, undefined, 5);
+      expect(activies).toEqual([anActivity2]);
+    });
+    test('should get all activities in Grenoble', async () => {
+      const activies = await activityRepository.getAll(undefined, undefined, undefined, undefined, undefined, 'Grenoble');
+      expect(activies).toEqual([anActivity, anActivity3]);
+    });
+    test('should get all activities in Sport category', async () => {
+      const activies = await activityRepository.getAll(undefined, undefined, undefined, undefined, undefined, undefined, 'Sport');
+      expect(activies).toEqual([anActivity]);
     });
   });
 });
