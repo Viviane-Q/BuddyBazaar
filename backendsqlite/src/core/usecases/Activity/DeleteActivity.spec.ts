@@ -21,7 +21,7 @@ const thenActivitiesShouldBe = async (activities: Activity[]) => {
   expect(activities).toEqual(expectedActivies);
 };
 
-describe('Feature: an user creeate an activity', () => {
+describe('Feature: an user deletes an activity', () => {
   beforeEach(() => {
     activityRepository.clear();
   });

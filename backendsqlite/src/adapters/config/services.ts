@@ -3,7 +3,7 @@ import EncryptionLib from '../driven/EncryptionLib';
 import UserRepository from '../../domain/interfaces/repositories/UserRepository';
 import Encryption from '../../domain/interfaces/Encryption';
 import ActivityRepository from '../../domain/interfaces/repositories/ActivityRepository';
-import ActivityRepositorySQLite from '../driven/repositories/AcitivityRepositorySQLite';
+import ActivityRepositorySQLite from '../driven/repositories/ActivityRepositorySQLite';
 
 const userRepository = new UserRepositorySQLite();
 const encryption = new EncryptionLib();

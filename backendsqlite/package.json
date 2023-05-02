@@ -7,7 +7,7 @@
     "setup": "npm install && npm run doc && npm run updatedb",
     "updatedb": "node src/util/updatedb.js",
     "doc": "node src/util/swagger.js",
-    "start": "npm run doc && npm run updatedb  && node dist/index.js",
+    "start": "npm run doc && npm run updatedb  && node dist/server.js",
     "dev": "npm run updatedb && npm run doc && nodemon --watch src -e js,ts --exec \"ts-node src/server.js\"",
     "test:e2e": "DB=bmttest.sqlite npm run updatedb && DB=bmttest.sqlite npx jest --runInBand --testMatch='**/*.test.js'",
     "test:spec": "npx jest --runInBand --testMatch='**/*.spec.ts'",
