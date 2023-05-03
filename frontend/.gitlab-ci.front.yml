@@ -1,7 +1,7 @@
 stages:
   - install dependencies
   - lint
-  # - build
+  - build
   - test
 
 .ci-front:
@@ -41,11 +41,18 @@ lint front:
   needs:
     - install front dependencies
 
-# build front:
-#   extends: .ci-front-read-cache
-#   stage: build
-#   script:
-#     - npm run build
+build front:
+  tags:
+    - docker
+  image: sebastienviardot/rnenvsv:buster
+  stage: build
+  extends: .ci-front-read-cache
+  script:
+  - ./genereapk.sh
+  artifacts:
+    paths:
+      - public
+
 test-e2e front:
   tags:
     - docker 
@@ -64,3 +71,4 @@ test-e2e front:
     when: always
     paths:
       - frontend/cypress/videos/*
+
