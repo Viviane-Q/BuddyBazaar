@@ -20,3 +20,6 @@ cypress/videos/
 
 ios/
 android/
+Dockerfile
+.dockerignore
+.devcontainer/
