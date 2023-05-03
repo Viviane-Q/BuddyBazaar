@@ -52,9 +52,10 @@ build front:
   artifacts:
     paths:
       - frontend/public/*
-  only:
-    - main
-  
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+      when: never  # Prevent pipeline run for push event
+    - when: always # Run pipeline for all other cases
 
 test-e2e front:
   tags:
