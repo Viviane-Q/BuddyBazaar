@@ -51,7 +51,10 @@ build front:
   - ./genereapk.sh
   artifacts:
     paths:
-      - public
+      - frontend/public/*
+  only:
+    - main
+  
 
 test-e2e front:
   tags:
