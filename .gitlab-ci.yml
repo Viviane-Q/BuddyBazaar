@@ -3,6 +3,7 @@ stages:
   - lint
   - build
   - test
+  - deploy
 
 include:
   - local: '/backendsqlite/.gitlab-ci.back.yml'
