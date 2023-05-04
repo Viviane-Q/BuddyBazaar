@@ -3,6 +3,7 @@ stages:
   - lint
   - build
   - test
+  - deploy
 
 .ci-back:
   image: node
@@ -10,6 +11,7 @@ stages:
     - docker
   before_script:
     - cd backendsqlite
+    - cp .env.ci .env
 
 .ci-back-write-cache:
   extends: .ci-back
@@ -72,3 +74,23 @@ test-e2e back:
     - npm run test:e2e
   needs:
     - install back dependencies
+
+deploy back:
+  stage: deploy
+  extends: .ci-back-read-cache
+  tags:
+    - docker
+  variables:
+    SCALINGO_APP_NAME: bazaar # le nom de votre appli chez scalingo
+    SCALINGO_REGION: osc-fr1 # l'instance de scalingo sur laquelle votre appli est déployée
+    GIT_DEPTH: 0
+    PROJECT_DIR: backendsqlite # Le répertoire dans le dépôt où est le backend
+  image: ruby:3.1.3
+  script:
+    - cp .env.example .env # On copie le fichier d'exemple de .env
+    - sed -i "s/TOKENSECRET=/TOKENSECRET=$TOKENSECRET/g" .env # On remplace les variables d'environnement par celles de Scalingo
+    - cd ..
+    - gem install dpl --pre # gem est le gestionnaire de paquets pour Ruby
+    - curl -O https://cli-dl.scalingo.com/install && bash install # scalingo CLI est installé
+    - scalingo --app=$SCALINGO_APP_NAME env-set PROJECT_DIR=$PROJECT_DIR # Pour indiquer sur le dépôt distant où est le backend
+    - dpl --provider=scalingo --app=$SCALINGO_APP_NAME --api-token=$SCALINGO_API_TOKEN --region=$SCALINGO_REGION --branch=refs/heads/main

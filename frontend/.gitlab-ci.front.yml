@@ -10,6 +10,7 @@ stages:
     - docker
   before_script:
     - cd frontend
+    - cp .env.ci .env
 
 .ci-front-write-cache:
   extends: .ci-front
@@ -53,13 +54,15 @@ build front:
     paths:
       - frontend/public/*
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "push"'
-      when: never  # Prevent pipeline run for push event
-    - when: always # Run pipeline for all other cases
+    - if: ($CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH)
+      when: always
+    - when: manual
+      allow_failure: true
 
 test-e2e front:
   tags:
     - docker 
+    - perso
   image: cypress/base:latest
   stage: test
   extends: .ci-front-read-cache
