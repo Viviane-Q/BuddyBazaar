@@ -97,14 +97,12 @@ const ActivityForm = ({ navigation }) => {
         return;
       }
       resetForm();
-      navigation.navigate('MyActivitiesPage');
+      navigation.navigate('Home');
     });
   };
 
   return (
-    <View
-      style={styles.newActivityForm}
-    >
+    <View style={styles.newActivityForm}>
       <TextInput
         label="Titre"
         placeholder="Titre"
