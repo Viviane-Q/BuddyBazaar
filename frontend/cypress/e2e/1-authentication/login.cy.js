@@ -51,6 +51,6 @@ describe('Test de la page de connexion', () => {
     cy.get('input').last().type('123456')
     cy.get('div').contains('Se connecter').click()
     // check the user is redirected to the menu
-    cy.get('div').contains('Accueil').should('be.visible')
+    cy.get('div').contains('Chat').should('be.visible')
   })
 })
