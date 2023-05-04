@@ -1,5 +1,6 @@
 
 import { MD3LightTheme as DefaultTheme} from 'react-native-paper';
+import Category from './entities/Category';
 
 const theme = {
 	...DefaultTheme,
@@ -37,6 +38,17 @@ const theme = {
 		shadow: "#0000001A",
 		scrim: "#00000099",
 		backdrop: "#000000CC",
+		categories: {
+			[Category.Sport]: '#c48a7c',
+			[Category.Book]: '#d5a65c',
+			[Category.Art]: '#ccc47e',
+			[Category.Pub]: '#A4A663',
+			[Category.Cinema]: '#7E998C',
+			[Category.BoardGame]: '#88ACCC',
+			[Category.Musique]: '#6b81ac',
+			[Category.ManualWork]: '#a28291',
+			[Category.Other]: '#999393',
+		}
 	}
 }
 
