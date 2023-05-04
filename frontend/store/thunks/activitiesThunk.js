@@ -1,8 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setUserActivities } from '../slices/activitiesSlice';
-
-// import { BACKEND_URL } from "@env";
-const BACKEND_URL = 'http://localhost:3000';
+import { BACKEND_URL } from "@env";
 
 export const getOwnActivities = createAsyncThunk(
   'activities/getOwnActivities',

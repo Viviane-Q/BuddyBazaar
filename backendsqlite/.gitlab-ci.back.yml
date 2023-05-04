@@ -11,6 +11,7 @@ stages:
     - docker
   before_script:
     - cd backendsqlite
+    - cp .env.ci .env
 
 .ci-back-write-cache:
   extends: .ci-back
