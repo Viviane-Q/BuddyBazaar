@@ -60,6 +60,7 @@ build front:
 test-e2e front:
   tags:
     - docker 
+    - perso
   image: cypress/base:latest
   stage: test
   extends: .ci-front-read-cache
