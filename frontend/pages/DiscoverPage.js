@@ -69,7 +69,7 @@ const DiscoverPage = ({ navigation }) => {
           <ScrollView horizontal={true}>
             <View style={styles.activitiesContainer}>
               {activities.map((activity) => (
-                <ActivityCard key={activity.id} activity={activity} />
+                <ActivityCard key={activity.id} activity={activity} imageWidth={'100%'} imageHeight={150}/>
               ))}
             </View>
           </ScrollView>
@@ -79,7 +79,7 @@ const DiscoverPage = ({ navigation }) => {
           <ScrollView horizontal={true}>
             <View style={styles.activitiesContainer}>
               {activities.map((activity) => (
-                <ActivityCard key={activity.id} activity={activity} />
+                <ActivityCard key={activity.id} activity={activity} imageWidth={'100%'} imageHeight={150}/>
               ))}
             </View>
           </ScrollView>
