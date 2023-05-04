@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MyActivitiesPage from './MyActivitiesPage';
 import DiscoverPage from './DiscoverPage';
+import theme from '../theme';
 
 const SearchRoute = () => <Text>Chercher ici</Text>;
 
@@ -78,16 +79,17 @@ const HomePage = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, overflow: 'scroll', justifyContent: 'flex-end' }}>
-      {token && (
+      {/* {token && (
         <Button onPress={disconnect} mode="outlined">
           Se déconnecter
         </Button>
-      )}
+      )} */}
       <BottomNavigation
         navigationState={{ index, routes }}
         onIndexChange={setIndex}
         renderScene={renderScene}
         barStyle={styles.navigationBar}
+        activeColor = {theme.colors.white}
       />
     </View>
   );
@@ -95,7 +97,7 @@ const HomePage = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   navigationBar: {
-    borderTopWidth: 0.5,
+    backgroundColor: theme.colors.primary,
   },
 });
 

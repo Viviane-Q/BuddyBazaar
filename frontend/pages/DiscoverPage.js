@@ -4,6 +4,7 @@ import { Text, Button } from 'react-native-paper';
 import Category from '../entities/Category';
 import ActivityCard from '../components/activity/ActivityCard';
 import theme from '../theme';
+import TitleMedium from '../components/shared/typography/TitleMedium';
 
 const activities = [
   {
@@ -41,8 +42,6 @@ const activities = [
   },
 ];
 
-
-
 const DiscoverPage = ({ navigation }) => {
   const searchCategory = (category) => {
     //TODO: search by category
@@ -56,23 +55,25 @@ const DiscoverPage = ({ navigation }) => {
           Découvrez toutes les activités présentes sur notre plateforme !
         </Text>
         <View>
-          <Text variant="titleSmall">Par catégorie</Text>
+          <TitleMedium>Par catégorie</TitleMedium>
           <ScrollView horizontal={true}>
             <View style={styles.categoryButtonsContainer}>
               {Object.values(Category).map((category) => (
                 <Button
                   key={category}
                   buttonColor={theme.colors.categories[category]}
-                  textColor='white'
+                  textColor="white"
                   onPress={() => searchCategory(category)}
                   style={styles.categoryButton}
-                >{category}</Button>
+                >
+                  {category}
+                </Button>
               ))}
             </View>
           </ScrollView>
         </View>
         <View>
-          <Text variant="titleSmall">Ce soir</Text>
+          <TitleMedium>Ce soir</TitleMedium>
           <ScrollView horizontal={true}>
             <View style={styles.activitiesContainer}>
               {activities.map((activity) => (
@@ -87,7 +88,7 @@ const DiscoverPage = ({ navigation }) => {
           </ScrollView>
         </View>
         <View>
-          <Text variant="titleSmall">Ce weekend</Text>
+          <TitleMedium>Ce weekend</TitleMedium>
           <ScrollView horizontal={true}>
             <View style={styles.activitiesContainer}>
               {activities.map((activity) => (
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
   categoryButton: {
     borderRadius: 20,
     minWidth: 100,
-    shadowOffset: {width: 0, height: 3},
+    shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
   },
