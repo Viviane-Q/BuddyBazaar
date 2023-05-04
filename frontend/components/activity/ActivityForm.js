@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Picker } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { Button, TextInput, Snackbar } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
 import { useDispatch } from 'react-redux';
@@ -153,7 +154,7 @@ const ActivityForm = ({ navigation }) => {
         placeholder="Nombre de participants maximum"
         keyboardType="numeric"
         onChangeText={onNumberPersonMaxChange}
-        value={numberPersonMax}
+        value={numberPersonMax.toString()}
         style={styles.textInput}
         nativeID='numberPersonMaxInput'
       />
@@ -161,7 +162,7 @@ const ActivityForm = ({ navigation }) => {
         label="Coût"
         placeholder="Coût"
         keyboardType="numeric"
-        onChangeText={onCostChange}
+        onChangeText={onCostChange.toString()}
         value={cost}
         style={styles.textInput}
         nativeID='costInput'
@@ -218,7 +219,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     margin: 20,
-    height: 'fit-content',
+    // height: 'fit-content',
   },
   textInput: {
     margin: 10,
