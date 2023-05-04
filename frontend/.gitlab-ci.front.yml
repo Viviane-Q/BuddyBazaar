@@ -45,6 +45,7 @@ lint front:
 build front:
   tags:
     - docker
+    - perso
   image: sebastienviardot/rnenvsv:buster
   stage: build
   extends: .ci-front-read-cache
