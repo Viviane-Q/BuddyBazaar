@@ -81,7 +81,7 @@ deploy back:
     - docker
   variables:
     # SCALINGO_API_TOKEN # variable à ne pas définir en clair ici (cf instructions à la fin du .gitlab-ci.yml ci-dessous)
-    SCALINGO_APP_NAME: buddy-bazaar # le nom de votre appli chez scalingo
+    SCALINGO_APP_NAME: bazaar # le nom de votre appli chez scalingo
     SCALINGO_REGION: osc-fr1 # l'instance de scalingo sur laquelle votre appli est déployée
     GIT_DEPTH: 0
     PROJECT_DIR: backendsqlite # Le répertoire dans le dépôt où est le backend
