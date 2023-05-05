@@ -21,7 +21,7 @@ const MyActivitiesPage = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={{flexGrow: Dimensions.get('window').width < 500 ? 1 : 0}}>
+      <ScrollView>
         <View style={styles.activitiesContainer}>
           {userActivities &&
             userActivities.map((activity) => {
@@ -29,8 +29,8 @@ const MyActivitiesPage = ({ navigation }) => {
                 <ActivityCard
                   key={activity.id}
                   activity={activity}
-                  imageWidth={'100%'}
                   imageHeight={150}
+                  width={Dimensions.get('window').width < 500 ? 'auto' : 300}
                 />
               );
             })}
@@ -57,10 +57,11 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
   },
   activitiesContainer: {
-    margin: 18,
-    gap: 15,
+    flexGrow: Dimensions.get('window').width < 500 ? 1 : 0,
+    margin: 24,
+    gap: 24,
     flexDirection: Dimensions.get('window').width < 500 ? 'column' : 'row',
-    flexWrap: 'wrap',
+    flexWrap: Dimensions.get('window').width < 500 ? 'nowrap' : 'wrap',
   },
 });
 

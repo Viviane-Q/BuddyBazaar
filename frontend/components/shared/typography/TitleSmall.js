@@ -21,7 +21,14 @@ const TitleSmall = ({ children, ...props }) => {
 
   return (
     <View onLayout={onLayoutRootView}>
-      <Text {...props} style={{ fontFamily: 'Calistoga-Regular', color: theme.colors.secondary}}>
+      <Text
+        {...props}
+        style={{
+          fontFamily: 'Calistoga-Regular',
+          color: theme.colors.secondary,
+          ...props.style,
+        }}
+      >
         {children}
       </Text>
     </View>

@@ -23,7 +23,12 @@ const TitleMedium = ({ children, ...props }) => {
     <View onLayout={onLayoutRootView}>
       <Text
         {...props}
-        style={{ fontFamily: 'Calistoga-Regular', fontSize: 16, color: theme.colors.primary}}
+        style={{
+          fontFamily: 'Calistoga-Regular',
+          fontSize: 16,
+          color: theme.colors.primary,
+          ...props.style,
+        }}
       >
         {children}
       </Text>

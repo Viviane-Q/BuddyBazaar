@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView, View, StyleSheet } from 'react-native';
-import { Text, Button } from 'react-native-paper';
+import { Button } from 'react-native-paper';
 import Category from '../entities/Category';
 import ActivityCard from '../components/activity/ActivityCard';
 import theme from '../theme';
@@ -51,11 +51,8 @@ const DiscoverPage = ({ navigation }) => {
   return (
     <ScrollView>
       <View style={styles.viewContainer}>
-        <Text variant="titleMedium">
-          Découvrez toutes les activités présentes sur notre plateforme !
-        </Text>
         <View>
-          <TitleMedium>Par catégorie</TitleMedium>
+          <TitleMedium>Activités par catégorie</TitleMedium>
           <ScrollView horizontal={true}>
             <View style={styles.categoryButtonsContainer}>
               {Object.values(Category).map((category) => (
@@ -80,8 +77,8 @@ const DiscoverPage = ({ navigation }) => {
                 <ActivityCard
                   key={activity.id}
                   activity={activity}
-                  imageWidth={'100%'}
                   imageHeight={150}
+                  width={300}
                 />
               ))}
             </View>
@@ -95,8 +92,8 @@ const DiscoverPage = ({ navigation }) => {
                 <ActivityCard
                   key={activity.id}
                   activity={activity}
-                  imageWidth={'100%'}
                   imageHeight={150}
+                  width={300}
                 />
               ))}
             </View>
