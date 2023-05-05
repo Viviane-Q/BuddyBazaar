@@ -1,6 +1,7 @@
 #!/bin/bash -x
-cp .env.example .env # Copie le fichier d'exemple pour le fichier de configuration
-sed -i "s/BACKEND_URL=/BACKEND_URL=https\:\/\/bazaar\.osc\-fr1\.scalingo\.io/g" .env
+
+# replace import { BACKEND_URL } from "@env"; by const BACKEND_URL = "$BACKEND_URL"; in frontend/src/api.js
+sed -i "s|import { BACKEND_URL } from \"@env\";|const BACKEND_URL = \"$BACKEND_URL\";|g" store/thunks/*
 mkdir -p public # Crée le répertoire pour disposer dans pages de l'application 
 source /etc/profile.d/androidrc.sh # Définit les variables d'environnement pour accéder aux outils nécessaires
 npm install
