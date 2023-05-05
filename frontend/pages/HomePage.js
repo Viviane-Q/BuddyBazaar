@@ -7,8 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import MyActivitiesPage from './MyActivitiesPage';
 import DiscoverPage from './DiscoverPage';
 import theme from '../theme';
-
-const SearchRoute = () => <Text>Chercher ici</Text>;
+import SearchPage from './SearchPage';
 
 const MessagesRoute = () => <Text>Mes messages</Text>;
 
@@ -60,11 +59,11 @@ const HomePage = ({ navigation }) => {
   const renderScene = ({ route, jumpTo }) => {
     switch (route.key) {
       case 'discover':
-        return <DiscoverPage jumpTo={jumpTo} navigation={navigation}/>;
+        return <DiscoverPage jumpTo={jumpTo}/>;
       case 'myactivities':
         return <MyActivitiesPage jumpTo={jumpTo} navigation={navigation} />;
       case 'search':
-        return <SearchRoute jumpTo={jumpTo} />;
+        return <SearchPage jumpTo={jumpTo} />;
       case 'messages':
         return <MessagesRoute jumpTo={jumpTo} />;
       case 'profile':

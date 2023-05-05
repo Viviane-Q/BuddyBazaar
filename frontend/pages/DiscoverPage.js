@@ -1,51 +1,78 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { ScrollView, View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 import Category from '../entities/Category';
 import ActivityCard from '../components/activity/ActivityCard';
 import theme from '../theme';
 import TitleMedium from '../components/shared/typography/TitleMedium';
+import { useDispatch } from 'react-redux';
+import {
+  getActivitiesByCategory,
+  getActivitiesByDateRange,
+} from '../store/thunks/activitiesThunk';
 
-const activities = [
-  {
-    id: 1,
-    title: 'Football',
-    description: 'Venez jouer au football avec nous !',
-    startDate: new Date(),
-    endDate: new Date(),
-    numberPersonMax: 10,
-    cost: 0,
-    place: 'Stade de la Mosson',
-    category: Category.Sport,
-  },
-  {
-    id: 2,
-    title: 'Basketball',
-    description: 'Venez jouer au basketball avec nous !',
-    startDate: new Date(),
-    endDate: new Date(),
-    numberPersonMax: 10,
-    cost: 0,
-    place: 'Stade de la Mosson',
-    category: Category.Sport,
-  },
-  {
-    id: 3,
-    title: 'Tennis',
-    description: 'Venez jouer au tennis avec nous !',
-    startDate: new Date(),
-    endDate: new Date(),
-    numberPersonMax: 10,
-    cost: 0,
-    place: 'Stade de la Mosson',
-    category: Category.Sport,
-  },
-];
+const DiscoverPage = ({ jumpTo }) => {
+  const [activitiesTonight, setActivitiesTonight] = useState([]);
+  const [activitiesThisWeekend, setActivitiesThisWeekend] = useState([]);
 
-const DiscoverPage = ({ navigation }) => {
+  const dispatch = useDispatch();
+
+  const getActivitiesTonight = () => {
+    const tonight = new Date();
+    tonight.setHours(18, 0, 0, 0);
+    const tomorrow = new Date(tonight);
+    tomorrow.setDate(tonight.getDate() + 1);
+    const res = dispatch(
+      getActivitiesByDateRange({
+        startDate: tonight.toISOString(),
+        endDate: tomorrow.toISOString(),
+      })
+    );
+    res.then((res) => {
+      if (res.payload?.data.activities) {
+        setActivitiesTonight(res.payload?.data.activities);
+      }
+    });
+  };
+
+  const getActivitiesThisWeekend = () => {
+    const dayOfWeek = 6; // saturday
+    const weekEndStart = new Date();
+    weekEndStart.setHours(0, 0, 0, 0);
+    // if today is not saturday or sunday, get the next saturday
+    if (weekEndStart.getDay() < dayOfWeek && weekEndStart.getDay() != 0) {
+      weekEndStart.setDate(
+        weekEndStart.getDate() + ((dayOfWeek + 7 - weekEndStart.getDay()) % 7)
+      );
+    }
+    const weekEndEnd = new Date(weekEndStart)
+    // if weekEndStart is sunday, get the next day
+    if (weekEndStart.getDay() == 0) {
+      weekEndEnd.setDate(weekEndEnd.getDate() + 1);
+    } else if (weekEndStart.getDay() == 6) {
+      weekEndEnd.setDate(weekEndEnd.getDate() + 2);
+    }
+    const res = dispatch(
+      getActivitiesByDateRange({
+        startDate: weekEndStart.toISOString(),
+        endDate: weekEndEnd.toISOString(),
+      })
+    );
+    res.then((res) => {
+      if (res.payload?.data.activities) {
+        setActivitiesThisWeekend(res.payload?.data.activities);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getActivitiesTonight();
+    getActivitiesThisWeekend();
+  }, []);
+
   const searchCategory = (category) => {
-    //TODO: search by category
-    navigation.navigate('Search', { category });
+    dispatch(getActivitiesByCategory({ category }));
+    jumpTo('search');
   };
 
   return (
@@ -73,14 +100,15 @@ const DiscoverPage = ({ navigation }) => {
           <TitleMedium>Ce soir</TitleMedium>
           <ScrollView horizontal={true}>
             <View style={styles.activitiesContainer}>
-              {activities.map((activity) => (
-                <ActivityCard
-                  key={activity.id}
-                  activity={activity}
-                  imageHeight={150}
-                  width={300}
-                />
-              ))}
+              {activitiesTonight &&
+                activitiesTonight.map((activity) => (
+                  <ActivityCard
+                    key={activity.id}
+                    activity={activity}
+                    imageHeight={150}
+                    width={300}
+                  />
+                ))}
             </View>
           </ScrollView>
         </View>
@@ -88,14 +116,15 @@ const DiscoverPage = ({ navigation }) => {
           <TitleMedium>Ce weekend</TitleMedium>
           <ScrollView horizontal={true}>
             <View style={styles.activitiesContainer}>
-              {activities.map((activity) => (
-                <ActivityCard
-                  key={activity.id}
-                  activity={activity}
-                  imageHeight={150}
-                  width={300}
-                />
-              ))}
+              {activitiesThisWeekend &&
+                activitiesThisWeekend.map((activity) => (
+                  <ActivityCard
+                    key={activity.id}
+                    activity={activity}
+                    imageHeight={150}
+                    width={300}
+                  />
+                ))}
             </View>
           </ScrollView>
         </View>
