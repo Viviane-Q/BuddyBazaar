@@ -112,6 +112,7 @@ const RegisterPage = () => {
           />
         </View>
         <Button
+          style={styles.button}
           onPress={handleRegister}
           mode="outlined"
           icon="account-multiple-plus"
@@ -138,8 +139,12 @@ const styles = StyleSheet.create({
     gap: 24,
   },
   inputContainer: {
-    minWidth: 200,
+    minWidth: 300,
     gap: 10,
+  },
+  button: {
+    minWidth: 300,
+    borderRadius: 5
   },
   error: {
     backgroundColor: '#e35d6a',

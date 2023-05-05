@@ -87,7 +87,7 @@ const LoginPage = ({ navigation }) => {
             mode="outlined"
           />
         </View>
-        <Button onPress={handleLogin} mode="contained" icon="login">
+        <Button style={styles.button} onPress={handleLogin} mode="contained" icon="login">
           Se connecter
         </Button>
       </View>
@@ -110,8 +110,12 @@ const styles = StyleSheet.create({
     gap: 24,
   },
   inputContainer: {
-    minWidth: 200,
+    minWidth: 300,
     gap: 10,
+  },
+  button: {
+    minWidth: 300,
+    borderRadius: 5
   },
   error: {
     backgroundColor: '#e35d6a',

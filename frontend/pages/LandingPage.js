@@ -20,6 +20,7 @@ const LandingPage = ({ navigation }) => {
           onPress={() => navigation.navigate('Register')}
           mode="outlined"
           icon="account-multiple-plus"
+          style={styles.button}
         >
           Inscription
         </Button>
@@ -27,6 +28,7 @@ const LandingPage = ({ navigation }) => {
           onPress={() => navigation.navigate('Login')}
           mode="contained"
           icon="login"
+          style={styles.button}
         >
           Connexion
         </Button>
@@ -34,6 +36,7 @@ const LandingPage = ({ navigation }) => {
           onPress={() => navigation.navigate('Home')}
           mode="outlined"
           icon="map-search"
+          style={styles.button}
         >
           Découvrir
         </Button>
@@ -58,6 +61,10 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     gap: 30,
+  },
+  button: {
+    minWidth: 300,
+    borderRadius: 5
   },
 });
 
