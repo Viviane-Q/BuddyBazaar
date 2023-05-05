@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { setUserActivities } from '../slices/activitiesSlice';
-import { BACKEND_URL } from "@env";
+import Constants from 'expo-constants';
+const BACKEND_URL = Constants.expoConfig.extra.backendUrl;
 
 export const getOwnActivities = createAsyncThunk(
   'activities/getOwnActivities',

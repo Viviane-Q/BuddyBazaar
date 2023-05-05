@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { BACKEND_URL } from "@env";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { setToken } from '../slices/authSlice'
+import Constants from 'expo-constants';
+const BACKEND_URL = Constants.expoConfig.extra.backendUrl;
 
 export const registerUser = createAsyncThunk('users/registerUser', async (args, thunkAPI) => {
   const { name, email } = thunkAPI.getState().auth;
