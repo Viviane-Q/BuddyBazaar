@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 10,
-    paddingVertical: 10,
+    paddingVertical: 18,
   },
   activitiesContainer: {
     flex: 1,
