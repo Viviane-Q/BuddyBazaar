@@ -27,33 +27,28 @@ const HomePage = ({ navigation }) => {
   const [routes] = React.useState([
     {
       key: 'discover',
-      title: 'Découvrir',
       focusedIcon: 'compass',
       unfocusedIcon: 'compass-outline',
     },
     {
       key: 'search',
-      title: 'Chercher',
       focusedIcon: 'map-search',
       unfocusedIcon: 'map-search-outline',
     },
     {
       key: 'myactivities',
-      title: 'Mes activités',
       focusedIcon: 'clipboard-text',
       unfocusedIcon: 'clipboard-text-outline',
       badge: true,
     },
     {
       key: 'messages',
-      title: 'Chat',
       focusedIcon: 'chat',
       unfocusedIcon: 'chat-outline',
       badge: 10,
     },
     {
       key: 'profile',
-      title: 'Profil',
       focusedIcon: 'account',
       unfocusedIcon: 'account-outline',
     },
@@ -79,17 +74,18 @@ const HomePage = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, overflow: 'scroll', justifyContent: 'flex-end' }}>
-      {/* {token && (
-        <Button onPress={disconnect} mode="outlined">
+      {token && (
+        <Button onPress={disconnect} mode="outlined" style={{marginTop: 50}}>
           Se déconnecter
         </Button>
-      )} */}
+      )}
       <BottomNavigation
         navigationState={{ index, routes }}
         onIndexChange={setIndex}
         renderScene={renderScene}
         barStyle={styles.navigationBar}
-        activeColor = {theme.colors.white}
+        activeColor={theme.colors.primary}
+        inactiveColor={theme.colors.secondaryContainer}
       />
     </View>
   );
@@ -98,6 +94,7 @@ const HomePage = ({ navigation }) => {
 const styles = StyleSheet.create({
   navigationBar: {
     backgroundColor: theme.colors.primary,
+    height: 60,
   },
 });
 

@@ -9,7 +9,7 @@ const theme = {
 		primary: "#3D5B5C",
 		primaryContainer: "#fffdf1",
 		secondary: "#69857A",
-		secondaryContainer: "#fffdf1",
+		secondaryContainer: "#E0F2F1",
 		tertiary: "#EA9B3F",
 		tertiaryContainer: "#FFF8E1",
 		surface: "#FFFFFF",
