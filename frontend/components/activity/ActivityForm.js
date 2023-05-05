@@ -38,12 +38,10 @@ const ActivityForm = ({ navigation }) => {
   );
   const onNumberPersonMaxChange = (text) => {
     text = text.replace(/[^0-9]/g, '');
-    if (text < 1) text = 1;
     setNumberPersonMax(text);
   };
   const onCostChange = (text) => {
     text = text.replace(/[^0-9]/g, '');
-    if (text < 0) text = 0;
     setCost(text);
   };
   const resetForm = () => {
@@ -110,7 +108,7 @@ const ActivityForm = ({ navigation }) => {
         onChangeText={setTitle}
         value={title}
         style={styles.textInput}
-        nativeID='titleInput'
+        nativeID="titleInput"
       />
       <TextInput
         label="Description"
@@ -120,14 +118,14 @@ const ActivityForm = ({ navigation }) => {
         multiline={true}
         numberOfLines={4}
         style={styles.textInput}
-        nativeID='descriptionInput'
+        nativeID="descriptionInput"
       />
       <Button
         onPress={() => setOpen(true)}
         uppercase={false}
         mode="outlined"
         icon="calendar"
-        nativeID='datePickerButton'
+        nativeID="datePickerButton"
       >
         {!!startDate && !!endDate
           ? `${startDate.toLocaleDateString(
@@ -156,16 +154,16 @@ const ActivityForm = ({ navigation }) => {
         onChangeText={onNumberPersonMaxChange}
         value={numberPersonMax.toString()}
         style={styles.textInput}
-        nativeID='numberPersonMaxInput'
+        nativeID="numberPersonMaxInput"
       />
       <TextInput
         label="Coût"
         placeholder="Coût"
         keyboardType="numeric"
-        onChangeText={onCostChange.toString()}
-        value={cost}
+        onChangeText={onCostChange}
+        value={cost.toString()}
         style={styles.textInput}
-        nativeID='costInput'
+        nativeID="costInput"
       />
       <TextInput
         label="Lieu"
@@ -173,7 +171,7 @@ const ActivityForm = ({ navigation }) => {
         onChangeText={setPlace}
         value={place}
         style={styles.textInput}
-        nativeID='placeInput'
+        nativeID="placeInput"
       />
       <Picker
         label="Catégorie"
@@ -181,14 +179,19 @@ const ActivityForm = ({ navigation }) => {
         onValueChange={setCategory}
         selectedValue={category}
         style={styles.textInput}
-        nativeID='categoryPicker'
+        nativeID="categoryPicker"
       >
         {Object.values(Category).map((category, key) => (
           <Picker.Item label={category} value={category} key={key} />
         ))}
       </Picker>
       <View style={styles.modalButtonsContainer}>
-        <Button onPress={sendActivity} mode="contained" icon="check" nativeID='validateButtonNewActivity'>
+        <Button
+          onPress={sendActivity}
+          mode="contained"
+          icon="check"
+          nativeID="validateButtonNewActivity"
+        >
           Valider
         </Button>
       </View>

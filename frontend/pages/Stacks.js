@@ -9,7 +9,6 @@ import LandingPage from './LandingPage';
 import HomePage from './HomePage';
 import { setToken } from '../store/slices/authSlice';
 import ActivityForm from '../components/activity/ActivityForm';
-import MyActivitiesPage from './MyActivitiesPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -61,11 +60,6 @@ const Stacks = () => {
           name="ActivityForm"
           component={ActivityForm}
           options={{title: 'Créer une activité'}}
-        />
-        <Stack.Screen
-          name="MyActivitiesPage"
-          component={MyActivitiesPage}
-          options={{headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>
