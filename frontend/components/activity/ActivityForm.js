@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Picker } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { Button, TextInput, Snackbar } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
 import { useDispatch } from 'react-redux';
@@ -37,12 +38,10 @@ const ActivityForm = ({ navigation }) => {
   );
   const onNumberPersonMaxChange = (text) => {
     text = text.replace(/[^0-9]/g, '');
-    if (text < 1) text = 1;
     setNumberPersonMax(text);
   };
   const onCostChange = (text) => {
     text = text.replace(/[^0-9]/g, '');
-    if (text < 0) text = 0;
     setCost(text);
   };
   const resetForm = () => {
@@ -97,21 +96,19 @@ const ActivityForm = ({ navigation }) => {
         return;
       }
       resetForm();
-      navigation.navigate('MyActivitiesPage');
+      navigation.navigate('Home');
     });
   };
 
   return (
-    <View
-      style={styles.newActivityForm}
-    >
+    <View style={styles.newActivityForm}>
       <TextInput
         label="Titre"
         placeholder="Titre"
         onChangeText={setTitle}
         value={title}
         style={styles.textInput}
-        nativeID='titleInput'
+        nativeID="titleInput"
       />
       <TextInput
         label="Description"
@@ -121,14 +118,14 @@ const ActivityForm = ({ navigation }) => {
         multiline={true}
         numberOfLines={4}
         style={styles.textInput}
-        nativeID='descriptionInput'
+        nativeID="descriptionInput"
       />
       <Button
         onPress={() => setOpen(true)}
         uppercase={false}
         mode="outlined"
         icon="calendar"
-        nativeID='datePickerButton'
+        nativeID="datePickerButton"
       >
         {!!startDate && !!endDate
           ? `${startDate.toLocaleDateString(
@@ -155,18 +152,18 @@ const ActivityForm = ({ navigation }) => {
         placeholder="Nombre de participants maximum"
         keyboardType="numeric"
         onChangeText={onNumberPersonMaxChange}
-        value={numberPersonMax}
+        value={numberPersonMax.toString()}
         style={styles.textInput}
-        nativeID='numberPersonMaxInput'
+        nativeID="numberPersonMaxInput"
       />
       <TextInput
         label="Coût"
         placeholder="Coût"
         keyboardType="numeric"
         onChangeText={onCostChange}
-        value={cost}
+        value={cost.toString()}
         style={styles.textInput}
-        nativeID='costInput'
+        nativeID="costInput"
       />
       <TextInput
         label="Lieu"
@@ -174,7 +171,7 @@ const ActivityForm = ({ navigation }) => {
         onChangeText={setPlace}
         value={place}
         style={styles.textInput}
-        nativeID='placeInput'
+        nativeID="placeInput"
       />
       <Picker
         label="Catégorie"
@@ -182,14 +179,19 @@ const ActivityForm = ({ navigation }) => {
         onValueChange={setCategory}
         selectedValue={category}
         style={styles.textInput}
-        nativeID='categoryPicker'
+        nativeID="categoryPicker"
       >
         {Object.values(Category).map((category, key) => (
           <Picker.Item label={category} value={category} key={key} />
         ))}
       </Picker>
       <View style={styles.modalButtonsContainer}>
-        <Button onPress={sendActivity} mode="contained" icon="check" nativeID='validateButtonNewActivity'>
+        <Button
+          onPress={sendActivity}
+          mode="contained"
+          icon="check"
+          nativeID="validateButtonNewActivity"
+        >
           Valider
         </Button>
       </View>
@@ -220,7 +222,7 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
     margin: 20,
-    height: 'fit-content',
+    // height: 'fit-content',
   },
   textInput: {
     margin: 10,

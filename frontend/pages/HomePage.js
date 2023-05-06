@@ -5,10 +5,9 @@ import { setToken } from '../store/slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import MyActivitiesPage from './MyActivitiesPage';
-
-const DiscoverRoute = () => <Text>Que faire??</Text>;
-
-const SearchRoute = () => <Text>Chercher ici</Text>;
+import DiscoverPage from './DiscoverPage';
+import theme from '../theme';
+import SearchPage from './SearchPage';
 
 const MessagesRoute = () => <Text>Mes messages</Text>;
 
@@ -27,33 +26,28 @@ const HomePage = ({ navigation }) => {
   const [routes] = React.useState([
     {
       key: 'discover',
-      title: 'Découvrir',
       focusedIcon: 'compass',
       unfocusedIcon: 'compass-outline',
     },
     {
       key: 'search',
-      title: 'Chercher',
       focusedIcon: 'map-search',
       unfocusedIcon: 'map-search-outline',
     },
     {
       key: 'myactivities',
-      title: 'Mes activités',
       focusedIcon: 'clipboard-text',
       unfocusedIcon: 'clipboard-text-outline',
       badge: true,
     },
     {
       key: 'messages',
-      title: 'Chat',
       focusedIcon: 'chat',
       unfocusedIcon: 'chat-outline',
       badge: 10,
     },
     {
       key: 'profile',
-      title: 'Profil',
       focusedIcon: 'account',
       unfocusedIcon: 'account-outline',
     },
@@ -65,11 +59,11 @@ const HomePage = ({ navigation }) => {
   const renderScene = ({ route, jumpTo }) => {
     switch (route.key) {
       case 'discover':
-        return <DiscoverRoute jumpTo={jumpTo} />;
+        return <DiscoverPage jumpTo={jumpTo}/>;
       case 'myactivities':
         return <MyActivitiesPage jumpTo={jumpTo} navigation={navigation} />;
       case 'search':
-        return <SearchRoute jumpTo={jumpTo} />;
+        return <SearchPage jumpTo={jumpTo} />;
       case 'messages':
         return <MessagesRoute jumpTo={jumpTo} />;
       case 'profile':
@@ -80,7 +74,7 @@ const HomePage = ({ navigation }) => {
   return (
     <View style={{ flex: 1, overflow: 'scroll', justifyContent: 'flex-end' }}>
       {token && (
-        <Button onPress={disconnect} mode="outlined">
+        <Button onPress={disconnect} mode="outlined" style={{marginTop: 50}}>
           Se déconnecter
         </Button>
       )}
@@ -89,6 +83,8 @@ const HomePage = ({ navigation }) => {
         onIndexChange={setIndex}
         renderScene={renderScene}
         barStyle={styles.navigationBar}
+        activeColor={theme.colors.primary}
+        inactiveColor={theme.colors.secondaryContainer}
       />
     </View>
   );
@@ -96,7 +92,8 @@ const HomePage = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   navigationBar: {
-    borderTopWidth: 0.5,
+    backgroundColor: theme.colors.primary,
+    height: 60,
   },
 });
 

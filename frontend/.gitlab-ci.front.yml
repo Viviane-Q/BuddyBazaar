@@ -10,7 +10,6 @@ stages:
     - docker
   before_script:
     - cd frontend
-    - cp .env.ci .env
 
 .ci-front-write-cache:
   extends: .ci-front

@@ -1,5 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { setUserActivities } from '../slices/activitiesSlice';
+import {
+  setUserActivities,
+  setSearchedActivities,
+} from '../slices/activitiesSlice';
 import Constants from 'expo-constants';
 const BACKEND_URL = Constants.expoConfig.extra.backendUrl;
 
@@ -40,5 +43,44 @@ export const postNewActivity = createAsyncThunk(
       thunkAPI.dispatch(getOwnActivities());
     }
     return Promise.resolve({ res: data, error: !response.ok });
+  }
+);
+
+export const getActivitiesByCategory = createAsyncThunk(
+  'activities/getActivitiesByCategory',
+  async (args, thunkAPI) => {
+    const { category } = args;
+    const response = await fetch(
+      `${BACKEND_URL}/api/activities?category=${category}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    const data = await response.json();
+    if (response.ok) {
+      thunkAPI.dispatch(setSearchedActivities(data.activities));
+    }
+    return Promise.resolve({ res: data, error: !response.ok });
+  }
+);
+
+export const getActivitiesByDateRange = createAsyncThunk(
+  'activities/getActivitiesByCategory',
+  async (args) => {
+    const { startDate, endDate } = args;
+    const response = await fetch(
+      `${BACKEND_URL}/api/activities?startDate=${startDate}&endDate=${endDate}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    const data = await response.json();
+    return Promise.resolve({ data, error: !response.ok });
   }
 );

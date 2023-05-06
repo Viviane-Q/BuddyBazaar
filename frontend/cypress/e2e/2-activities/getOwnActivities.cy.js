@@ -2,7 +2,7 @@
 
 const activities = [{"id":1,"title":"Une activité","description":"Une description","startDate":"2024-01-01T00:00:00.000Z","endDate":"2024-01-02T00:00:00.000Z","numberPersonMax":5,"cost":10,"place":"Grenoble","category":"Sport","userId":1}];
 
-describe('Test de la page d\'inscription', () => {
+describe('Test de la page des activités de l\'utilisateur', () => {
     beforeEach(() => {
         cy.intercept('GET', '/api/activities/by-user', (req) => {
             const token = req.headers.token;
@@ -87,6 +87,6 @@ describe('Test de la page d\'inscription', () => {
         cy.get('#descriptionInput').type('Une nouvelle description')
         cy.get('#placeInput').type('Grenoble')
         cy.get('#validateButtonNewActivity').click()
-        cy.get('[data-testid="card-container"]').should('have.length', 2)
+        cy.get('[data-testid="card-container"]').filter(':visible').should('have.length', 2)
     })
 })

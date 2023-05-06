@@ -46,11 +46,11 @@ describe('Test de la page de connexion', () => {
     cy.get('div').contains('L\'adresse email ou le mot de passe est incorrect').should('be.visible')
   })
 
-  it('Doit rediriger l\'utilisateur vers le menu après une connexion réussie', () => {
+  it('Doit rediriger l\'utilisateur vers la page de découverte après une connexion réussie', () => {
     cy.get('input').first().type('Sebastien.Viardot@grenoble-inp.fr')
     cy.get('input').last().type('123456')
     cy.get('div').contains('Se connecter').click()
-    // check the user is redirected to the menu
-    cy.get('div').contains('Chat').should('be.visible')
+    // check the user is redirected to the discover page
+    cy.get('div').contains('Activités par catégorie').should('be.visible')
   })
 })
