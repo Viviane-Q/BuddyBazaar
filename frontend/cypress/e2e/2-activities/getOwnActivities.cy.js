@@ -87,6 +87,6 @@ describe('Test de la page des activités de l\'utilisateur', () => {
         cy.get('#descriptionInput').type('Une nouvelle description')
         cy.get('#placeInput').type('Grenoble')
         cy.get('#validateButtonNewActivity').click()
-        cy.get('[data-testid="card-container"]').should('have.length', 2)
+        cy.get('[data-testid="card-container"]').filter(':visible').should('have.length', 2)
     })
 })
