@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, View, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
 import ActivityCard from '../components/activity/ActivityCard';
+import TitleMedium from '../components/shared/typography/TitleMedium';
 
 const SearchPage = () => {
   const appActivities = useSelector(
@@ -11,6 +12,7 @@ const SearchPage = () => {
   return (
     <ScrollView>
       <View style={styles.viewContainer}>
+        <TitleMedium>Recherche</TitleMedium>
         <ScrollView horizontal={true}>
           <View style={styles.activitiesContainer}>
             {appActivities.map((activity) => (
@@ -30,8 +32,6 @@ const SearchPage = () => {
 
 const styles = StyleSheet.create({
   viewContainer: {
-    flex: 1,
-    flexDirection: 'column',
     gap: 30,
     margin: 18,
   },
