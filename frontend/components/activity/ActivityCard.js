@@ -6,13 +6,23 @@ import TitleSmall from '../shared/typography/TitleSmall';
 import theme from '../../theme';
 import BodyMedium from '../shared/typography/BodyMedium';
 
-const ActivityCard = ({ activity, imageWidth, imageHeight, width }) => {
+const ActivityCard = ({
+  activity,
+  imageWidth,
+  imageHeight,
+  width,
+  navigation,
+}) => {
   const styled = styles(activity.category, imageWidth, imageHeight, width);
   const startDate = new Date(activity.startDate).toLocaleDateString('fr-FR');
   const endDate = new Date(activity.endDate).toLocaleDateString('fr-FR');
 
+  const showDetails = () => {
+    navigation.navigate('ActivityDetails', { activity });
+  };
+
   return (
-    <Card style={styled.activityCard}>
+    <Card style={styled.activityCard} onPress={showDetails}>
       <View style={styled.cardImageContent}>
         <View style={styled.numberPersonMaxChip}>
           <Button
@@ -67,6 +77,7 @@ const styles = (category, imageWidth, imageHeight, width) =>
       overflow: 'hidden',
       width: width,
       backgroundColor: theme.colors.primaryContainer,
+      cursor: 'pointer',
     },
     icon: { width: 30, borderRadius: 0 },
     cover: {

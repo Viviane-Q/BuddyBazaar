@@ -59,11 +59,11 @@ const HomePage = ({ navigation }) => {
   const renderScene = ({ route, jumpTo }) => {
     switch (route.key) {
       case 'discover':
-        return <DiscoverPage jumpTo={jumpTo}/>;
+        return <DiscoverPage jumpTo={jumpTo} navigation={navigation}/>;
       case 'myactivities':
         return <MyActivitiesPage jumpTo={jumpTo} navigation={navigation} />;
       case 'search':
-        return <SearchPage jumpTo={jumpTo} />;
+        return <SearchPage jumpTo={jumpTo} navigation={navigation}/>;
       case 'messages':
         return <MessagesRoute jumpTo={jumpTo} />;
       case 'profile':

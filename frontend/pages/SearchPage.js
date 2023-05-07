@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import ActivityCard from '../components/activity/ActivityCard';
 import TitleMedium from '../components/shared/typography/TitleMedium';
 
-const SearchPage = () => {
+const SearchPage = ({ navigation }) => {
   const appActivities = useSelector(
     (state) => state.activities.searchedActivities
   );
@@ -21,6 +21,7 @@ const SearchPage = () => {
                 activity={activity}
                 imageHeight={150}
                 width={300}
+                navigation={navigation}
               />
             ))}
           </View>

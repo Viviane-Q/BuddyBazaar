@@ -84,3 +84,44 @@ export const getActivitiesByDateRange = createAsyncThunk(
     return Promise.resolve({ data, error: !response.ok });
   }
 );
+
+export const deleteActivity = createAsyncThunk(
+  'activities/deleteActivity',
+  async (args, thunkAPI) => {
+    const { id } = args;
+    const { token } = thunkAPI.getState().auth;
+    const response = await fetch(`${BACKEND_URL}/api/activities/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        token: `${token}`,
+      },
+    });
+    const data = await response.json();
+    if (response.ok) {
+      thunkAPI.dispatch(getOwnActivities());
+    }
+    return Promise.resolve({ res: data, error: !response.ok });
+  }
+);
+
+export const updateActivity = createAsyncThunk(
+  'activities/updateActivity',
+  async (args, thunkAPI) => {
+    const { activity } = args;
+    const { token } = thunkAPI.getState().auth;
+    const response = await fetch(`${BACKEND_URL}/api/activities/${activity.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        token: `${token}`,
+      },
+      body: JSON.stringify(activity),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      thunkAPI.dispatch(getOwnActivities());
+    }
+    return Promise.resolve({ res: data, error: !response.ok });
+  }
+);
