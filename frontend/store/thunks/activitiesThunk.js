@@ -145,7 +145,7 @@ export const registerForActivity = createAsyncThunk(
       })
     const data = await response.json();
     if (response.ok) {
-      // update the store with the user registered
+      thunkAPI.dispatch(getOwnActivities());
     }
     return Promise.resolve({ res: data, error: !response.ok });
   }
@@ -167,7 +167,7 @@ export const unregisterForActivity = createAsyncThunk(
       })
     const data = await response.json();
     if (response.ok) {
-      // update the store with the user registered
+      thunkAPI.dispatch(getOwnActivities());
     }
     return Promise.resolve({ res: data, error: !response.ok });
   }

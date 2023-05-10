@@ -14,7 +14,7 @@ import theme from '../../theme';
 import TitleSmall from '../shared/typography/TitleSmall';
 
 const ActivityDetails = ({ navigation, route }) => {
-  const { activity } = route.params;
+  const [activity, setActivity] = useState(route.params.activity);
   const userId = useSelector((state) => state.auth.id);
   const ownsActivity = activity.userId === userId;
   const dispatch = useDispatch();
@@ -63,6 +63,10 @@ const ActivityDetails = ({ navigation, route }) => {
       setSnackbarVisible(true);
       setSnackbarType('success');
       setSnackbarMessage('Inscription réussie');
+      setActivity({
+        ...activity,
+        participants: [...activity.participants, userId],
+      });
     });
   };
 
@@ -78,6 +82,10 @@ const ActivityDetails = ({ navigation, route }) => {
       setSnackbarVisible(true);
       setSnackbarType('success');
       setSnackbarMessage('Désinscription réussie');
+      setActivity({
+        ...activity,
+        participants: activity.participants.filter((p) => p !== userId),
+      });
     });
   };
 
