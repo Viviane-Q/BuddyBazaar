@@ -3,17 +3,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginPage from './LoginPage';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import RegisterPage from './RegisterPage';
 import LandingPage from './LandingPage';
 import HomePage from './HomePage';
 import { setToken } from '../store/slices/authSlice';
 import ActivityForm from '../components/activity/ActivityForm';
 import ActivityDetails from '../components/activity/ActivityDetails';
+import { getUser } from '../store/thunks/authThunk';
 
 const Stack = createNativeStackNavigator();
 
 const Stacks = () => {
+  const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
     async function retrieveToken() {
@@ -24,6 +26,12 @@ const Stacks = () => {
     }
     retrieveToken();
   }, []);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(getUser());
+    }
+  }, [token]);
 
   return (
     <NavigationContainer>

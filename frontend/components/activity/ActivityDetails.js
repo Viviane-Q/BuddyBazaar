@@ -3,11 +3,12 @@ import { View, StyleSheet } from 'react-native';
 import TitleMedium from '../shared/typography/TitleMedium';
 import BodyMedium from '../shared/typography/BodyMedium';
 import { Button, Snackbar } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteActivity } from '../../store/thunks/activitiesThunk';
 
 const ActivityDetails = ({ navigation, route }) => {
   const { activity } = route.params;
+  const userId = useSelector((state) => state.auth.id);
   const dispatch = useDispatch();
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarType, setSnackbarType] = useState('error');
@@ -52,38 +53,39 @@ const ActivityDetails = ({ navigation, route }) => {
       <BodyMedium>{endDate}</BodyMedium>
       <BodyMedium>{activity.numberPersonMax}</BodyMedium>
       <BodyMedium>{activity.category}</BodyMedium>
-      <Button
-        onPress={editActivityHandler}
-        mode="contained"
-        icon="pencil-outline"
-        nativeID="editActivityButton"
-      >
-        Modifier
-      </Button>
-      {
-        // TODO: display buttons only if the user owns the activity
-      }
-      <Button
-        onPress={deleteActivityHandler}
-        mode="contained"
-        icon="delete"
-        nativeID="deleteActivityButton"
-      >
-        Supprimer
-      </Button>
-      <Snackbar
-        visible={snackbarVisible}
-        onDismiss={() => setSnackbarVisible(false)}
-        style={snackbarType === 'error' ? styles.error : styles.success}
-        action={{
-          label: '⨯',
-          onPress: () => {
-            setSnackbarVisible(false);
-          },
-        }}
-      >
-        {snackbarMessage}
-      </Snackbar>
+      {userId === activity.userId && (
+        <View>
+          <Button
+            onPress={editActivityHandler}
+            mode="contained"
+            icon="pencil-outline"
+            nativeID="editActivityButton"
+          >
+            Modifier
+          </Button>
+          <Button
+            onPress={deleteActivityHandler}
+            mode="contained"
+            icon="delete"
+            nativeID="deleteActivityButton"
+          >
+            Supprimer
+          </Button>
+          <Snackbar
+            visible={snackbarVisible}
+            onDismiss={() => setSnackbarVisible(false)}
+            style={snackbarType === 'error' ? styles.error : styles.success}
+            action={{
+              label: '⨯',
+              onPress: () => {
+                setSnackbarVisible(false);
+              },
+            }}
+          >
+            {snackbarMessage}
+          </Snackbar>
+        </View>
+      )}
     </View>
   );
 };
