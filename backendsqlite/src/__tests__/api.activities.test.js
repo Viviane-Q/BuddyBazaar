@@ -7,6 +7,7 @@ let anUser;
 let anActivity;
 let anActivity2;
 let anActivity3;
+let anActivityRegistration;
 let token;
 
 describe('e2e: /api/activities', () => {
@@ -17,6 +18,7 @@ describe('e2e: /api/activities', () => {
     anActivity = data.anActivity;
     anActivity2 = data.anActivity2;
     anActivity3 = data.anActivity3;
+    anActivityRegistration = data.anActivityRegistration;
     token = await login(request(app), anUser);
   });
   describe('POST /api/activities', () => {
@@ -206,6 +208,36 @@ describe('e2e: /api/activities', () => {
       expect(response.body).toEqual({
         message: 'Activities retrieved',
         activities: JSON.parse(JSON.stringify([anActivity3])),
+      });
+    });
+  });
+
+  describe('POST /api/activities/:id/register', () => {
+    describe('Rbac rules', () => {
+      authTest(request(app), 'post', '/api/activities/1/register')();
+    });
+    test('Example: send a new registration for an activity', async () => {
+      const response = await request(app)
+        .post(`/api/activities/${anActivity3.id}/register`)
+        .set({ token });
+      expect(response.statusCode).toBe(200);
+      expect(response.body).toEqual({
+        message: 'Registration successful',
+      });
+    });
+  });
+
+  describe('POST /api/activities/:id/unregister', () => {
+    describe('Rbac rules', () => {
+      authTest(request(app), 'post', '/api/activities/1/unregister')();
+    });
+    test('Example: send a de-registration for an existing registration', async () => {
+      const response = await request(app)
+        .post(`/api/activities/${anActivityRegistration.activityId}/unregister`)
+        .set({ token });
+      expect(response.statusCode).toBe(200);
+      expect(response.body).toEqual({
+        message: 'De-registration successful',
       });
     });
   });
