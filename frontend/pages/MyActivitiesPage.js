@@ -18,7 +18,7 @@ const MyActivitiesPage = ({ navigation }) => {
       if (activity.userId === userId) {
         owned.push(activity);
       }
-      if (activity.participants.includes(userId)) {
+      if (activity.participants?.includes(userId)) {
         registered.push(activity);
       }
       return [owned, registered];

@@ -163,6 +163,33 @@ const ActivityDetails = ({ navigation, route }) => {
             </BodyMedium>
           </View>
         </View>
+        {!activity.participants?.includes(userId) ? (
+          <Button
+            icon="account-plus"
+            mode="contained"
+            onPress={registerActivityHandler}
+            nativeID="registerActivityButton"
+            style={{
+              ...styles.registerButton,
+              display: userId && !ownsActivity ? 'flex' : 'none',
+            }}
+          >
+            S&apos;inscrire
+          </Button>
+        ) : (
+          <Button
+            icon="account-minus"
+            mode="contained"
+            onPress={unregisterActivityHandler}
+            nativeID="unregisterActivityButton"
+            style={{
+              ...styles.registerButton,
+              display: userId && !ownsActivity ? 'flex' : 'none',
+            }}
+          >
+            Se désinscrire
+          </Button>
+        )}
       </View>
       <Snackbar
         visible={snackbarVisible}
@@ -177,33 +204,6 @@ const ActivityDetails = ({ navigation, route }) => {
       >
         {snackbarMessage}
       </Snackbar>
-      {!activity.participants?.includes(userId) ? (
-        <Button
-          icon="account-plus"
-          mode="contained"
-          onPress={registerActivityHandler}
-          nativeID="registerActivityButton"
-          style={{
-            ...styles.registerButton,
-            display: userId && !ownsActivity ? 'flex' : 'none',
-          }}
-        >
-          S&apos;inscrire
-        </Button>
-      ) : (
-        <Button
-          icon="account-minus"
-          mode="contained"
-          onPress={unregisterActivityHandler}
-          nativeID="registerActivityButton"
-          style={{
-            ...styles.registerButton,
-            display: userId && !ownsActivity ? 'flex' : 'none',
-          }}
-        >
-          Se désinscrire
-        </Button>
-      )}
     </View>
   );
 };
@@ -211,7 +211,6 @@ const ActivityDetails = ({ navigation, route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative',
     height: '100%',
     backgroundColor: theme.colors.primaryContainer,
   },
@@ -250,12 +249,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   registerButton: {
-    position: 'absolute',
-    bottom: 0,
     width: 250,
     margin: 16,
     alignSelf: 'center',
-    zIndex: -1,
   },
   error: {
     backgroundColor: '#e35d6a',
