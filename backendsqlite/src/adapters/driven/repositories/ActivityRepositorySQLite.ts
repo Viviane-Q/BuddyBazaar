@@ -147,6 +147,36 @@ class ActivityRepositorySQLite implements ActivityRepository {
     });
   }
 
+  async getAllRegisteredByUserId(userId: number): Promise<Activity[]> {
+    const seqActivities = models.activities.findAll({
+      include: [
+        {
+          model: models.activitiesRegistrations,
+          where: {
+            userId: { [Op.in]: [userId] },
+          },
+        },
+      ],
+    });
+    return seqActivities.map((seqActivity: any) => {
+      return new Activity(
+        seqActivity.id,
+        seqActivity.title,
+        seqActivity.description,
+        seqActivity.startDate,
+        seqActivity.endDate,
+        seqActivity.numberPersonMax,
+        seqActivity.cost,
+        seqActivity.place,
+        seqActivity.category,
+        seqActivity.userId,
+        seqActivity.activitiesRegistrations.map((registration: any) => {
+          return registration.userId;
+        })
+      );
+    });
+  }
+
   async update(activity: Activity): Promise<boolean> {
     const result = await models.activities.update(activity.toObject(), {
       where: { id: activity.id },

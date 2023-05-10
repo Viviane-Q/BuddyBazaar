@@ -67,6 +67,14 @@ class ActivityRepositoryInMemory implements ActivityRepository {
     );
   }
 
+  getAllRegisteredByUserId(userId: number): Promise<Activity[]> {
+    return Promise.resolve(
+      this.activities.filter((activity) =>
+        activity.participants.includes(userId)
+      )
+    );
+  }
+
   update(activity: Activity): Promise<boolean> {
     const index = this.activities.findIndex(
       (activityToFind) => activityToFind.id === activity.id

@@ -54,6 +54,7 @@ module.exports.seedDb = async () => {
     userId: anUser.id,
     activityId: anActivity2.id,
   });
+  anActivity2.setDataValue('activitiesRegistrations', [anActivityRegistration]);
 
   return {
     anUser,

@@ -53,7 +53,8 @@ export default class ActivityFixtures {
     10,
     'Grenoble',
     Category.Cinema,
-    UserFixtures.userMartin.id as number
+    UserFixtures.userMartin.id as number,
+    [UserFixtures.userJean.id as number]
   );
 
   static pastActivity = new Activity(
