@@ -50,15 +50,23 @@ module.exports.seedDb = async () => {
     userId: anUser2.id,
   });
 
+  const anActivityRegistration = await models.activitiesRegistrations.create({
+    userId: anUser.id,
+    activityId: anActivity2.id,
+  });
+
   return {
     anUser,
     anUser2,
     anActivity,
     anActivity2,
     anActivity3,
+    anActivityRegistration,
   };
 };
 
 module.exports.cleanDb = async () => {
-  await db.sync({ force: true });
+  await db.sync({
+    force: true,
+  });
 };
