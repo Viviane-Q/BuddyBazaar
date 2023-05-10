@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { ScrollView, View, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Button, TextInput, Snackbar } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
@@ -9,6 +9,7 @@ import {
   updateActivity,
 } from '../../store/thunks/activitiesThunk';
 import Category from '../../entities/Category';
+import theme from '../../theme';
 
 const ActivityForm = ({ navigation, route }) => {
   const [snackbarVisible, setSnackbarVisible] = useState(false);
@@ -124,7 +125,8 @@ const ActivityForm = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.newActivityForm}>
+    <View style={{flex: 1}}>
+    <ScrollView style={styles.newActivityForm}>
       <TextInput
         label="Titre"
         placeholder="Titre"
@@ -132,6 +134,7 @@ const ActivityForm = ({ navigation, route }) => {
         value={title}
         style={styles.textInput}
         nativeID="titleInput"
+        mode="outlined"
       />
       <TextInput
         label="Description"
@@ -142,6 +145,7 @@ const ActivityForm = ({ navigation, route }) => {
         numberOfLines={4}
         style={styles.textInput}
         nativeID="descriptionInput"
+        mode="outlined"
       />
       <Button
         onPress={() => setOpen(true)}
@@ -178,6 +182,7 @@ const ActivityForm = ({ navigation, route }) => {
         value={numberPersonMax.toString()}
         style={styles.textInput}
         nativeID="numberPersonMaxInput"
+        mode="outlined"
       />
       <TextInput
         label="Coût"
@@ -187,6 +192,7 @@ const ActivityForm = ({ navigation, route }) => {
         value={cost.toString()}
         style={styles.textInput}
         nativeID="costInput"
+        mode="outlined"
       />
       <TextInput
         label="Lieu"
@@ -195,19 +201,22 @@ const ActivityForm = ({ navigation, route }) => {
         value={place}
         style={styles.textInput}
         nativeID="placeInput"
+        mode="outlined"
       />
-      <Picker
-        label="Catégorie"
-        placeholder="Catégorie"
-        onValueChange={setCategory}
-        selectedValue={category}
-        style={styles.textInput}
-        nativeID="categoryPicker"
-      >
-        {Object.values(Category).map((category, key) => (
-          <Picker.Item label={category} value={category} key={key} />
-        ))}
-      </Picker>
+      <View style={styles.pickerContainer}>
+        <Picker
+          label="Catégorie"
+          placeholder="Catégorie"
+          onValueChange={setCategory}
+          selectedValue={category}
+          style={styles.picker}
+          nativeID="categoryPicker"
+        >
+          {Object.values(Category).map((category, key) => (
+            <Picker.Item label={category} value={category} key={key} />
+          ))}
+        </Picker>
+      </View>
       <View style={styles.modalButtonsContainer}>
         <Button
           onPress={sendActivity}
@@ -231,6 +240,8 @@ const ActivityForm = ({ navigation, route }) => {
       >
         {snackbarMessage}
       </Snackbar>
+      <View style={{height: 100}}></View>
+    </ScrollView>
     </View>
   );
 };
@@ -241,14 +252,25 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   newActivityForm: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    margin: 20,
-    // height: 'fit-content',
+    backgroundColor: theme.colors.background,
+    flexGrow: 1 ,
   },
   textInput: {
-    margin: 10,
+    backgroundColor: theme.colors.primaryContainer,
+    marginVertical: 10,
+    marginHorizontal: 30,
+  },
+  picker: {
+    backgroundColor: theme.colors.primaryContainer,
+  },
+  pickerContainer: {
+    borderRadius: 4,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: theme.colors.outline,
+    overflow: 'hidden',
+    marginVertical: 10,
+    marginHorizontal: 31,
   },
   error: {
     backgroundColor: '#e35d6a',
