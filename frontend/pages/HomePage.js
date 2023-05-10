@@ -11,9 +11,8 @@ import SearchPage from './SearchPage';
 
 const MessagesRoute = () => <Text>Mes messages</Text>;
 
-const ProfileRoute = () => <Text>Mon profil</Text>;
-
-const HomePage = ({ navigation }) => {
+// TODO move this to a separate file
+const ProfileRoute = ({navigation}) => {
   const dispatch = useDispatch();
   const token = useSelector((state) => state.auth.token);
   const disconnect = () => {
@@ -21,7 +20,17 @@ const HomePage = ({ navigation }) => {
     AsyncStorage.removeItem('token');
     navigation.navigate('Landing');
   };
+  return (
+    token && (
+      <Button onPress={disconnect} mode="outlined" style={{ marginTop: 50 }}>
+        Se déconnecter
+      </Button>
+    )
+  );
+};
 
+const HomePage = ({ navigation }) => {
+  const token = useSelector((state) => state.auth.token);
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     {
@@ -38,13 +47,11 @@ const HomePage = ({ navigation }) => {
       key: 'myactivities',
       focusedIcon: 'clipboard-text',
       unfocusedIcon: 'clipboard-text-outline',
-      badge: true,
     },
     {
       key: 'messages',
       focusedIcon: 'chat',
       unfocusedIcon: 'chat-outline',
-      badge: 10,
     },
     {
       key: 'profile',
@@ -59,25 +66,20 @@ const HomePage = ({ navigation }) => {
   const renderScene = ({ route, jumpTo }) => {
     switch (route.key) {
       case 'discover':
-        return <DiscoverPage jumpTo={jumpTo} navigation={navigation}/>;
+        return <DiscoverPage jumpTo={jumpTo} navigation={navigation} />;
       case 'myactivities':
         return <MyActivitiesPage jumpTo={jumpTo} navigation={navigation} />;
       case 'search':
-        return <SearchPage jumpTo={jumpTo} navigation={navigation}/>;
+        return <SearchPage jumpTo={jumpTo} navigation={navigation} />;
       case 'messages':
         return <MessagesRoute jumpTo={jumpTo} />;
       case 'profile':
-        return <ProfileRoute jumpTo={jumpTo} />;
+        return <ProfileRoute jumpTo={jumpTo} navigation={navigation} />;
     }
   };
 
   return (
     <View style={{ flex: 1, overflow: 'scroll', justifyContent: 'flex-end' }}>
-      {token && (
-        <Button onPress={disconnect} mode="outlined" style={{marginTop: 50}}>
-          Se déconnecter
-        </Button>
-      )}
       <BottomNavigation
         navigationState={{ index, routes }}
         onIndexChange={setIndex}
