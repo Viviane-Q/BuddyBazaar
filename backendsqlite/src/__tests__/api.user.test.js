@@ -1,6 +1,7 @@
 const app = require('../adapters/driving/app');
 const request = require('supertest');
 const { cleanDb, seedDb } = require('../util/dbUtils');
+const { authTest, login } = require('./utils');
 
 let anUser;
 
@@ -86,6 +87,22 @@ describe('e2e: /api/users', () => {
       expect(response.body.message).toBe(
         'You must specify the email and password'
       );
+    });
+  });
+
+  describe('GET /api/users/me', () => {
+    describe('Rbac rules', () => {
+      authTest(request(app), 'get', '/api/users/me')();
+    });
+    test('Example: sends a request with a valid token', async () => {
+      const token = await login(request(app), anUser);
+      const response = await request(app).get('/api/users/me').set({ token });
+      expect(response.statusCode).toBe(200);
+      expect(response.body.user).toEqual({
+        id: anUser.id,
+        name: anUser.name,
+        email: anUser.email,
+      });
     });
   });
 });

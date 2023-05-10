@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Button, TextInput, Snackbar } from 'react-native-paper';
 import { DatePickerModal } from 'react-native-paper-dates';
 import { useDispatch } from 'react-redux';
-import { postNewActivity } from '../../store/thunks/activitiesThunk';
+import {
+  postNewActivity,
+  updateActivity,
+} from '../../store/thunks/activitiesThunk';
 import Category from '../../entities/Category';
 
-const ActivityForm = ({ navigation }) => {
+const ActivityForm = ({ navigation, route }) => {
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarType, setSnackbarType] = useState('error');
   const [snackbarMessage, setSnackbarMessage] = useState(
@@ -22,8 +25,28 @@ const ActivityForm = ({ navigation }) => {
   const [place, setPlace] = useState('');
   const [category, setCategory] = useState(Category.Sport);
   const [open, setOpen] = React.useState(false);
+  const isUpdate = route?.params?.activity?.id;
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    initActivity();
+  }, []);
+
+  const initActivity = () => {
+    if (isUpdate) {
+      const activity = route.params.activity;
+      setTitle(activity.title);
+      setDescription(activity.description);
+      setStartDate(new Date(activity.startDate));
+      setEndDate(new Date(activity.endDate));
+      setNumberPersonMax(activity.numberPersonMax);
+      setCost(activity.cost);
+      setPlace(activity.place);
+      setCategory(activity.category);
+    }
+  };
+
   const onDismiss = React.useCallback(() => {
     setOpen(false);
   }, [setOpen]);
@@ -81,18 +104,18 @@ const ActivityForm = ({ navigation }) => {
       setSnackbarMessage('Tous les champs doivent être remplis');
       return;
     }
-    const res = dispatch(postNewActivity({ activity }));
+    const res = isUpdate
+      ? dispatch(
+          updateActivity({
+            activity: { id: route.params.activity.id, ...activity },
+          })
+        )
+      : dispatch(postNewActivity({ activity }));
     res.then((res) => {
-      if (!res.payload) {
+      if (!res.payload || res.payload.error) {
         setSnackbarVisible(true);
         setSnackbarType('error');
         setSnackbarMessage('Une erreur est survenue');
-        return;
-      }
-      if (res.payload.error) {
-        setSnackbarVisible(true);
-        setSnackbarType('error');
-        setSnackbarMessage("L'adresse email ou le mot de passe est incorrect");
         return;
       }
       resetForm();

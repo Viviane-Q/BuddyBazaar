@@ -34,6 +34,7 @@ const MyActivitiesPage = ({ navigation }) => {
                     activity={activity}
                     imageHeight={150}
                     width={Dimensions.get('window').width < 500 ? 'auto' : 300}
+                    navigation={navigation}
                   />
                 );
               })}

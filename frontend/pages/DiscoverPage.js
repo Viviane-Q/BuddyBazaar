@@ -11,7 +11,7 @@ import {
   getActivitiesByDateRange,
 } from '../store/thunks/activitiesThunk';
 
-const DiscoverPage = ({ jumpTo }) => {
+const DiscoverPage = ({ jumpTo, navigation }) => {
   const [activitiesTonight, setActivitiesTonight] = useState([]);
   const [activitiesThisWeekend, setActivitiesThisWeekend] = useState([]);
 
@@ -107,6 +107,7 @@ const DiscoverPage = ({ jumpTo }) => {
                     activity={activity}
                     imageHeight={150}
                     width={300}
+                    navigation={navigation}
                   />
                 ))}
             </View>
@@ -123,6 +124,7 @@ const DiscoverPage = ({ jumpTo }) => {
                     activity={activity}
                     imageHeight={150}
                     width={300}
+                    navigation={navigation}
                   />
                 ))}
             </View>

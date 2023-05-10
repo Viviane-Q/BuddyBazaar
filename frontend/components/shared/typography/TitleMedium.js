@@ -25,7 +25,7 @@ const TitleMedium = ({ children, ...props }) => {
         {...props}
         style={{
           fontFamily: 'Calistoga-Regular',
-          fontSize: 16,
+          fontSize: 20,
           color: theme.colors.primary,
           ...props.style,
         }}
