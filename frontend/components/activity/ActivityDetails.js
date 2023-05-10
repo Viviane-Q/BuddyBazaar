@@ -16,6 +16,7 @@ import TitleSmall from '../shared/typography/TitleSmall';
 const ActivityDetails = ({ navigation, route }) => {
   const { activity } = route.params;
   const userId = useSelector((state) => state.auth.id);
+  const ownsActivity = activity.userId === userId;
   const dispatch = useDispatch();
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarType, setSnackbarType] = useState('error');
@@ -93,7 +94,7 @@ const ActivityDetails = ({ navigation, route }) => {
           <TitleMedium style={{ color: theme.colors.primary }}>
             {activity.title}
           </TitleMedium>
-          {userId === activity.userId && (
+          {ownsActivity && (
             <View style={styles.buttonsGroup}>
               <IconButton
                 icon="delete"
@@ -174,8 +175,10 @@ const ActivityDetails = ({ navigation, route }) => {
           mode="contained"
           onPress={registerActivityHandler}
           nativeID="registerActivityButton"
-          style={styles.registerButton}
-          visible={userId !== activity.userId}
+          style={{
+            ...styles.registerButton,
+            display: !ownsActivity ? 'flex' : 'none',
+          }}
         >
           S&apos;inscrire
         </Button>
@@ -185,8 +188,10 @@ const ActivityDetails = ({ navigation, route }) => {
           mode="contained"
           onPress={unregisterActivityHandler}
           nativeID="registerActivityButton"
-          style={styles.registerButton}
-          visible={userId !== activity.userId}
+          style={{
+            ...styles.registerButton,
+            display: !ownsActivity ? 'flex' : 'none',
+          }}
         >
           Se désinscrire
         </Button>
