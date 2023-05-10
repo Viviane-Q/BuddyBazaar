@@ -185,7 +185,7 @@ const ActivityDetails = ({ navigation, route }) => {
           nativeID="registerActivityButton"
           style={{
             ...styles.registerButton,
-            display: !ownsActivity ? 'flex' : 'none',
+            display: userId && !ownsActivity ? 'flex' : 'none',
           }}
         >
           S&apos;inscrire
@@ -198,7 +198,7 @@ const ActivityDetails = ({ navigation, route }) => {
           nativeID="registerActivityButton"
           style={{
             ...styles.registerButton,
-            display: !ownsActivity ? 'flex' : 'none',
+            display: userId && !ownsActivity ? 'flex' : 'none',
           }}
         >
           Se désinscrire
