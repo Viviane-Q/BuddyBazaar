@@ -23,6 +23,7 @@ class Activity {
   private _place: string;
   private _category: Category;
   private _userId: number;
+  private _participants: number[] = [];
 
   constructor(
     id: number | undefined,
@@ -34,7 +35,8 @@ class Activity {
     cost: number,
     place: string,
     category: Category,
-    userId: number
+    userId: number,
+    participants?: number[]
   ) {
     if (endDate < startDate) {
       throw new CodeError('The end date must be after the start date', 400);
@@ -49,6 +51,9 @@ class Activity {
     this._place = place;
     this._category = category;
     this._userId = userId;
+    if (participants) {
+      this._participants = participants;
+    }
   }
 
   get id(): number | undefined {
@@ -91,6 +96,10 @@ class Activity {
     return this._userId;
   }
 
+  get participants(): number[] {
+    return this._participants;
+  }
+
   toObject(): any {
     return {
       id: this._id,
@@ -103,6 +112,7 @@ class Activity {
       place: this._place,
       category: this._category,
       userId: this._userId,
+      participants: this._participants,
     };
   }
 }

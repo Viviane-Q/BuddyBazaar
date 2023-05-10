@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteActivity,
   registerForActivity,
+  unregisterForActivity,
 } from '../../store/thunks/activitiesThunk';
 import theme from '../../theme';
 import TitleSmall from '../shared/typography/TitleSmall';
@@ -64,8 +65,20 @@ const ActivityDetails = ({ navigation, route }) => {
     });
   };
 
-  // const unregisterActivityHandler = () => {
-  // };
+  const unregisterActivityHandler = () => {
+    const res = dispatch(unregisterForActivity({ activityId: activity.id }));
+    res.then((res) => {
+      if (!res.payload || res.payload.error) {
+        setSnackbarVisible(true);
+        setSnackbarType('error');
+        setSnackbarMessage('Une erreur est survenue');
+        return;
+      }
+      setSnackbarVisible(true);
+      setSnackbarType('success');
+      setSnackbarMessage('Désinscription réussie');
+    });
+  };
 
   return (
     <View style={styles.container}>
@@ -137,11 +150,10 @@ const ActivityDetails = ({ navigation, route }) => {
               size={24}
             />
             <BodyMedium style={{ fontWeight: 'bold', fontSize: 18 }}>
-              0/{activity.numberPersonMax}
+              {activity.participants?.length ?? 0}/{activity.numberPersonMax}
             </BodyMedium>
           </View>
         </View>
-        {/** TODO : get number of listed user*/}
       </View>
       <Snackbar
         visible={snackbarVisible}
@@ -156,15 +168,27 @@ const ActivityDetails = ({ navigation, route }) => {
       >
         {snackbarMessage}
       </Snackbar>
-      {userId !== activity.userId && (
+      {!activity.participants?.includes(userId) ? (
         <Button
           icon="account-plus"
           mode="contained"
           onPress={registerActivityHandler}
           nativeID="registerActivityButton"
           style={styles.registerButton}
+          visible={userId !== activity.userId}
         >
           S&apos;inscrire
+        </Button>
+      ) : (
+        <Button
+          icon="account-minus"
+          mode="contained"
+          onPress={unregisterActivityHandler}
+          nativeID="registerActivityButton"
+          style={styles.registerButton}
+          visible={userId !== activity.userId}
+        >
+          Se désinscrire
         </Button>
       )}
     </View>
@@ -218,7 +242,7 @@ const styles = StyleSheet.create({
     width: 250,
     margin: 16,
     alignSelf: 'center',
-    zIndex: -1
+    zIndex: -1,
   },
   error: {
     backgroundColor: '#e35d6a',

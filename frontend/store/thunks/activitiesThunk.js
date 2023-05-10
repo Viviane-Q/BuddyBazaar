@@ -150,3 +150,25 @@ export const registerForActivity = createAsyncThunk(
     return Promise.resolve({ res: data, error: !response.ok });
   }
 );
+
+export const unregisterForActivity = createAsyncThunk(
+  'activities/unregisterForActivity',
+  async (args, thunkAPI) => {
+    const { token } = thunkAPI.getState().auth;
+    const { activityId } = args;
+    const response = await fetch(
+      `${BACKEND_URL}/api/activities/${activityId}/unregister`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          token: `${token}`,
+        },
+      })
+    const data = await response.json();
+    if (response.ok) {
+      // update the store with the user registered
+    }
+    return Promise.resolve({ res: data, error: !response.ok });
+  }
+);
