@@ -68,7 +68,7 @@ const Stacks = () => {
           name="ActivityForm"
           component={ActivityForm}
           options={({ route }) => ({
-            title: route.params.activity
+            title: route?.params?.activity
               ? 'Modifier une activité'
               : 'Ajouter une activité',
           })}

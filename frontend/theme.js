@@ -11,7 +11,7 @@ const theme = {
 		secondary: "#69857A",
 		secondaryContainer: "#E0F2F1",
 		tertiary: "#EA9B3F",
-		tertiaryContainer: "#FFF8E1",
+		tertiaryContainer: "#d7ccc3",
 		surface: "#FFFFFF",
 		surfaceVariant: "#F5F5F5",
 		surfaceDisabled: "#E0E0E0",

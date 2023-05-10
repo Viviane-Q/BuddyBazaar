@@ -25,8 +25,7 @@ const ActivityForm = ({ navigation, route }) => {
   const [place, setPlace] = useState('');
   const [category, setCategory] = useState(Category.Sport);
   const [open, setOpen] = React.useState(false);
-  const isUpdate =
-    route.params && route.params.activity && route.params.activity.id;
+  const isUpdate = route?.params?.activity?.id;
 
   const dispatch = useDispatch();
 
@@ -35,7 +34,7 @@ const ActivityForm = ({ navigation, route }) => {
   }, []);
 
   const initActivity = () => {
-    if (route.params && route.params.activity) {
+    if (isUpdate) {
       const activity = route.params.activity;
       setTitle(activity.title);
       setDescription(activity.description);

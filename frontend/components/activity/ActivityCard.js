@@ -46,7 +46,7 @@ const ActivityCard = ({
       <Card.Content style={styled.cardContent}>
         <View style={styled.cardContentTitle}>
           <TitleSmall>{activity.title}</TitleSmall>
-          <BodyMedium variant="bodyMedium" style={{ fontWeight: 'bold' }}>
+          <BodyMedium style={{ fontWeight: 'bold' }}>
             {activity.cost} €
           </BodyMedium>
         </View>

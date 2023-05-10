@@ -25,6 +25,7 @@ const TitleSmall = ({ children, ...props }) => {
         {...props}
         style={{
           fontFamily: 'Calistoga-Regular',
+          fontSize: 16,
           color: theme.colors.secondary,
           ...props.style,
         }}
