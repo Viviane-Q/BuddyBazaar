@@ -19,12 +19,16 @@ const whenUserRetrievesActivities = (user: User) => {
 };
 
 describe('Feature: an user retrieves their activities', () => {
-  test('Example: User retrieves their 2 registered activities', async () => {
+  test('Example: User retrieves their owned activities and their registered activities', async () => {
     givenActivities([
       ActivityFixtures.activityClimbing,
       ActivityFixtures.activityHiking,
+      ActivityFixtures.activityCinema,
     ]); // activities of two different users
     const activities = await whenUserRetrievesActivities(UserFixtures.userJean);
-    expect(activities).toEqual([ActivityFixtures.activityClimbing]);
+    expect(activities).toEqual([
+      ActivityFixtures.activityClimbing,
+      ActivityFixtures.activityCinema,
+    ]);
   });
 });

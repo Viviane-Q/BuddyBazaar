@@ -13,6 +13,7 @@ interface ActivityRepository {
     category?: string
   ): Promise<Activity[]>;
   getAllByUserId(userId: number): Promise<Activity[]>;
+  getAllRegisteredByUserId(userId: number): Promise<Activity[]>;
   update(activity: Activity): Promise<boolean>;
   delete(activityId: number): Promise<boolean>;
 }

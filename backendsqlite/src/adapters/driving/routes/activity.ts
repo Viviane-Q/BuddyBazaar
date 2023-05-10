@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import CodeError from '../../../util/CodeError';
 import { CustomRequest } from '../types/CustomRequest';
 import ActivityController from '../controllers/ActivityController';
+import ActivityRegistrationController from '../controllers/ActivityRegistrationController';
 import { Resources } from '../../../core/security/Resources';
 import { Actions } from '../../../core/security/Actions';
 import can from '../../../core/security/can';
@@ -168,6 +169,69 @@ router.delete(
       } else {
         res.status(200).json({
           message: 'Activity deleted',
+        });
+      }
+    } catch (err) {
+      if (err instanceof CodeError) {
+        res.status(err.code).json({
+          message: err.message,
+        });
+      } else {
+        res.status(500).json({
+          message: 'Internal server error',
+        });
+      }
+    }
+  }
+);
+
+router.post(
+  '/:id/register',
+  can(Resources.ACTIVITY, Actions.READ),
+  async (req: Request, res: Response) => {
+    try {
+      const result = await ActivityRegistrationController.registerForAnActivity(
+        req as CustomRequest
+      );
+      if (!result) {
+        res.status(400).json({
+          message: 'Registration failed',
+        });
+      } else {
+        res.status(200).json({
+          message: 'Registration successful',
+        });
+      }
+    } catch (err) {
+      console.log(err);
+      if (err instanceof CodeError) {
+        res.status(err.code).json({
+          message: err.message,
+        });
+      } else {
+        res.status(500).json({
+          message: 'Internal server error',
+        });
+      }
+    }
+  }
+);
+
+router.post(
+  '/:id/unregister',
+  can(Resources.ACTIVITY, Actions.READ),
+  async (req: Request, res: Response) => {
+    try {
+      const result = await ActivityRegistrationController.unregisterForAnActivity(
+        req as CustomRequest
+      );
+      if (!result) {
+        res.status(400).json({
+          message: 'De-registration failed',
+        });
+      } else {
+        res.status(200).json({
+          message: 'De-registration successful',
         });
       }
     } catch (err) {

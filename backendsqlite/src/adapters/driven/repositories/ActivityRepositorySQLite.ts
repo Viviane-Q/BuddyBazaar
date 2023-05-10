@@ -53,9 +53,10 @@ class ActivityRepositorySQLite implements ActivityRepository {
   ): Promise<Activity[]> {
     const now = new Date();
     const options: FindOptions = {
+      include: [{ model: models.activitiesRegistrations }],
       where: {
         endDate: { [Op.gte]: now },
-      }
+      },
     };
     if (querySearch) {
       options.where = {
@@ -114,13 +115,19 @@ class ActivityRepositorySQLite implements ActivityRepository {
         seqActivity.cost,
         seqActivity.place,
         seqActivity.category,
-        seqActivity.userId
+        seqActivity.userId,
+        seqActivity.activitiesRegistrations.map((registration: any) => {
+          return registration.userId;
+        })
       );
     });
   }
 
   async getAllByUserId(userId: number): Promise<Activity[]> {
-    const seqActivities = models.activities.findAll({ where: { userId } });
+    const seqActivities = models.activities.findAll({
+      include: [{ model: models.activitiesRegistrations }],
+      where: { userId },
+    });
     return seqActivities.map((seqActivity: any) => {
       return new Activity(
         seqActivity.id,
@@ -132,7 +139,40 @@ class ActivityRepositorySQLite implements ActivityRepository {
         seqActivity.cost,
         seqActivity.place,
         seqActivity.category,
-        seqActivity.userId
+        seqActivity.userId,
+        seqActivity.activitiesRegistrations.map((registration: any) => {
+          return registration.userId;
+        })
+      );
+    });
+  }
+
+  async getAllRegisteredByUserId(userId: number): Promise<Activity[]> {
+    const seqActivities = models.activities.findAll({
+      include: [
+        {
+          model: models.activitiesRegistrations,
+          where: {
+            userId: { [Op.in]: [userId] },
+          },
+        },
+      ],
+    });
+    return seqActivities.map((seqActivity: any) => {
+      return new Activity(
+        seqActivity.id,
+        seqActivity.title,
+        seqActivity.description,
+        seqActivity.startDate,
+        seqActivity.endDate,
+        seqActivity.numberPersonMax,
+        seqActivity.cost,
+        seqActivity.place,
+        seqActivity.category,
+        seqActivity.userId,
+        seqActivity.activitiesRegistrations.map((registration: any) => {
+          return registration.userId;
+        })
       );
     });
   }

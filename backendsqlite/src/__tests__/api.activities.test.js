@@ -7,16 +7,36 @@ let anUser;
 let anActivity;
 let anActivity2;
 let anActivity3;
+let anActivityRegistration;
 let token;
+
+const convertToBody = (activity) => {
+  return {
+    id: activity.id,
+    title: activity.title,
+    description: activity.description,
+    startDate: activity.startDate.toISOString(),
+    endDate: activity.endDate.toISOString(),
+    numberPersonMax: activity.numberPersonMax,
+    cost: activity.cost,
+    place: activity.place,
+    category: activity.category,
+    userId: activity.userId,
+    participants: activity.dataValues.activitiesRegistrations?.map(
+      (registration) => registration.userId
+    ) || [],
+  };
+};
 
 describe('e2e: /api/activities', () => {
   beforeEach(async () => {
     await cleanDb();
     const data = await seedDb();
     anUser = data.anUser;
-    anActivity = data.anActivity;
-    anActivity2 = data.anActivity2;
-    anActivity3 = data.anActivity3;
+    anActivity = convertToBody(data.anActivity);
+    anActivity2 = convertToBody(data.anActivity2);
+    anActivity3 = convertToBody(data.anActivity3);
+    anActivityRegistration = data.anActivityRegistration;
     token = await login(request(app), anUser);
   });
   describe('POST /api/activities', () => {
@@ -90,7 +110,7 @@ describe('e2e: /api/activities', () => {
       expect(response.statusCode).toBe(200);
       expect(response.body).toEqual({
         message: 'Activities retrieved',
-        activities: [JSON.parse(JSON.stringify(anActivity))],
+        activities: [anActivity, anActivity2],
       });
     });
   });
@@ -115,7 +135,7 @@ describe('e2e: /api/activities', () => {
       expect(response.statusCode).toBe(200);
       expect(response.body).toEqual({
         message: 'Activity retrieved',
-        activity: JSON.parse(JSON.stringify(anActivity)),
+        activity: anActivity,
       });
     });
   });
@@ -179,9 +199,7 @@ describe('e2e: /api/activities', () => {
       expect(response.statusCode).toBe(200);
       expect(response.body).toEqual({
         message: 'Activities retrieved',
-        activities: JSON.parse(
-          JSON.stringify([anActivity, anActivity2, anActivity3])
-        ),
+        activities: [anActivity, anActivity2, anActivity3],
       });
     });
     test('Example: get all activities with title or description containing "activité"', async () => {
@@ -191,7 +209,7 @@ describe('e2e: /api/activities', () => {
       expect(response.statusCode).toBe(200);
       expect(response.body).toEqual({
         message: 'Activities retrieved',
-        activities: JSON.parse(JSON.stringify([anActivity, anActivity2])),
+        activities: [anActivity, anActivity2],
       });
     });
     test('Example: get all activities with title or description containing "ciné" and between 2024-01-01 18:00:00 and 2024-01-02 22:00:00', async () => {
@@ -205,7 +223,37 @@ describe('e2e: /api/activities', () => {
       expect(response.statusCode).toBe(200);
       expect(response.body).toEqual({
         message: 'Activities retrieved',
-        activities: JSON.parse(JSON.stringify([anActivity3])),
+        activities: [anActivity3],
+      });
+    });
+  });
+
+  describe('POST /api/activities/:id/register', () => {
+    describe('Rbac rules', () => {
+      authTest(request(app), 'post', '/api/activities/1/register')();
+    });
+    test('Example: send a new registration for an activity', async () => {
+      const response = await request(app)
+        .post(`/api/activities/${anActivity3.id}/register`)
+        .set({ token });
+      expect(response.statusCode).toBe(200);
+      expect(response.body).toEqual({
+        message: 'Registration successful',
+      });
+    });
+  });
+
+  describe('POST /api/activities/:id/unregister', () => {
+    describe('Rbac rules', () => {
+      authTest(request(app), 'post', '/api/activities/1/unregister')();
+    });
+    test('Example: send a de-registration for an existing registration', async () => {
+      const response = await request(app)
+        .post(`/api/activities/${anActivityRegistration.activityId}/unregister`)
+        .set({ token });
+      expect(response.statusCode).toBe(200);
+      expect(response.body).toEqual({
+        message: 'De-registration successful',
       });
     });
   });

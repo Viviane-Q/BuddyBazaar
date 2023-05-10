@@ -34,7 +34,7 @@ describe('Test de la page des activités de l\'utilisateur', () => {
             else{
                 const activity = req.body;
                 activity.id = activities.length + 1;
-                activities.push(activity);
+                activities.push({...activity, userId: 1});
                 req.reply({
                     statusCode: 200,
                     body: {
@@ -51,6 +51,18 @@ describe('Test de la page des activités de l\'utilisateur', () => {
                 }
               })
         })
+        cy.intercept('GET', '/api/users/me', (req) => {
+            req.reply({
+              statusCode: 200,
+              body: {
+                user: {
+                  id: 1,
+                  name: 'Jean Dupont',
+                  email: 'Sebastien.Viardot@grenoble-inp.fr',
+                },
+              },
+            });
+          });
         cy.visit('http://localhost:19006')
         cy.get('div').contains('Connexion').click()
         cy.get('input').first().type('Sebastien.Viardot@grenoble-inp.fr')

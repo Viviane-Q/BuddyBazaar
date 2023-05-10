@@ -13,6 +13,7 @@
     "test:e2e": "npm run updatedb && npx jest --runInBand --testMatch='**/*.test.js'",
     "test:spec": "npx jest --runInBand --testMatch='**/*.spec.ts'",
     "test:integ": "npm run updatedb && npx jest --runInBand --testMatch='**/*.integ.ts'",
+    "test": "npm run test:spec && npm run test:integ && npm run test:e2e",
     "build": "tsup src/server.js --format cjs --clean",
     "lint": "npx eslint src --ext .js,.ts"
   },

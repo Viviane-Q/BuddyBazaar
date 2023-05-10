@@ -53,6 +53,20 @@ export default class ActivityFixtures {
     10,
     'Grenoble',
     Category.Cinema,
-    UserFixtures.userMartin.id as number
+    UserFixtures.userMartin.id as number,
+    [UserFixtures.userJean.id as number]
+  );
+
+  static pastActivity = new Activity(
+    4,
+    'Ciné',
+    'Petit film à Pathé Gaumont Chavant',
+    new Date('2020-05-02 14:00:00'),
+    new Date('2020-05-02 16:00:00'),
+    2,
+    10,
+    'Grenoble',
+    Category.Cinema,
+    UserFixtures.userJean.id as number
   );
 }

@@ -3,15 +3,20 @@ import { View, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 import TitleMedium from '../shared/typography/TitleMedium';
 import BodyMedium from '../shared/typography/BodyMedium';
-import { IconButton, Snackbar, Card, Divider } from 'react-native-paper';
+import { IconButton, Snackbar, Divider, Button } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteActivity } from '../../store/thunks/activitiesThunk';
+import {
+  deleteActivity,
+  registerForActivity,
+  unregisterForActivity,
+} from '../../store/thunks/activitiesThunk';
 import theme from '../../theme';
 import TitleSmall from '../shared/typography/TitleSmall';
 
 const ActivityDetails = ({ navigation, route }) => {
-  const { activity } = route.params;
+  const [activity, setActivity] = useState(route.params.activity);
   const userId = useSelector((state) => state.auth.id);
+  const ownsActivity = activity.userId === userId;
   const dispatch = useDispatch();
   const [snackbarVisible, setSnackbarVisible] = useState(false);
   const [snackbarType, setSnackbarType] = useState('error');
@@ -46,104 +51,146 @@ const ActivityDetails = ({ navigation, route }) => {
     navigation.navigate('ActivityForm', { activity });
   };
 
+  const registerActivityHandler = () => {
+    const res = dispatch(registerForActivity({ activityId: activity.id }));
+    res.then((res) => {
+      if (!res.payload || res.payload.error) {
+        setSnackbarVisible(true);
+        setSnackbarType('error');
+        setSnackbarMessage('Une erreur est survenue');
+        return;
+      }
+      setSnackbarVisible(true);
+      setSnackbarType('success');
+      setSnackbarMessage('Inscription réussie');
+      setActivity({
+        ...activity,
+        participants: [...activity.participants, userId],
+      });
+    });
+  };
+
+  const unregisterActivityHandler = () => {
+    const res = dispatch(unregisterForActivity({ activityId: activity.id }));
+    res.then((res) => {
+      if (!res.payload || res.payload.error) {
+        setSnackbarVisible(true);
+        setSnackbarType('error');
+        setSnackbarMessage('Une erreur est survenue');
+        return;
+      }
+      setSnackbarVisible(true);
+      setSnackbarType('success');
+      setSnackbarMessage('Désinscription réussie');
+      setActivity({
+        ...activity,
+        participants: activity.participants.filter((p) => p !== userId),
+      });
+    });
+  };
+
   return (
-    <Card style={styles.activityCard}>
+    <View style={styles.container}>
       <View>
         <Image
           source={`https://picsum.photos/700?id=${activity.id}`}
           style={styles.cover}
         />
       </View>
-      <Card.Content>
-        <View style={{ gap: 16 }}>
-          <View style={styles.titleContainer}>
-            <TitleMedium style={{ color: theme.colors.primary }}>
-              {activity.title}
-            </TitleMedium>
-            {userId === activity.userId && (
-              <View style={styles.buttonsGroup}>
-                <IconButton
-                  icon="delete"
-                  onPress={deleteActivityHandler}
-                  nativeID="deleteActivityButton"
-                  iconColor={theme.colors.secondary}
-                  size={20}
-                  style={styles.icon}
-                />
-                <IconButton
-                  icon="pencil-outline"
-                  onPress={editActivityHandler}
-                  nativeID="editActivityButton"
-                  iconColor={theme.colors.secondary}
-                  size={20}
-                  style={styles.icon}
-                />
-              </View>
-            )}
-          </View>
-          <View
-            style={{
-              ...styles.categoryContainer,
-              backgroundColor: theme.colors.categories[activity.category],
-            }}
-          >
-            <BodyMedium style={{ color: 'white' }}>
-              {activity.category}
-            </BodyMedium>
-          </View>
-          <Divider
-            style={{ backgroundColor: theme.colors.tertiaryContainer }}
-          />
-          <View>
-            <TitleSmall style={{ fontWeight: 'bold' }}>Infos clés</TitleSmall>
-            <BodyMedium style={{ fontWeight: 'bold' }}>
-              Coût : {activity.cost} €
-            </BodyMedium>
-            <BodyMedium>Lieu : {activity.place}</BodyMedium>
-            <BodyMedium>Début : {startDate}</BodyMedium>
-            <BodyMedium>Fin : {endDate}</BodyMedium>
-          </View>
-          <Divider
-            style={{ backgroundColor: theme.colors.tertiaryContainer }}
-          />
-          <View>
-            <TitleSmall style={{ fontWeight: 'bold' }}>Description</TitleSmall>
-            <BodyMedium>{activity.description}</BodyMedium>
-          </View>
-          <Divider
-            style={{ backgroundColor: theme.colors.tertiaryContainer }}
-          />
-          <View style={styles.participantContainer}>
-            <TitleSmall style={{ fontWeight: 'bold' }}>Participants</TitleSmall>
-            <View style={styles.numberPersonContainer}>
+      <View style={{ gap: 16, margin: 16 }}>
+        <View style={styles.titleContainer}>
+          <TitleMedium style={{ color: theme.colors.primary }}>
+            {activity.title}
+          </TitleMedium>
+          {ownsActivity && (
+            <View style={styles.buttonsGroup}>
               <IconButton
-                icon="account-group"
-                compact="true"
-                style={styles.icon}
+                icon="delete"
+                onPress={deleteActivityHandler}
+                nativeID="deleteActivityButton"
                 iconColor={theme.colors.secondary}
-                size={28}
+                size={20}
+                style={styles.icon}
               />
-              <BodyMedium style={{ fontWeight: 'bold', fontSize: 18 }}>
-                0/{activity.numberPersonMax}
-              </BodyMedium>
+              <IconButton
+                icon="pencil-outline"
+                onPress={editActivityHandler}
+                nativeID="editActivityButton"
+                iconColor={theme.colors.secondary}
+                size={20}
+                style={styles.icon}
+              />
             </View>
-          </View>
-          {/** TODO : get number of listed user*/}
+          )}
         </View>
-      </Card.Content>
-      {/* <Card.Actions>
-        {userId !== activity.userId && (
+        <View
+          style={{
+            ...styles.categoryContainer,
+            backgroundColor: theme.colors.categories[activity.category],
+          }}
+        >
+          <BodyMedium style={{ color: 'white' }}>
+            {activity.category}
+          </BodyMedium>
+        </View>
+        <Divider style={{ backgroundColor: theme.colors.tertiaryContainer }} />
+        <View>
+          <TitleSmall style={{ fontWeight: 'bold' }}>Infos clés</TitleSmall>
+          <BodyMedium style={{ fontWeight: 'bold' }}>
+            Coût : {activity.cost} €
+          </BodyMedium>
+          <BodyMedium>Lieu : {activity.place}</BodyMedium>
+          <BodyMedium>Début : {startDate}</BodyMedium>
+          <BodyMedium>Fin : {endDate}</BodyMedium>
+        </View>
+        <Divider style={{ backgroundColor: theme.colors.tertiaryContainer }} />
+        <View>
+          <TitleSmall style={{ fontWeight: 'bold' }}>Description</TitleSmall>
+          <BodyMedium>{activity.description}</BodyMedium>
+        </View>
+        <Divider style={{ backgroundColor: theme.colors.tertiaryContainer }} />
+        <View style={styles.participantContainer}>
+          <TitleSmall style={{ fontWeight: 'bold' }}>Participants</TitleSmall>
+          <View style={styles.numberPersonContainer}>
+            <IconButton
+              icon="account-group"
+              compact="true"
+              iconColor={theme.colors.secondary}
+              size={24}
+            />
+            <BodyMedium style={{ fontWeight: 'bold', fontSize: 18 }}>
+              {activity.participants?.length ?? 0}/{activity.numberPersonMax}
+            </BodyMedium>
+          </View>
+        </View>
+        {!activity.participants?.includes(userId) ? (
           <Button
-            icon="delete"
-            mode="text"
-            compact="true"
-            onPress={deleteActivityHandler}
-            nativeID="deleteActivityButton"
+            icon="account-plus"
+            mode="contained"
+            onPress={registerActivityHandler}
+            nativeID="registerActivityButton"
+            style={{
+              ...styles.registerButton,
+              display: userId && !ownsActivity ? 'flex' : 'none',
+            }}
           >
             S&apos;inscrire
           </Button>
+        ) : (
+          <Button
+            icon="account-minus"
+            mode="contained"
+            onPress={unregisterActivityHandler}
+            nativeID="unregisterActivityButton"
+            style={{
+              ...styles.registerButton,
+              display: userId && !ownsActivity ? 'flex' : 'none',
+            }}
+          >
+            Se désinscrire
+          </Button>
         )}
-      </Card.Actions> */}
+      </View>
       <Snackbar
         visible={snackbarVisible}
         onDismiss={() => setSnackbarVisible(false)}
@@ -157,20 +204,20 @@ const ActivityDetails = ({ navigation, route }) => {
       >
         {snackbarMessage}
       </Snackbar>
-    </Card>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  activityCard: {
-    backgroundColor: theme.colors.primaryContainer,
+  container: {
+    flex: 1,
     height: '100%',
+    backgroundColor: theme.colors.primaryContainer,
   },
   titleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 12,
   },
   buttonsGroup: {
     flexDirection: 'row',
@@ -200,6 +247,11 @@ const styles = StyleSheet.create({
   },
   participantContainer: {
     alignItems: 'center',
+  },
+  registerButton: {
+    width: 250,
+    margin: 16,
+    alignSelf: 'center',
   },
   error: {
     backgroundColor: '#e35d6a',

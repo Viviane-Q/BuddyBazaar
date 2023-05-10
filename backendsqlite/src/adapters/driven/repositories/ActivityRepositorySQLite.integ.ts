@@ -21,7 +21,10 @@ const buildActivity = (objActivity: any) => {
     objActivity.cost,
     objActivity.place,
     objActivity.category,
-    objActivity.userId
+    objActivity.userId,
+    objActivity.dataValues.activitiesRegistrations?.map((registration: any) => {
+      return registration.userId;
+    })
   );
 };
 
@@ -79,6 +82,19 @@ describe('ActivityRepositorySQLite integration tests', () => {
     });
     test('should return an empty array because the user does not exist', async () => {
       const result = await activityRepository.getAllByUserId(999);
+      expect(result).toEqual([]);
+    });
+  });
+
+  describe('getAllRegisteredByUserId', () => {
+    test('should return an array of activities which user is registered for', async () => {
+      const result = await activityRepository.getAllRegisteredByUserId(
+        anUser.id as number
+      );
+      expect(result).toEqual([anActivity2]);
+    });
+    test('should return an empty array because the user does not exist', async () => {
+      const result = await activityRepository.getAllRegisteredByUserId(999);
       expect(result).toEqual([]);
     });
   });
