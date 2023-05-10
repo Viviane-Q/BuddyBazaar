@@ -14,4 +14,11 @@ export default {
     [Actions.READONE]: (req: CustomRequest): Promise<boolean> =>
       ownsActivity(req),
   },
+  [Resources.USER]: {
+    [Actions.CREATE]: (): boolean => false,
+    [Actions.READ]: (): boolean => false,
+    [Actions.UPDATE]: (): boolean => false,
+    [Actions.DELETE]: (): boolean => false,
+    [Actions.READONE]: (req: CustomRequest): boolean => isValidUser(req),
+  },
 };

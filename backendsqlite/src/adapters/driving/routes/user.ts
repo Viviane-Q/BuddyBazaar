@@ -2,6 +2,9 @@ import { Request, Response, Router } from 'express';
 import UserController from '../controllers/UserController';
 import CodeError from '../../../util/CodeError';
 import { CustomRequest } from '../types/CustomRequest';
+import { Resources } from '../../../core/security/Resources';
+import { Actions } from '../../../core/security/Actions';
+import can from '../../../core/security/can';
 
 const router = Router();
 
@@ -59,5 +62,16 @@ router.post('/signin', async (req: Request, res: Response) => {
     }
   }
 });
+
+router.get(
+  '/me',
+  can(Resources.USER, Actions.READONE),
+  async (req: Request, res: Response) => {
+    res.status(200).json({
+      message: 'User found',
+      user: (req as CustomRequest).user,
+    });
+  }
+);
 
 export default router;

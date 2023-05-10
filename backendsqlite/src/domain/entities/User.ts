@@ -37,6 +37,12 @@ class User {
       id: this.id,
       name: this.name,
       email: this.email,
+    };
+  }
+
+  toObjectWithPasshash(): any {
+    return {
+      ...this.toObject(),
       passhash: this.passhash,
     };
   }

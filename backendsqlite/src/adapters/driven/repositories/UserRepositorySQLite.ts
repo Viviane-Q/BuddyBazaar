@@ -16,7 +16,7 @@ class UserRepositorySQLite implements UserRepository {
   }
 
   async create(user: User): Promise<User> {
-    const seqUser = await models.users.create(user.toObject());
+    const seqUser = await models.users.create(user.toObjectWithPasshash());
     return new User(seqUser.id, seqUser.name, seqUser.email);
   }
 
