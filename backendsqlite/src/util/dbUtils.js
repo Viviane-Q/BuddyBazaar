@@ -62,6 +62,17 @@ module.exports.seedDb = async () => {
   });
   anActivity2.setDataValue('activitiesRegistrations', [anActivityRegistration]);
 
+  const aMessage = await models.messages.create({
+    content: 'Un message',
+    userId: anUser.id,
+    activityId: anActivity2.id,
+  });
+  const aMessage2 = await models.messages.create({
+    content: 'Un message 2',
+    userId: anUser2.id,
+    activityId: anActivity2.id,
+  });
+
   return {
     anUser,
     anUser2,
@@ -69,6 +80,8 @@ module.exports.seedDb = async () => {
     anActivity2,
     anActivity3,
     anActivityRegistration,
+    aMessage,
+    aMessage2
   };
 };
 
