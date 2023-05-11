@@ -1,6 +1,6 @@
 import { View } from "react-native";
 import { Menu, TextInput } from "react-native-paper";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 
 const Autocomplete = ({
   value: origValue,
@@ -14,34 +14,34 @@ const Autocomplete = ({
 }) => {
   const [value, setValue] = useState(origValue);
   const [menuVisible, setMenuVisible] = useState(false);
-  const [filteredData, setFilteredData] = useState([]);
-
+  const handleChangeText = (text) => {
+    origOnChange(text);
+    setValue(text);
+  };
+  useEffect(() => {
+    if(!data || value.length <3 ){
+      setMenuVisible(false);
+    }else{
+      setMenuVisible(true);
+    }
+  }, [data,value]);
   return (
     <View style={[containerStyle]}>
       <TextInput
         onFocus={() => {
-          if (value.length === 0) {
+          if (data && value.length >= 3 ) {
             setMenuVisible(true);
           }
         }}
+        onBlur={() => {setMenuVisible(false);}}
         label={label}
         style={style}
-        onChangeText={(text) => {
-          origOnChange(text);
-          if (text && text.length >= 3) {
-            setFilteredData(data);
-            setMenuVisible(true);
-          }else{
-            setMenuVisible(false);
-            setFilteredData([]);
-          }
-          setValue(text);
-        }}
+        onChangeText={handleChangeText}
         value={value}
         mode="outlined"
         nativeID={cypressID}
       />
-      {menuVisible && filteredData && (
+      {menuVisible && data && (
         <View
           style={{
             flex: 1,
@@ -52,7 +52,7 @@ const Autocomplete = ({
           }}
           nativeID={`${cypressID}-menu`}
         >
-          {filteredData.map((datum, i) => (
+          {data.map((datum, i) => (
             <Menu.Item
               key={i}
               style={{ width: '100%' }}
