@@ -135,6 +135,7 @@ describe("Test de la page de détails d'une activité", () => {
       cy.get('div').contains('Modifier une activité');
       cy.get('#placeInput').clear();
       cy.get('#placeInput').type('Lyon');
+      cy.get('#placeInput-menu > div').eq(0).click()
       cy.get('#validateButtonNewActivity').click();
       cy.get('div').contains('Lyon');
     });

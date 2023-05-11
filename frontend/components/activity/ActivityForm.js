@@ -10,6 +10,8 @@ import {
 } from '../../store/thunks/activitiesThunk';
 import Category from '../../entities/Category';
 import theme from '../../theme';
+import Autocomplete from '../shared/form/Autocomplete';
+import { checkAddress } from '../../store/thunks/franceAPIThunk';
 
 // get current date and time without seconds
 
@@ -32,13 +34,28 @@ const ActivityForm = ({ navigation, route }) => {
   const [cost, setCost] = useState('0');
   const [place, setPlace] = useState('');
   const [category, setCategory] = useState(Category.Sport);
-
+  const [suggestions, setSuggestions] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     initActivity();
   }, []);
 
+  const getSuggestions = (address) => {
+    if(address.trim().length >= 3) {
+      const res = dispatch(checkAddress({ address }))
+      res.then((data) => {
+        if(!data.payload || data.payload.error) {
+          setSnackbarVisible(true);
+          setSnackbarType('error');
+          setSnackbarMessage(data.payload.message);
+          return;
+        }
+        setSuggestions(data.payload.res);
+      });
+    }
+  }
+    
   const initActivity = () => {
     if (isUpdate) {
       const activity = route.params.activity;
@@ -241,15 +258,17 @@ const ActivityForm = ({ navigation, route }) => {
           nativeID="costInput"
           mode="outlined"
         />
-        <TextInput
-          label="Lieu"
-          placeholder="Lieu"
-          onChangeText={setPlace}
-          value={place}
-          style={styles.textInput}
-          nativeID="placeInput"
-          mode="outlined"
-        />
+        <Autocomplete
+            value={place}
+            style={[styles.textInput]}
+            setFormValue={setPlace}
+            containerStyle={{}}
+            cypressID="placeInput"
+            label="Lieu"
+            data={suggestions}
+            menuStyle={{backgroundColor: 'white'}}
+            onChange={getSuggestions}
+          />
         <View style={styles.pickerContainer}>
           <Picker
             label="Catégorie"

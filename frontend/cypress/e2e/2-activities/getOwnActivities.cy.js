@@ -90,6 +90,7 @@ describe('Test de la page des activités de l\'utilisateur', () => {
         cy.get('#titleInput').eq(0).type('Une nouvelle activité')
         cy.get('#descriptionInput').type('Une nouvelle description')
         cy.get('#placeInput').type('Grenoble')
+        cy.get('#placeInput-menu > div').eq(0).click()
         cy.get('#validateButtonNewActivity').click()
         cy.get('[data-testid="card-container"]').filter(':visible').should('have.length', 2)
     })
