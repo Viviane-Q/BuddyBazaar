@@ -39,6 +39,7 @@
     "morgan": "^1.9.1",
     "rotating-file-stream": "^1.4.6",
     "sequelize": "^5.19.2",
+    "socket.io": "^4.6.1",
     "sqlite3": "^5.0.5",
     "swagger-autogen": "^2.18.8",
     "swagger-ui-express": "^4.3.0"
