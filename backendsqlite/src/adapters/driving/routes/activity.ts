@@ -5,34 +5,31 @@ import ActivityController from '../controllers/ActivityController';
 import ActivityRegistrationController from '../controllers/ActivityRegistrationController';
 import { Resources } from '../../../core/security/Resources';
 import { Actions } from '../../../core/security/Actions';
-import can from '../../../core/security/can';
+import { can } from '../../../core/security/can';
 
 const router = Router();
 
-router.get(
-  '/',
-  async (req: Request, res: Response) => {
-    try {
-      const activities = await ActivityController.getActivities(
-        req as CustomRequest
-      );
-      res.status(200).json({
-        message: 'Activities retrieved',
-        activities: activities.map((activity) => activity.toObject()),
+router.get('/', async (req: Request, res: Response) => {
+  try {
+    const activities = await ActivityController.getActivities(
+      req as CustomRequest
+    );
+    res.status(200).json({
+      message: 'Activities retrieved',
+      activities: activities.map((activity) => activity.toObject()),
+    });
+  } catch (err) {
+    if (err instanceof CodeError) {
+      res.status(err.code).json({
+        message: err.message,
       });
-    } catch (err) {
-      if (err instanceof CodeError) {
-        res.status(err.code).json({
-          message: err.message,
-        });
-      } else {
-        res.status(500).json({
-          message: 'Internal server error',
-        });
-      }
+    } else {
+      res.status(500).json({
+        message: 'Internal server error',
+      });
     }
   }
-);
+});
 
 router.post(
   '/',
@@ -221,9 +218,10 @@ router.post(
   can(Resources.ACTIVITY, Actions.READ),
   async (req: Request, res: Response) => {
     try {
-      const result = await ActivityRegistrationController.unregisterForAnActivity(
-        req as CustomRequest
-      );
+      const result =
+        await ActivityRegistrationController.unregisterForAnActivity(
+          req as CustomRequest
+        );
       if (!result) {
         res.status(400).json({
           message: 'De-registration failed',
