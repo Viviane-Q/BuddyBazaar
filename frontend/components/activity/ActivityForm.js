@@ -88,8 +88,6 @@ const ActivityForm = ({ navigation, route }) => {
     }
     if (!regexDate.test(startDate) || !regexDate.test(endDate)) {
       setSnackbarVisible(true);
-      console.log('startDate', startDate);
-      console.log('endDate', endDate);
       setSnackbarType('error');
       setSnackbarMessage('Date invalide');
       return;
