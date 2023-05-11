@@ -109,10 +109,19 @@
     "/api/users/me": {
       "get": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
@@ -170,6 +179,11 @@
         "description": "",
         "parameters": [
           {
+            "name": "token",
+            "in": "header",
+            "type": "string"
+          },
+          {
             "name": "body",
             "in": "body",
             "schema": {
@@ -210,6 +224,9 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -219,10 +236,19 @@
     "/api/activities/by-user": {
       "get": {
         "description": "",
-        "parameters": [],
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string"
+          }
+        ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -239,11 +265,19 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -260,6 +294,11 @@
             "name": "id",
             "in": "path",
             "required": true,
+            "type": "string"
+          },
+          {
+            "name": "token",
+            "in": "header",
             "type": "string"
           },
           {
@@ -306,6 +345,9 @@
           "400": {
             "description": "Bad Request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -319,6 +361,11 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -327,6 +374,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -343,6 +393,11 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -351,6 +406,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"
@@ -367,6 +425,11 @@
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "token",
+            "in": "header",
+            "type": "string"
           }
         ],
         "responses": {
@@ -375,6 +438,9 @@
           },
           "400": {
             "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Internal Server Error"

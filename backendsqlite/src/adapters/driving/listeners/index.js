@@ -1,8 +1,8 @@
 import messageListener from './message';
 
-const initListeners = (io) => {
+const initListeners = (io, services) => {
   io.on('connection', function (socket) {
-    messageListener(socket);
+    messageListener(socket, services);
   });
 };
 
