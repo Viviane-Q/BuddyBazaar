@@ -10,5 +10,12 @@ const { PORT } = process.env;
 
 // Instantiate an Express Application
 const app = require('./adapters/driving/app.js');
+
+// Instantiate Socket.io
+const server = require('http').Server(app);
+const io = require('socket.io')(server, { cors: { origin: '*' } });
+const initListeners = require('./adapters/driving/listeners');
+initListeners(io);
+
 // Open Server on selected Port
-app.listen(PORT, () => console.info('Server listening on port ', PORT));
+server.listen(PORT, () => console.info('Server listening on port ', PORT));
