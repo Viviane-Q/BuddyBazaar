@@ -72,7 +72,7 @@ class ActivityRepositorySQLite implements ActivityRepository {
         startDate: { [Op.gte]: startDate },
       };
     }
-    if (endDate) {
+    if (endDate && endDate.getTime() > now.getTime()) {
       options.where = {
         ...options.where,
         endDate: { [Op.lte]: endDate },

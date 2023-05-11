@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { ScrollView, View, StyleSheet, Text } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { Button, TextInput, Snackbar } from 'react-native-paper';
-import { DatePickerModal } from 'react-native-paper-dates';
+import { MaskedTextInput } from "react-native-mask-text";
 import { useDispatch } from 'react-redux';
 import {
   postNewActivity,
   updateActivity,
 } from '../../store/thunks/activitiesThunk';
 import Category from '../../entities/Category';
+import theme from '../../theme';
+
+// get current date and time without seconds
 
 const ActivityForm = ({ navigation, route }) => {
   const [snackbarVisible, setSnackbarVisible] = useState(false);
@@ -16,16 +19,19 @@ const ActivityForm = ({ navigation, route }) => {
   const [snackbarMessage, setSnackbarMessage] = useState(
     'Une erreur est survenue'
   );
+  const isUpdate = route?.params?.activity?.id;
+  const today = isUpdate ? new Date(route.params.activity.startDate).toLocaleDateString('fr-FR').split('/').join('-').replaceAll('-','/'):new Date().toLocaleDateString('fr-FR').split('/').join('-').replaceAll('-', '/');
+  const time = isUpdate ? new Date(route.params.activity.endDate).toLocaleTimeString('fr-FR', { hour12: false }).slice(0, -3):new Date().toLocaleTimeString('fr-FR', { hour12: false }).slice(0, -3);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  const [startDate, setStartDate] = useState(today);
+  const [startTime, setStartTime] = useState(time);
+  const [endDate, setEndDate] = useState(today);
+  const [endTime, setEndTime] = useState(time);
   const [numberPersonMax, setNumberPersonMax] = useState(1);
   const [cost, setCost] = useState('0');
   const [place, setPlace] = useState('');
   const [category, setCategory] = useState(Category.Sport);
-  const [open, setOpen] = React.useState(false);
-  const isUpdate = route?.params?.activity?.id;
 
   const dispatch = useDispatch();
 
@@ -38,8 +44,10 @@ const ActivityForm = ({ navigation, route }) => {
       const activity = route.params.activity;
       setTitle(activity.title);
       setDescription(activity.description);
-      setStartDate(new Date(activity.startDate));
-      setEndDate(new Date(activity.endDate));
+      setStartDate(new Date(activity.startDate).toLocaleDateString('fr-FR').split('/').join('-').replaceAll('-', '/'));
+      setEndDate(new Date(activity.endDate).toLocaleDateString('fr-FR').split('/').join('-').replaceAll('-', '/'));
+      setStartTime(new Date(activity.startDate).toLocaleTimeString('fr-FR', { hour12: false }).slice(0, -3));
+      setEndTime(new Date(activity.endDate).toLocaleTimeString('fr-FR', { hour12: false }).slice(0, -3));
       setNumberPersonMax(activity.numberPersonMax);
       setCost(activity.cost);
       setPlace(activity.place);
@@ -47,18 +55,6 @@ const ActivityForm = ({ navigation, route }) => {
     }
   };
 
-  const onDismiss = React.useCallback(() => {
-    setOpen(false);
-  }, [setOpen]);
-
-  const onConfirm = React.useCallback(
-    ({ startDate, endDate }) => {
-      setOpen(false);
-      setStartDate(startDate);
-      setEndDate(endDate);
-    },
-    [setOpen, setStartDate, setEndDate]
-  );
   const onNumberPersonMaxChange = (text) => {
     text = text.replace(/[^0-9]/g, '');
     setNumberPersonMax(text);
@@ -70,8 +66,10 @@ const ActivityForm = ({ navigation, route }) => {
   const resetForm = () => {
     setTitle('');
     setDescription('');
-    setStartDate();
-    setEndDate();
+    setStartDate(today);
+    setStartTime(time);
+    setEndDate(today);
+    setEndTime(time);
     setNumberPersonMax(1);
     setCost('0');
     setPlace('');
@@ -79,11 +77,38 @@ const ActivityForm = ({ navigation, route }) => {
   };
 
   const sendActivity = () => {
+    // check if startTime is a valid time
+    const regexTime = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+    const regexDate = /^(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d\d$/;
+    if (!regexTime.test(startTime) || !regexTime.test(endTime)) {
+      setSnackbarVisible(true);
+      setSnackbarType('error');
+      setSnackbarMessage('Heure invalide');
+      return;
+    }
+    if (!regexDate.test(startDate) || !regexDate.test(endDate)) {
+      setSnackbarVisible(true);
+      setSnackbarType('error');
+      setSnackbarMessage('Date invalide');
+      return;
+    }
+    const startDateToSend = new Date();
+    startDateToSend.setFullYear(startDate.split('/')[2]);
+    startDateToSend.setMonth(startDate.split('/')[1] - 1);
+    startDateToSend.setDate(startDate.split('/')[0]);
+    startDateToSend.setHours(parseInt(startTime.split(':')[0]));
+    startDateToSend.setMinutes(parseInt(startTime.split(':')[1]));
+    const endDateToSend = new Date();
+    endDateToSend.setFullYear(endDate.split('/')[2]);
+    endDateToSend.setMonth(endDate.split('/')[1] - 1);
+    endDateToSend.setDate(endDate.split('/')[0]);
+    endDateToSend.setHours(parseInt(endTime.split(':')[0]));
+    endDateToSend.setMinutes(parseInt(endTime.split(':')[1]));
     const activity = {
       title,
       description,
-      startDate,
-      endDate,
+      startDate: startDateToSend,
+      endDate: endDateToSend,
       numberPersonMax,
       cost,
       place,
@@ -106,10 +131,10 @@ const ActivityForm = ({ navigation, route }) => {
     }
     const res = isUpdate
       ? dispatch(
-          updateActivity({
-            activity: { id: route.params.activity.id, ...activity },
-          })
-        )
+        updateActivity({
+          activity: { id: route.params.activity.id, ...activity },
+        })
+      )
       : dispatch(postNewActivity({ activity }));
     res.then((res) => {
       if (!res.payload || res.payload.error) {
@@ -124,113 +149,146 @@ const ActivityForm = ({ navigation, route }) => {
   };
 
   return (
-    <View style={styles.newActivityForm}>
-      <TextInput
-        label="Titre"
-        placeholder="Titre"
-        onChangeText={setTitle}
-        value={title}
-        style={styles.textInput}
-        nativeID="titleInput"
-      />
-      <TextInput
-        label="Description"
-        placeholder="Description"
-        onChangeText={setDescription}
-        value={description}
-        multiline={true}
-        numberOfLines={4}
-        style={styles.textInput}
-        nativeID="descriptionInput"
-      />
-      <Button
-        onPress={() => setOpen(true)}
-        uppercase={false}
-        mode="outlined"
-        icon="calendar"
-        nativeID="datePickerButton"
-      >
-        {!!startDate && !!endDate
-          ? `${startDate.toLocaleDateString(
-              'fr-FR'
-            )} - ${endDate.toLocaleDateString('fr-FR')}`
-          : 'Choissisez une date'}
-      </Button>
-      <DatePickerModal
-        locale="fr"
-        mode="range"
-        visible={open}
-        onDismiss={onDismiss}
-        startDate={startDate}
-        endDate={endDate}
-        onConfirm={onConfirm}
-        saveLabel="Confirmer"
-        startLabel="Début"
-        endLabel="Fin"
-        label="Sélectionnez deux dates"
-        style={styles.textInput}
-      />
-      <TextInput
-        label="Nombre de participants maximum"
-        placeholder="Nombre de participants maximum"
-        keyboardType="numeric"
-        onChangeText={onNumberPersonMaxChange}
-        value={numberPersonMax.toString()}
-        style={styles.textInput}
-        nativeID="numberPersonMaxInput"
-      />
-      <TextInput
-        label="Coût"
-        placeholder="Coût"
-        keyboardType="numeric"
-        onChangeText={onCostChange}
-        value={cost.toString()}
-        style={styles.textInput}
-        nativeID="costInput"
-      />
-      <TextInput
-        label="Lieu"
-        placeholder="Lieu"
-        onChangeText={setPlace}
-        value={place}
-        style={styles.textInput}
-        nativeID="placeInput"
-      />
-      <Picker
-        label="Catégorie"
-        placeholder="Catégorie"
-        onValueChange={setCategory}
-        selectedValue={category}
-        style={styles.textInput}
-        nativeID="categoryPicker"
-      >
-        {Object.values(Category).map((category, key) => (
-          <Picker.Item label={category} value={category} key={key} />
-        ))}
-      </Picker>
-      <View style={styles.modalButtonsContainer}>
-        <Button
-          onPress={sendActivity}
-          mode="contained"
-          icon="check"
-          nativeID="validateButtonNewActivity"
+    <View style={{ flex: 1 }}>
+      <ScrollView style={styles.newActivityForm}>
+        <TextInput
+          label="Titre"
+          placeholder="Titre"
+          onChangeText={setTitle}
+          value={title}
+          style={styles.textInput}
+          nativeID="titleInput"
+          mode="outlined"
+        />
+        <TextInput
+          label="Description"
+          placeholder="Description"
+          onChangeText={setDescription}
+          value={description}
+          multiline={true}
+          numberOfLines={4}
+          style={styles.textInput}
+          nativeID="descriptionInput"
+          mode="outlined"
+        />
+        <View style={styles.dateContainer}>
+          <View style={styles.datePickerRow}>
+            <View style={styles.datePickerContainer}>
+              <Text>Date de début</Text>
+              <MaskedTextInput
+                placeholder="JJ/MM/AAAA"
+                mask="99/99/9999"
+                onChangeText={setStartDate}
+                defaultValue={today}
+                style={styles.dateInput}
+                keyboardType="numeric"
+              />
+            </View>
+            <View style={styles.datePickerContainer}>
+              <Text>Heure de début</Text>
+              <MaskedTextInput
+                placeholder="hh:mm"
+                mask="99:99"
+                onChangeText={setStartTime}
+                defaultValue={time}
+                style={styles.dateInput}
+                keyboardType="numeric"
+              />
+            </View>
+          </View>
+          <View style={styles.datePickerRow}>
+            <View style={styles.datePickerContainer}>
+              <Text>Date de fin</Text>
+              <MaskedTextInput
+                placeholder="JJ/MM/AAAA"
+                mask="99/99/9999"
+                onChangeText={setEndDate}
+                defaultValue={today}
+                style={styles.dateInput}
+                keyboardType="numeric"
+              />
+            </View>
+            <View style={styles.datePickerContainer}>
+              <Text>Heure de fin</Text>
+              <MaskedTextInput
+                placeholder="hh:mm"
+                mask="99:99"
+                onChangeText={setEndTime}
+                defaultValue={time}
+                style={styles.dateInput}
+                keyboardType="numeric"
+              />
+            </View>
+          </View>
+        </View>
+        <TextInput
+          label="Nombre de participants maximum"
+          placeholder="Nombre de participants maximum"
+          keyboardType="numeric"
+          onChangeText={onNumberPersonMaxChange}
+          value={numberPersonMax.toString()}
+          style={styles.textInput}
+          nativeID="numberPersonMaxInput"
+          mode="outlined"
+        />
+        <TextInput
+          label="Coût"
+          placeholder="Coût"
+          keyboardType="numeric"
+          onChangeText={onCostChange}
+          value={cost.toString()}
+          style={styles.textInput}
+          nativeID="costInput"
+          mode="outlined"
+        />
+        <TextInput
+          label="Lieu"
+          placeholder="Lieu"
+          onChangeText={setPlace}
+          value={place}
+          style={styles.textInput}
+          nativeID="placeInput"
+          mode="outlined"
+        />
+        <View style={styles.pickerContainer}>
+          <Picker
+            label="Catégorie"
+            placeholder="Catégorie"
+            onValueChange={setCategory}
+            selectedValue={category}
+            style={styles.picker}
+            nativeID="categoryPicker"
+          >
+            {Object.values(Category).map((category, key) => (
+              <Picker.Item label={category} value={category} key={key} />
+            ))}
+          </Picker>
+        </View>
+        <View style={styles.modalButtonsContainer}>
+          <Button
+            onPress={sendActivity}
+            mode="contained"
+            icon="check"
+            nativeID="validateButtonNewActivity"
+          >
+            Valider
+          </Button>
+        </View>
+        <Snackbar
+          visible={snackbarVisible}
+          onDismiss={() => setSnackbarVisible(false)}
+          style={snackbarType === 'error' ? styles.error : styles.success}
+          action={{
+            label: '⨯',
+            onPress: () => {
+              setSnackbarVisible(false);
+            },
+          }}
         >
-          Valider
-        </Button>
-      </View>
-      <Snackbar
-        visible={snackbarVisible}
-        onDismiss={() => setSnackbarVisible(false)}
-        style={snackbarType === 'error' ? styles.error : styles.success}
-        action={{
-          label: '⨯',
-          onPress: () => {
-            setSnackbarVisible(false);
-          },
-        }}
-      >
-        {snackbarMessage}
-      </Snackbar>
+          {snackbarMessage}
+        </Snackbar>
+        <View style={{ height: 100 }}></View>
+      </ScrollView>
     </View>
   );
 };
@@ -241,14 +299,44 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
   },
   newActivityForm: {
-    backgroundColor: 'white',
-    padding: 20,
-    borderRadius: 10,
-    margin: 20,
-    // height: 'fit-content',
+    backgroundColor: theme.colors.background,
+    flexGrow: 1,
   },
   textInput: {
-    margin: 10,
+    backgroundColor: theme.colors.primaryContainer,
+    marginVertical: 10,
+    marginHorizontal: 30,
+  },
+  picker: {
+    backgroundColor: theme.colors.primaryContainer,
+  },
+  pickerContainer: {
+    borderRadius: 4,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: theme.colors.outline,
+    overflow: 'hidden',
+    marginVertical: 10,
+    marginHorizontal: 31,
+  },
+  dateInput: {
+    margin: 0,
+  },
+  datePickerContainer: {
+    backgroundColor: theme.colors.primaryContainer,
+    borderRadius: 4,
+    padding: 5,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderColor: theme.colors.outline,
+    overflow: 'hidden',
+    width: '45%',
+  },
+  datePickerRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 10,
+    marginHorizontal: 30,
   },
   error: {
     backgroundColor: '#e35d6a',

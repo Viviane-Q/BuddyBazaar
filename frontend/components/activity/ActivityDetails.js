@@ -25,10 +25,10 @@ const ActivityDetails = ({ navigation, route }) => {
   );
   const startDate = `${new Date(activity.startDate).toLocaleDateString(
     'fr-FR'
-  )} ${new Date(activity.startDate).toLocaleTimeString('fr-FR')}`;
+  )} ${new Date(activity.startDate).toLocaleTimeString('fr-FR').slice(0, -3)}`;
   const endDate = `${new Date(activity.endDate).toLocaleDateString(
     'fr-FR'
-  )} ${new Date(activity.endDate).toLocaleTimeString('fr-FR')}`;
+  )} ${new Date(activity.endDate).toLocaleTimeString('fr-FR').slice(0, -3)}`;
 
   const deleteActivityHandler = () => {
     const res = dispatch(
