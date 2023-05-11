@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Button, BottomNavigation, Text } from 'react-native-paper';
+import { Button, BottomNavigation } from 'react-native-paper';
 import { setToken } from '../store/slices/authSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -8,8 +8,7 @@ import MyActivitiesPage from './MyActivitiesPage';
 import DiscoverPage from './DiscoverPage';
 import theme from '../theme';
 import SearchPage from './SearchPage';
-
-const MessagesRoute = () => <Text>Mes messages</Text>;
+import MessagesPage from './MessagesPage';
 
 // TODO move this to a separate file
 const ProfileRoute = ({navigation}) => {
@@ -72,7 +71,7 @@ const HomePage = ({ navigation }) => {
       case 'search':
         return <SearchPage jumpTo={jumpTo} navigation={navigation} />;
       case 'messages':
-        return <MessagesRoute jumpTo={jumpTo} />;
+        return <MessagesPage jumpTo={jumpTo} navigation={navigation}/>;
       case 'profile':
         return <ProfileRoute jumpTo={jumpTo} navigation={navigation} />;
     }

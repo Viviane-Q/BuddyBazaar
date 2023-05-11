@@ -11,6 +11,7 @@ import { setToken } from '../store/slices/authSlice';
 import ActivityForm from '../components/activity/ActivityForm';
 import ActivityDetails from '../components/activity/ActivityDetails';
 import { getUser } from '../store/thunks/authThunk';
+import MessageRoom from '../components/message/MessageRoom';
 
 const Stack = createNativeStackNavigator();
 
@@ -77,6 +78,13 @@ const Stacks = () => {
           name="ActivityDetails"
           component={ActivityDetails}
           options={{ title: "Détails de l'activité" }}
+        />
+        <Stack.Screen
+          name="MessageRoom"
+          component={MessageRoom}
+          options={({ route }) => ({
+            title: route?.params?.activity.title,
+          })}
         />
       </Stack.Navigator>
     </NavigationContainer>
