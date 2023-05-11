@@ -5,91 +5,23 @@ import theme from '../../theme';
 import BodyMedium from '../shared/typography/BodyMedium';
 import TitleSmall from '../shared/typography/TitleSmall';
 import BodySmall from '../shared/typography/BodySmall';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  sendMessage,
+  joinRoom,
+  listenToMessages,
+} from '../../store/thunks/messagesThunk';
 
-const messages = [
-  {
-    id: 1,
-    content: 'Hello',
-    user: {
-      id: 1,
-      username: 'John',
-    },
-    activityId: 1,
-    createdAt: new Date(),
-  },
-  {
-    id: 2,
-    content: 'Hello',
-    user: {
-      id: 2,
-      username: 'Jane',
-    },
-    activityId: 1,
-    createdAt: new Date(),
-  },
-  {
-    id: 3,
-    content:
-      'Hellooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo',
-    user: {
-      id: 1,
-      username: 'John',
-    },
-    activityId: 1,
-    createdAt: new Date(),
-  },
-  {
-    id: 4,
-    content:
-      'Hello usdhfsdkgdslflsdjfidsjfol sdfjsifds dsf sdhf jsd fsd dskfkdskfdsfhn sdkjfh usd fsd fds f',
-    user: {
-      id: 1,
-      username: 'John',
-    },
-    activityId: 1,
-    createdAt: new Date(),
-  },
-  {
-    id: 5,
-    content:
-      'Hello usdhfsdkgdslflsdjfidsjfol sdfjsifds dsf sdhf jsd fsd dskfkdskfdsfhn sdkjfh usd fsd fds f',
-    user: {
-      id: 1,
-      username: 'John',
-    },
-    activityId: 1,
-    createdAt: new Date(),
-  },
-  {
-    id: 6,
-    content:
-      'Hello usdhfsdkgdslflsdjfidsjfol sdfjsifds dsf sdhf jsd fsd dskfkdskfdsfhn sdkjfh usd fsd fds f',
-    user: {
-      id: 1,
-      username: 'John',
-    },
-    activityId: 1,
-    createdAt: new Date(),
-  },
-  {
-    id: 7,
-    content:
-      'Hello usdhfsdkgdslflsdjfidsjfol sdfjsifds dsf sdhf jsd fsd dskfkdskfdsfhn sdkjfh usd fsd fds f',
-    user: {
-      id: 2,
-      username: 'John',
-    },
-    activityId: 1,
-    createdAt: new Date(),
-  },
-];
-
-const MessageRoom = () => {
+const MessageRoom = ({ route }) => {
+  const messagesList = useSelector((state) => state.messages.messages);
   const userId = useSelector((state) => state.auth.id);
+  const activityId = route.params.activity.id;
   const [message, setMessage] = useState('');
+  const dispatch = useDispatch();
 
   useEffect(() => {
+    dispatch(joinRoom({ activityId }));
+    dispatch(listenToMessages({ activityId }));
     getMessages();
     // scroll to bottom
   }, []);
@@ -98,16 +30,17 @@ const MessageRoom = () => {
     // get messages by activityId
   };
 
-  const sendMessage = () => {
-    // send message
+  const sendMessageHandler = () => {
+    if (!message) return;
+    dispatch(sendMessage({ content: message, activityId }));
     setMessage('');
   };
 
   return (
     <View style={styles.container}>
       <ScrollView>
-        {messages &&
-          messages.map((message) => {
+        {messagesList &&
+          messagesList.map((message) => {
             return (
               <View
                 key={message.id}
@@ -119,7 +52,7 @@ const MessageRoom = () => {
               >
                 {message.user.id !== userId && (
                   <TitleSmall style={{ color: theme.colors.primaryContainer }}>
-                    {message.user.username}
+                    {message.user.name}
                   </TitleSmall>
                 )}
                 <BodyMedium style={{ color: theme.colors.primaryContainer }}>
@@ -140,11 +73,12 @@ const MessageRoom = () => {
           value={message}
           onChangeText={setMessage}
           nativeID="messageInput"
+          onSubmitEditing={sendMessageHandler}
         />
         <IconButton
           icon="send"
           iconColor={theme.colors.primary}
-          onPress={sendMessage}
+          onPress={sendMessageHandler}
           nativeID="sendMessageButton"
         />
       </View>
