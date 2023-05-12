@@ -122,7 +122,6 @@ const updateActivity = (req: CustomRequest): Promise<boolean> => {
     category,
   } = req.body;
 
-  console.log(place);
   const activityToUpdate = new Activity(
     id,
     title,
