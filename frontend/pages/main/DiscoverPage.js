@@ -10,8 +10,10 @@ import {
   getActivitiesByCategory,
   getActivitiesByDateRange,
 } from '../../store/thunks/activitiesThunk';
+import { useIsFocused } from '@react-navigation/native';
 
 const DiscoverPage = ({ navigation }) => {
+  const isFocused = useIsFocused();
   const [activitiesTonight, setActivitiesTonight] = useState([]);
   const [activitiesThisWeekend, setActivitiesThisWeekend] = useState([]);
 
@@ -45,7 +47,7 @@ const DiscoverPage = ({ navigation }) => {
         weekEndStart.getDate() + ((dayOfWeek + 7 - weekEndStart.getDay()) % 7)
       );
     }
-    const weekEndEnd = new Date(weekEndStart)
+    const weekEndEnd = new Date(weekEndStart);
     // if weekEndStart is sunday, get the next day
     if (weekEndStart.getDay() == 0) {
       weekEndEnd.setDate(weekEndEnd.getDate() + 1);
@@ -66,9 +68,11 @@ const DiscoverPage = ({ navigation }) => {
   };
 
   useEffect(() => {
-    getActivitiesTonight();
-    getActivitiesThisWeekend();
-  }, []);
+    if (isFocused) {
+      getActivitiesTonight();
+      getActivitiesThisWeekend();
+    }
+  }, [isFocused]);
 
   const searchCategory = (category) => {
     dispatch(getActivitiesByCategory({ category }));

@@ -103,7 +103,6 @@ export default function Navigation() {
             ),
           }}
         />
-        {/** TODO don't display these if no token provided */}
         {token ? (
           <Fragment>
             <Tab.Screen
