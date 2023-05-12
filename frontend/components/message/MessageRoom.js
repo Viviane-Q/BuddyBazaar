@@ -10,6 +10,7 @@ import {
   sendMessage,
   joinRoom,
   listenToMessages,
+  getMessages
 } from '../../store/thunks/messagesThunk';
 
 const MessageRoom = ({ route }) => {
@@ -22,13 +23,9 @@ const MessageRoom = ({ route }) => {
   useEffect(() => {
     dispatch(joinRoom({ activityId }));
     dispatch(listenToMessages({ activityId }));
-    getMessages();
+    dispatch(getMessages({ activityId }));
     // scroll to bottom
   }, []);
-
-  const getMessages = () => {
-    // get messages by activityId
-  };
 
   const sendMessageHandler = () => {
     if (!message) return;
