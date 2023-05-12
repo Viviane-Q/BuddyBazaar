@@ -1,16 +1,18 @@
 import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, View } from 'react-native';
-import TitleMedium from '../components/shared/typography/TitleMedium';
+import TitleMedium from '../../components/shared/typography/TitleMedium';
 import { List, Divider } from 'react-native-paper';
 import { useSelector, useDispatch } from 'react-redux';
-import { getOwnActivities } from '../store/thunks/activitiesThunk';
-import theme from '../theme';
+import { getOwnActivities } from '../../store/thunks/activitiesThunk';
+import theme from '../../theme';
 import { Image } from 'expo-image';
-import BodyMedium from '../components/shared/typography/BodyMedium';
-import TitleSmall from '../components/shared/typography/TitleSmall';
-import { getLastMessages } from '../store/thunks/messagesThunk';
+import BodyMedium from '../../components/shared/typography/BodyMedium';
+import TitleSmall from '../../components/shared/typography/TitleSmall';
+import { getLastMessages } from '../../store/thunks/messagesThunk';
+import { useIsFocused } from '@react-navigation/native';
 
 const MessagesPage = ({ navigation }) => {
+  const isFocused = useIsFocused();
   const userActivities = useSelector(
     (state) => state.activities.userActivities
   );
@@ -20,9 +22,11 @@ const MessagesPage = ({ navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getOwnActivities());
-    dispatch(getLastMessages());
-  }, []);
+    if (isFocused) {
+      dispatch(getOwnActivities());
+      dispatch(getLastMessages());
+    }
+  }, [isFocused]);
 
   const showMessages = ({ activity }) => {
     navigation.navigate('MessageRoom', { activity });

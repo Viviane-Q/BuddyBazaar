@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, View, Dimensions } from 'react-native';
 import { IconButton, Divider } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOwnActivities } from '../store/thunks/activitiesThunk';
-import ActivityCard from '../components/activity/ActivityCard';
-import TitleMedium from '../components/shared/typography/TitleMedium';
-import TitleSmall from '../components/shared/typography/TitleSmall';
-import theme from '../theme';
+import { getOwnActivities } from '../../store/thunks/activitiesThunk';
+import ActivityCard from '../../components/activity/ActivityCard';
+import TitleMedium from '../../components/shared/typography/TitleMedium';
+import TitleSmall from '../../components/shared/typography/TitleSmall';
+import theme from '../../theme';
 
 const MyActivitiesPage = ({ navigation }) => {
   const userId = useSelector((state) => state.auth.id);

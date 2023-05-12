@@ -1,8 +1,8 @@
 import React from 'react';
 import { ScrollView, View, StyleSheet } from 'react-native';
 import { useSelector } from 'react-redux';
-import ActivityCard from '../components/activity/ActivityCard';
-import TitleMedium from '../components/shared/typography/TitleMedium';
+import ActivityCard from '../../components/activity/ActivityCard';
+import TitleMedium from '../../components/shared/typography/TitleMedium';
 
 const SearchPage = ({ navigation }) => {
   const appActivities = useSelector(

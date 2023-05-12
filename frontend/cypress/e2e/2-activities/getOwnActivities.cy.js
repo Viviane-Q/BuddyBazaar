@@ -76,7 +76,7 @@ describe('Test de la page des activités de l\'utilisateur', () => {
         cy.get('input').last().type('123456')
         cy.get('div').contains('Se connecter').click()
         // get button where it says Mes activités
-        cy.get('[data-testid="bottom-navigation-bar-content-wrapper"] > div:nth-child(3)').click()
+        cy.get('a[href="/MyActivities"]').click();
     })
     it('Doit afficher au moins une activité sur la page des propres activités', () => {
         cy.get('div').contains('Une activit\u00E9').should('be.visible')

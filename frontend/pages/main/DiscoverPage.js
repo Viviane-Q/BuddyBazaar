@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
-import Category from '../entities/Category';
-import ActivityCard from '../components/activity/ActivityCard';
-import theme from '../theme';
-import TitleMedium from '../components/shared/typography/TitleMedium';
+import Category from '../../entities/Category';
+import ActivityCard from '../../components/activity/ActivityCard';
+import theme from '../../theme';
+import TitleMedium from '../../components/shared/typography/TitleMedium';
 import { useDispatch } from 'react-redux';
 import {
   getActivitiesByCategory,
   getActivitiesByDateRange,
-} from '../store/thunks/activitiesThunk';
+} from '../../store/thunks/activitiesThunk';
 
-const DiscoverPage = ({ jumpTo, navigation }) => {
+const DiscoverPage = ({ navigation }) => {
   const [activitiesTonight, setActivitiesTonight] = useState([]);
   const [activitiesThisWeekend, setActivitiesThisWeekend] = useState([]);
 
@@ -72,7 +72,7 @@ const DiscoverPage = ({ jumpTo, navigation }) => {
 
   const searchCategory = (category) => {
     dispatch(getActivitiesByCategory({ category }));
-    jumpTo('search');
+    navigation.navigate('Search');
   };
 
   return (

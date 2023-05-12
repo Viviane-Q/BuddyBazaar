@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Button, Snackbar } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { setEmail } from '../store/slices/authSlice';
-import { signInUser } from '../store/thunks/authThunk';
+import { setEmail } from '../../store/slices/authSlice';
+import { signInUser } from '../../store/thunks/authThunk';
 
 const LoginPage = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -51,7 +51,7 @@ const LoginPage = ({ navigation }) => {
   };
   useEffect(() => {
     if (token) {
-      navigation.navigate('Home');
+      navigation.navigate('Discover');
     }
   }, [token]);
   return (

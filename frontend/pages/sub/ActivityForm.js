@@ -10,7 +10,7 @@ import {
 } from '../../store/thunks/activitiesThunk';
 import Category from '../../entities/Category';
 import theme from '../../theme';
-import Autocomplete from '../shared/form/Autocomplete';
+import Autocomplete from '../../components/shared/form/Autocomplete';
 import { checkAddress } from '../../store/thunks/franceAPIThunk';
 
 // get current date and time without seconds
@@ -164,7 +164,7 @@ const ActivityForm = ({ navigation, route }) => {
         return;
       }
       resetForm();
-      navigation.navigate('Home');
+      navigation.navigate('MyActivities');
     });
   };
 

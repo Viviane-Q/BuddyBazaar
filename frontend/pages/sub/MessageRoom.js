@@ -2,9 +2,9 @@ import React, { useEffect, useState, useRef } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { IconButton, TextInput } from 'react-native-paper';
 import theme from '../../theme';
-import BodyMedium from '../shared/typography/BodyMedium';
-import TitleSmall from '../shared/typography/TitleSmall';
-import BodySmall from '../shared/typography/BodySmall';
+import BodyMedium from '../../components/shared/typography/BodyMedium';
+import TitleSmall from '../../components/shared/typography/TitleSmall';
+import BodySmall from '../../components/shared/typography/BodySmall';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   sendMessage,
