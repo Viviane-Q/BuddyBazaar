@@ -49,6 +49,42 @@ class MessageRepositorySQLite implements MessageRepository {
       );
     });
   }
+
+  async getLastMessagesForActivities(
+    activitiesId: number[]
+  ): Promise<Message[]> {
+    const seqMessages = await Promise.all(
+      activitiesId.map(async (activityId) => {
+        const seqMessage = await models.messages.findOne({
+          include: {
+            model: models.users,
+          },
+          where: {
+            activityId,
+          },
+          order: [['createdAt', 'DESC']],
+        });
+        return seqMessage;
+      })
+    );
+    return seqMessages
+      .filter((seq) => !!seq)
+      .map((message: any) => {
+        const sender = new User(
+          message.user.id,
+          message.user.name,
+          message.user.email
+        );
+        return new Message(
+          message.content,
+          message.userId,
+          message.activityId,
+          message.createdAt,
+          message.id,
+          sender
+        );
+      });
+  }
 }
 
 export default MessageRepositorySQLite;

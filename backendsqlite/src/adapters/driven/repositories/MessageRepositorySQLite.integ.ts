@@ -23,6 +23,8 @@ const buildActivity = (objActivity: any) => {
     objActivity.numberPersonMax,
     objActivity.cost,
     objActivity.place,
+    objActivity.longitude,
+    objActivity.latitude,
     objActivity.category,
     objActivity.userId,
     objActivity.dataValues.activitiesRegistrations?.map((registration: any) => {
@@ -101,6 +103,17 @@ describe('ActivityRepositorySQLite integration tests', () => {
       const messages = await messageRepository.getByActivityId(
         anActivity2.id as number
       );
+      expect(messages).toEqual(expectedMessages);
+    });
+  });
+
+  describe('getLastMessagesForActivities', () => {
+    test("should return the last message for each activity with the sender's infos", async () => {
+      const expectedMessages = [aMessage2];
+      const messages = await messageRepository.getLastMessagesForActivities([
+        anActivity.id as number,
+        anActivity2.id as number,
+      ]);
       expect(messages).toEqual(expectedMessages);
     });
   });
