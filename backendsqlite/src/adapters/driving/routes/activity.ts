@@ -141,6 +141,7 @@ router.put(
         });
       }
     } catch (err) {
+      console.log(err);
       if (err instanceof CodeError) {
         res.status(err.code).json({
           message: err.message,

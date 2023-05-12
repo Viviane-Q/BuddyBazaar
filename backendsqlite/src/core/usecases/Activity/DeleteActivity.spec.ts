@@ -51,6 +51,8 @@ describe('Feature: an user deletes an activity', () => {
         0,
         0,
         '',
+        0,
+        0,
         Category.Other,
         0
       )

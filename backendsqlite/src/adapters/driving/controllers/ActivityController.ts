@@ -117,9 +117,12 @@ const updateActivity = (req: CustomRequest): Promise<boolean> => {
     numberPersonMax,
     cost,
     place,
+    longitude,
+    latitude,
     category,
   } = req.body;
 
+  console.log(place);
   const activityToUpdate = new Activity(
     id,
     title,
@@ -128,9 +131,9 @@ const updateActivity = (req: CustomRequest): Promise<boolean> => {
     new Date(endDate),
     numberPersonMax,
     cost,
-    place.label,
-    place.coordinates[0],
-    place.coordinates[1],
+    place,
+    longitude,
+    latitude,
     category,
     req.user.id as number
   );

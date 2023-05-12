@@ -19,6 +19,8 @@ const whenUserUpdateActivity = (activityToChange: Activity) => {
     activityToChange.numberPersonMax,
     activityToChange.cost,
     activityToChange.place,
+    activityToChange.longitude,
+    activityToChange.latitude,
     activityToChange.category,
     activityToChange.userId
   );

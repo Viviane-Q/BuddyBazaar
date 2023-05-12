@@ -20,6 +20,8 @@ const convertToBody = (activity) => {
     numberPersonMax: activity.numberPersonMax,
     cost: activity.cost,
     place: activity.place,
+    longitude: activity.longitude,
+    latitude: activity.latitude,
     category: activity.category,
     userId: activity.userId,
     participants: activity.dataValues.activitiesRegistrations?.map(
