@@ -39,6 +39,8 @@ class ActivityRepositorySQLite implements ActivityRepository {
         activity.numberPersonMax,
         activity.cost,
         activity.place,
+        activity.longitude,
+        activity.latitude,
         activity.category,
         activity.userId,
         activity.dataValues.activitiesRegistrations?.map(

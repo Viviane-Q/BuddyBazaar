@@ -11,6 +11,11 @@ const roomListener = (socket: Socket, services: Services) => {
       token: socket.handshake.auth.token,
       context: { services },
     });
+    socket.rooms.forEach((room) => {
+      if (room.includes('activity:')) {
+        socket.leave(room);
+      }
+    });
     socket.join(`activity:${payload.activityId}`);
   });
 };

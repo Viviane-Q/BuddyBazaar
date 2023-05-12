@@ -61,5 +61,3 @@ export const getMessages = createAsyncThunk(
     return Promise.resolve({ res: data, error: !response.ok });
   }
 );
-
-// TODO leave room and stop listening to messages

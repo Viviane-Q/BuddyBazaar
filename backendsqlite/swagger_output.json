@@ -331,6 +331,12 @@
                 "place": {
                   "example": "any"
                 },
+                "longitude": {
+                  "example": "any"
+                },
+                "latitude": {
+                  "example": "any"
+                },
                 "category": {
                   "example": "any"
                 }
