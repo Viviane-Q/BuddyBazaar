@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { IconButton, TextInput } from 'react-native-paper';
 import theme from '../../theme';
@@ -10,7 +10,7 @@ import {
   sendMessage,
   joinRoom,
   listenToMessages,
-  getMessages
+  getMessages,
 } from '../../store/thunks/messagesThunk';
 
 const MessageRoom = ({ route }) => {
@@ -19,12 +19,12 @@ const MessageRoom = ({ route }) => {
   const activityId = route.params.activity.id;
   const [message, setMessage] = useState('');
   const dispatch = useDispatch();
+  const scrollViewRef = useRef();
 
   useEffect(() => {
     dispatch(joinRoom({ activityId }));
     dispatch(listenToMessages({ activityId }));
     dispatch(getMessages({ activityId }));
-    // scroll to bottom
   }, []);
 
   const sendMessageHandler = () => {
@@ -35,7 +35,12 @@ const MessageRoom = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView
+        ref={scrollViewRef}
+        onContentSizeChange={() =>
+          scrollViewRef.current.scrollToEnd({ animated: true })
+        }
+      >
         {messagesList &&
           messagesList.map((message) => {
             return (
