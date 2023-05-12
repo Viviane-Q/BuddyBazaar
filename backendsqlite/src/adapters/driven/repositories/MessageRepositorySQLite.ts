@@ -1,4 +1,5 @@
 import Message from '../../../domain/entities/Message';
+import User from '../../../domain/entities/User';
 import MessageRepository from '../../../domain/interfaces/repositories/MessageRepository';
 import models from '../models';
 
@@ -23,8 +24,30 @@ class MessageRepositorySQLite implements MessageRepository {
     }
   }
 
-  getByActivityId(activityId: number): Promise<Message[]> {
-    throw new Error('Method not implemented.');
+  async getByActivityId(activityId: number): Promise<Message[]> {
+    const seqMessages = await models.messages.findAll({
+      include: {
+        model: models.users,
+      },
+      where: {
+        activityId,
+      },
+    });
+    return seqMessages.map((message: any) => {
+      const sender = new User(
+        message.user.id,
+        message.user.name,
+        message.user.email
+      );
+      return new Message(
+        message.content,
+        message.userId,
+        message.activityId,
+        message.createdAt,
+        message.id,
+        sender
+      );
+    });
   }
 }
 

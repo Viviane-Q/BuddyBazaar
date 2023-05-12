@@ -7,7 +7,11 @@ import MessageRepositorySQLite from './MessageRepositorySQLite';
 const messageRepository = new MessageRepositorySQLite();
 
 let anActivity: Activity;
+let anActivity2: Activity;
 let anUser: User;
+let anUser2: User;
+let aMessage: Message;
+let aMessage2: Message;
 
 const buildActivity = (objActivity: any) => {
   return new Activity(
@@ -28,7 +32,18 @@ const buildActivity = (objActivity: any) => {
 };
 
 const buildUser = (userObj: any) => {
-  return new User(userObj.id, userObj.name, userObj.email, userObj.passhash);
+  return new User(userObj.id, userObj.name, userObj.email);
+};
+
+const buildMessage = (messageObj: any, user: User) => {
+  return new Message(
+    messageObj.content,
+    messageObj.userId,
+    messageObj.activityId,
+    messageObj.createdAt,
+    messageObj.id,
+    user
+  );
 };
 
 describe('ActivityRepositorySQLite integration tests', () => {
@@ -36,7 +51,11 @@ describe('ActivityRepositorySQLite integration tests', () => {
     await cleanDb();
     const data = await seedDb();
     anActivity = buildActivity(data.anActivity);
+    anActivity2 = buildActivity(data.anActivity2);
     anUser = buildUser(data.anUser);
+    anUser2 = buildUser(data.anUser2);
+    aMessage = buildMessage(data.aMessage, anUser);
+    aMessage2 = buildMessage(data.aMessage2, anUser2);
   });
 
   describe('create', () => {
@@ -73,6 +92,16 @@ describe('ActivityRepositorySQLite integration tests', () => {
       );
       const message = await messageRepository.create(messageToCreate);
       expect(message).toBeNull();
+    });
+  });
+
+  describe('getByActivityId', () => {
+    test("should return the messages of an activity with the sender's infos", async () => {
+      const expectedMessages = [aMessage, aMessage2];
+      const messages = await messageRepository.getByActivityId(
+        anActivity2.id as number
+      );
+      expect(messages).toEqual(expectedMessages);
     });
   });
 });
