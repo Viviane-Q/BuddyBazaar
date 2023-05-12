@@ -13,6 +13,8 @@ export default class ActivityFixtures {
     2,
     15,
     'ev3',
+    23.0,
+    45.0,
     Category.Sport,
     UserFixtures.userJean.id as number
   );
@@ -26,6 +28,8 @@ export default class ActivityFixtures {
     2,
     15,
     'ev3',
+    23.0,
+    45.0,
     Category.Sport,
     UserFixtures.userJean.id as number
   );
@@ -39,6 +43,8 @@ export default class ActivityFixtures {
     4,
     0,
     'Bastille',
+    45.19,
+    5.72,
     Category.Sport,
     UserFixtures.userMartin.id as number
   );
@@ -52,6 +58,8 @@ export default class ActivityFixtures {
     2,
     10,
     'Grenoble',
+    45.19,
+    5.72,
     Category.Cinema,
     UserFixtures.userMartin.id as number,
     [UserFixtures.userJean.id as number]
@@ -66,6 +74,8 @@ export default class ActivityFixtures {
     2,
     10,
     'Grenoble',
+    45.19,
+    5.72,
     Category.Cinema,
     UserFixtures.userJean.id as number
   );

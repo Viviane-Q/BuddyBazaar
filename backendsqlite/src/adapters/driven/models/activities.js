@@ -44,6 +44,22 @@ const activities = db.define(
     place: {
       type: Sequelize.STRING,
     },
+    longitude: {
+      type: Sequelize.FLOAT,
+      validate: {
+        isFloat: true,
+        min: -180,
+        max: 180,
+      },
+    },
+    latitude: {
+      type: Sequelize.FLOAT,
+      validate: {
+        isFloat: true,
+        min: -90,
+        max: 90,
+      },
+    },
     category: {
       type: Sequelize.STRING,
       validate: {

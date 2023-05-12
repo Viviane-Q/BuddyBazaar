@@ -21,6 +21,8 @@ class Activity {
   private _numberPersonMax: number;
   private _cost: number;
   private _place: string;
+  private _latitude: number;
+  private _longitude: number;
   private _category: Category;
   private _userId: number;
   private _participants: number[] = [];
@@ -34,6 +36,8 @@ class Activity {
     numberPersonMax: number,
     cost: number,
     place: string,
+    longitude: number,
+    latitude: number,
     category: Category,
     userId: number,
     participants?: number[]
@@ -49,6 +53,8 @@ class Activity {
     this._numberPersonMax = numberPersonMax;
     this._cost = cost;
     this._place = place;
+    this._longitude = longitude;
+    this._latitude = latitude;
     this._category = category;
     this._userId = userId;
     if (participants) {
@@ -92,6 +98,14 @@ class Activity {
     return this._place;
   }
 
+  get latitude(): number {
+    return this._latitude;
+  }
+
+  get longitude(): number {
+    return this._longitude;
+  }
+
   get userId(): number {
     return this._userId;
   }
@@ -110,6 +124,8 @@ class Activity {
       numberPersonMax: this._numberPersonMax,
       cost: this._cost,
       place: this._place,
+      latitude: this._latitude,
+      longitude: this._longitude,
       category: this._category,
       userId: this._userId,
       participants: this._participants,

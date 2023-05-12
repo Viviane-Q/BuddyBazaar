@@ -1,4 +1,4 @@
-import Activity, { Category } from '../../../domain/entities/Activity';
+import Activity from '../../../domain/entities/Activity';
 import User from '../../../domain/entities/User';
 import { cleanDb, seedDb } from '../../../util/dbUtils';
 import ActivityRegistrationRepositorySQLite from './ActivityRegistrationRepositorySQLite';
@@ -20,6 +20,8 @@ const buildActivity = (objActivity: any) => {
     objActivity.numberPersonMax,
     objActivity.cost,
     objActivity.place,
+    objActivity.longitude,
+    objActivity.latitude,
     objActivity.category,
     objActivity.userId
   );

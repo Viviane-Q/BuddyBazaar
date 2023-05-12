@@ -24,6 +24,8 @@ module.exports.seedDb = async () => {
     numberPersonMax: 5,
     cost: 10,
     place: 'Grenoble',
+    longitude: 45.188529,
+    latitude: 5.724524,
     category: 'Sport',
     userId: anUser.id,
   });
@@ -35,6 +37,8 @@ module.exports.seedDb = async () => {
     numberPersonMax: 2,
     cost: 5,
     place: 'Paris',
+    longitude: 48.856614,
+    latitude: 2.352222,
     category: 'Art',
     userId: anUser2.id,
   });
@@ -46,6 +50,8 @@ module.exports.seedDb = async () => {
     numberPersonMax: 4,
     cost: 15,
     place: 'Grenoble',
+    longitude: 45.188529,
+    latitude: 5.724524,
     category: 'Cinéma',
     userId: anUser2.id,
   });

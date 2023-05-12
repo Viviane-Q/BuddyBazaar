@@ -20,6 +20,8 @@ const convertToBody = (activity) => {
     numberPersonMax: activity.numberPersonMax,
     cost: activity.cost,
     place: activity.place,
+    longitude: activity.longitude,
+    latitude: activity.latitude,
     category: activity.category,
     userId: activity.userId,
     participants: activity.dataValues.activitiesRegistrations?.map(
@@ -54,6 +56,8 @@ describe('e2e: /api/activities', () => {
           numberPersonMax: 5,
           cost: 10,
           place: 'Grenoble',
+          longitude: 45.188529,
+          latitude: 5.724524,
           category: 'Sport',
         })
         .set({ token });
@@ -71,6 +75,8 @@ describe('e2e: /api/activities', () => {
           numberPersonMax: 5,
           cost: 10,
           place: 'Grenoble',
+          longitude: 45.188529,
+          latitude: 5.724524,
         })
         .set({ token });
       expect(response.statusCode).toBe(400);
@@ -89,6 +95,8 @@ describe('e2e: /api/activities', () => {
           numberPersonMax: 5,
           cost: 10,
           place: 'Grenoble',
+          longitude: 45.188529,
+          latitude: 5.724524,
           category: 'Sport',
         })
         .set({ token });

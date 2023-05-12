@@ -10,6 +10,8 @@ import {
 } from '../../store/thunks/activitiesThunk';
 import Category from '../../entities/Category';
 import theme from '../../theme';
+import Autocomplete from '../shared/form/Autocomplete';
+import { checkAddress } from '../../store/thunks/franceAPIThunk';
 
 // get current date and time without seconds
 
@@ -30,15 +32,30 @@ const ActivityForm = ({ navigation, route }) => {
   const [endTime, setEndTime] = useState(time);
   const [numberPersonMax, setNumberPersonMax] = useState(1);
   const [cost, setCost] = useState('0');
-  const [place, setPlace] = useState('');
+  const [place, setPlace] = useState({'label': '', 'coordinates': [0,0]});
   const [category, setCategory] = useState(Category.Sport);
-
+  const [suggestions, setSuggestions] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
     initActivity();
   }, []);
 
+  const getSuggestions = (address) => {
+    if(address.trim().length >= 3) {
+      const res = dispatch(checkAddress({ address }))
+      res.then((data) => {
+        if(!data.payload || data.payload.error) {
+          setSnackbarVisible(true);
+          setSnackbarType('error');
+          setSnackbarMessage(data.payload.message);
+          return;
+        }
+        setSuggestions(data.payload.res);
+      });
+    }
+  }
+    
   const initActivity = () => {
     if (isUpdate) {
       const activity = route.params.activity;
@@ -50,7 +67,7 @@ const ActivityForm = ({ navigation, route }) => {
       setEndTime(new Date(activity.endDate).toLocaleTimeString('fr-FR', { hour12: false }).slice(0, -3));
       setNumberPersonMax(activity.numberPersonMax);
       setCost(activity.cost);
-      setPlace(activity.place);
+      setPlace({label: activity.place, coordinates: [activity.longitude, activity.latitude]});
       setCategory(activity.category);
     }
   };
@@ -72,7 +89,7 @@ const ActivityForm = ({ navigation, route }) => {
     setEndTime(time);
     setNumberPersonMax(1);
     setCost('0');
-    setPlace('');
+    setPlace({'label': '', 'coordinates': [0,0]});
     setCategory(Category.Sport);
   };
 
@@ -111,7 +128,9 @@ const ActivityForm = ({ navigation, route }) => {
       endDate: endDateToSend,
       numberPersonMax,
       cost,
-      place,
+      place: place.label,
+      longitude: place.coordinates[0],
+      latitude: place.coordinates[1],
       category,
     };
     if (
@@ -120,10 +139,11 @@ const ActivityForm = ({ navigation, route }) => {
       !activity.startDate ||
       !activity.endDate ||
       !activity.numberPersonMax ||
-      !activity.cost ||
+      activity.cost==null ||
       !activity.place ||
       !activity.category
     ) {
+      
       setSnackbarVisible(true);
       setSnackbarType('error');
       setSnackbarMessage('Tous les champs doivent être remplis');
@@ -241,15 +261,17 @@ const ActivityForm = ({ navigation, route }) => {
           nativeID="costInput"
           mode="outlined"
         />
-        <TextInput
-          label="Lieu"
-          placeholder="Lieu"
-          onChangeText={setPlace}
-          value={place}
-          style={styles.textInput}
-          nativeID="placeInput"
-          mode="outlined"
-        />
+        <Autocomplete
+            value={place.label}
+            style={[styles.textInput]}
+            setFormValue={setPlace}
+            containerStyle={{}}
+            cypressID="placeInput"
+            label="Lieu"
+            data={suggestions}
+            menuStyle={{backgroundColor: 'white'}}
+            onChange={getSuggestions}
+          />
         <View style={styles.pickerContainer}>
           <Picker
             label="Catégorie"

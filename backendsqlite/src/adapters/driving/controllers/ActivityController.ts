@@ -59,7 +59,9 @@ const createActivity = (req: CustomRequest): Promise<boolean> => {
     new Date(endDate),
     numberPersonMax,
     cost,
-    place,
+    place.label,
+    place.longitude,
+    place.latitude,
     category,
     req.user.id as number
   );
@@ -115,6 +117,8 @@ const updateActivity = (req: CustomRequest): Promise<boolean> => {
     numberPersonMax,
     cost,
     place,
+    longitude,
+    latitude,
     category,
   } = req.body;
 
@@ -127,6 +131,8 @@ const updateActivity = (req: CustomRequest): Promise<boolean> => {
     numberPersonMax,
     cost,
     place,
+    longitude,
+    latitude,
     category,
     req.user.id as number
   );
