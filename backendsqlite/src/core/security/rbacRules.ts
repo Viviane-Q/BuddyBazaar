@@ -32,6 +32,6 @@ export default {
       ownsOrRegisteredForActivity(data),
     [Actions.UPDATE]: (): boolean => false,
     [Actions.DELETE]: (): boolean => false,
-    [Actions.READONE]: (): boolean => false,
+    [Actions.READONE]: (req: CustomRequest): boolean => isValidUser(req),
   },
 };

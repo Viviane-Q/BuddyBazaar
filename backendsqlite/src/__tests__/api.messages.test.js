@@ -51,3 +51,31 @@ describe('e2e: /api/activities/:activityId/messages', () => {
     });
   });
 });
+
+describe('e2e: /api/messages', () => {
+  beforeEach(async () => {
+    await cleanDb();
+    const data = await seedDb();
+    anUser = data.anUser;
+    anActivity2 = data.anActivity2;
+    aMessage = convertToBody(data.aMessage);
+    aMessage2 = convertToBody(data.aMessage2);
+    token = await login(request(app), anUser);
+  });
+
+  describe('GET /api/messages/last', () => {
+    describe('Rbac rules', () => {
+      authTest(request(app), 'get', '/api/messages/last')();
+    });
+    test("Example: get last messages for each user's activity", async () => {
+      const response = await request(app)
+        .get('/api/messages/last')
+        .set({ token });
+      expect(response.statusCode).toBe(200);
+      expect(response.body).toEqual({
+        message: 'Messages retrieved',
+        messages: [aMessage2],
+      });
+    });
+  });
+});

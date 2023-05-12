@@ -1,3 +1,4 @@
+import GetLastMessagesByUserId from '../../../core/usecases/Message/GetLastMessagesByUserId';
 import GetMessagesByActivityId from '../../../core/usecases/Message/GetMessagesByActivityId';
 import Message from '../../../domain/entities/Message';
 import { Services } from '../../config/services';
@@ -11,6 +12,16 @@ const getMessages = (req: CustomRequest): Promise<Message[]> => {
   });
 };
 
+const getLastMessages = (req: CustomRequest): Promise<Message[]> => {
+  const services = req.context.services as Services;
+  return GetLastMessagesByUserId({
+    userId: req.user.id as number,
+    activityRepository: services.activityRepository,
+    messageRepository: services.messageRepository,
+  });
+};
+
 export default {
   getMessages,
+  getLastMessages,
 };
