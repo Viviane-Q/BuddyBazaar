@@ -8,6 +8,10 @@ class MessageRepositoryInMemory implements MessageRepository {
     this.messages.push(...messages);
   }
 
+  clear(): void {
+    this.messages.splice(0, this.messages.length);
+  }
+
   getAll(): Promise<Message[]> {
     return Promise.resolve(this.messages);
   }
