@@ -23,7 +23,7 @@ export const joinRoom = createAsyncThunk(
     const { activityId } = args;
     const { token } = thunkAPI.getState().auth;
     const socket = getSocket(token);
-    socket.join(`activity:${activityId}`);
+    socket.emit('room:join', { activityId });
   }
 );
 

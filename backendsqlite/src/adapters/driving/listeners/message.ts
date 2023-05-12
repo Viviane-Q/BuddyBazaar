@@ -26,7 +26,6 @@ const messageListener = (socket: Socket, services: Services) => {
       if (createdMessage) {
         const serializedMessage = createdMessage.toObject();
         serializedMessage.user = payload.user;
-        socket.join(`activity:${payload.activityId}`);
         socket
           .in(`activity:${payload.activityId}`)
           .emit('message:emit', serializedMessage);
