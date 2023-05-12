@@ -68,7 +68,6 @@ test-e2e front:
   extends: .ci-front-read-cache
   script:
     - npm ci --prefer-offline
-    - npm run web &
     - npm install -g wait-on
     - npm run web &
     - wait-on http://localhost:19006
