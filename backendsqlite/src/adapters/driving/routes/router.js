@@ -1,5 +1,5 @@
 import user from './user';
-import activity from './activity';
+import activity from './activity/activity';
 
 const router = require('express').Router();
 

@@ -123,7 +123,7 @@ describe('e2e: /api/activities', () => {
     });
   });
 
-  describe('GET /api/activities/:id', () => {
+  describe('GET /api/activities/:activityId', () => {
     describe('Rbac rules', () => {
       authTest(request(app), 'get', '/api/activities/1')();
       test('Example: sends a request with an id not belonging to the user', async () => {
@@ -148,7 +148,7 @@ describe('e2e: /api/activities', () => {
     });
   });
 
-  describe('PUT /api/activities/:id', () => {
+  describe('PUT /api/activities/:activityId', () => {
     describe('Rbac rules', () => {
       authTest(request(app), 'put', '/api/activities/1')();
       test('Example: sends a request with an id not belonging to the user', async () => {
@@ -177,7 +177,7 @@ describe('e2e: /api/activities', () => {
     });
   });
 
-  describe('DELETE /api/activities/:id', () => {
+  describe('DELETE /api/activities/:activityId', () => {
     describe('Rbac rules', () => {
       authTest(request(app), 'delete', '/api/activities/1')();
       test('Example: sends a request with an id not belonging to the user', async () => {
@@ -236,7 +236,7 @@ describe('e2e: /api/activities', () => {
     });
   });
 
-  describe('POST /api/activities/:id/register', () => {
+  describe('POST /api/activities/:activityId/register', () => {
     describe('Rbac rules', () => {
       authTest(request(app), 'post', '/api/activities/1/register')();
     });
@@ -251,7 +251,7 @@ describe('e2e: /api/activities', () => {
     });
   });
 
-  describe('POST /api/activities/:id/unregister', () => {
+  describe('POST /api/activities/:activityId/unregister', () => {
     describe('Rbac rules', () => {
       authTest(request(app), 'post', '/api/activities/1/unregister')();
     });

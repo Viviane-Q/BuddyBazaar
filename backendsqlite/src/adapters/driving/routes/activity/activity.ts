@@ -1,13 +1,16 @@
 import { Request, Response, Router } from 'express';
-import CodeError from '../../../util/CodeError';
-import { CustomRequest } from '../types/CustomRequest';
-import ActivityController from '../controllers/ActivityController';
-import ActivityRegistrationController from '../controllers/ActivityRegistrationController';
-import { Resources } from '../../../core/security/Resources';
-import { Actions } from '../../../core/security/Actions';
-import { can } from '../../../core/security/can';
+import CodeError from '../../../../util/CodeError';
+import { CustomRequest } from '../../types/CustomRequest';
+import ActivityController from '../../controllers/ActivityController';
+import ActivityRegistrationController from '../../controllers/ActivityRegistrationController';
+import { Resources } from '../../../../core/security/Resources';
+import { Actions } from '../../../../core/security/Actions';
+import { can } from '../../../../core/security/can';
+import message from './message';
 
-const router = Router();
+const router = Router({ mergeParams: true });
+
+router.use('/:activityId/messages', message);
 
 router.get('/', async (req: Request, res: Response) => {
   try {
@@ -89,7 +92,7 @@ router.get(
 );
 
 router.get(
-  '/:id',
+  '/:activityId',
   can(Resources.ACTIVITY, Actions.READONE),
   async (req: Request, res: Response) => {
     try {
@@ -121,7 +124,7 @@ router.get(
 );
 
 router.put(
-  '/:id',
+  '/:activityId',
   can(Resources.ACTIVITY, Actions.UPDATE),
   async (req: Request, res: Response) => {
     try {
@@ -152,7 +155,7 @@ router.put(
 );
 
 router.delete(
-  '/:id',
+  '/:activityId',
   can(Resources.ACTIVITY, Actions.DELETE),
   async (req: Request, res: Response) => {
     try {
@@ -183,7 +186,7 @@ router.delete(
 );
 
 router.post(
-  '/:id/register',
+  '/:activityId/register',
   can(Resources.ACTIVITY, Actions.READ),
   async (req: Request, res: Response) => {
     try {
@@ -214,7 +217,7 @@ router.post(
 );
 
 router.post(
-  '/:id/unregister',
+  '/:activityId/unregister',
   can(Resources.ACTIVITY, Actions.READ),
   async (req: Request, res: Response) => {
     try {
