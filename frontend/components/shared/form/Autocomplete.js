@@ -23,12 +23,14 @@ const Autocomplete = ({
     origOnChange(text);
     setValue(text);
   };
-
+  useEffect(() => {
+    setValue(origValue);
+  }, [origValue]);
   return (
     <View style={[containerStyle]}>
       <TextInput
         onFocus={() => {
-          if (data && value.length >= 3 ) {
+          if (data && value.length >= 3 && data.length > 0 ) {
             setMenuVisible(true);
           }
         }}
@@ -56,7 +58,6 @@ const Autocomplete = ({
               key={i}
               style={{ width: '100%' }}
               onPress={() => {
-                console.log('suggestion', suggestion);
                 setValue(suggestion.label);
                 setFormValue(suggestion);
                 setMenuVisible(false);

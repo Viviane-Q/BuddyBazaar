@@ -67,7 +67,7 @@ const ActivityForm = ({ navigation, route }) => {
       setEndTime(new Date(activity.endDate).toLocaleTimeString('fr-FR', { hour12: false }).slice(0, -3));
       setNumberPersonMax(activity.numberPersonMax);
       setCost(activity.cost);
-      setPlace(activity.place);
+      setPlace({label: activity.place, coordinates: [activity.longitude, activity.latitude]});
       setCategory(activity.category);
     }
   };
@@ -141,14 +141,6 @@ const ActivityForm = ({ navigation, route }) => {
       !activity.place ||
       !activity.category
     ) {
-      // console.log(activity.title);
-      // console.log(activity.description);
-      // console.log(activity.startDate);
-      // console.log(activity.endDate);
-      // console.log(activity.numberPersonMax);
-      // console.log(activity.cost);
-      // console.log(activity.place);
-      // console.log(activity.category);
       
       setSnackbarVisible(true);
       setSnackbarType('error');
