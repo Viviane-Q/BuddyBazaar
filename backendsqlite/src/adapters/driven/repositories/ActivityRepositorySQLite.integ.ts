@@ -20,6 +20,8 @@ const buildActivity = (objActivity: any) => {
     objActivity.numberPersonMax,
     objActivity.cost,
     objActivity.place,
+    objActivity.longitude,
+    objActivity.latitude,
     objActivity.category,
     objActivity.userId,
     objActivity.dataValues.activitiesRegistrations?.map((registration: any) => {
@@ -53,6 +55,8 @@ describe('ActivityRepositorySQLite integration tests', () => {
         10,
         10,
         'place',
+        40,
+        5,
         Category.Sport,
         anUser.id as number
       );
@@ -65,6 +69,8 @@ describe('ActivityRepositorySQLite integration tests', () => {
         activityToCreate.numberPersonMax,
         activityToCreate.cost,
         activityToCreate.place,
+        activityToCreate.longitude,
+        activityToCreate.latitude,
         activityToCreate.category,
         activityToCreate.userId
       );
@@ -115,6 +121,8 @@ describe('ActivityRepositorySQLite integration tests', () => {
           10,
           10,
           'place',
+          40,
+          5,
           Category.Sport,
           1
         )

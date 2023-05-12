@@ -15,16 +15,15 @@ const Autocomplete = ({
   const [value, setValue] = useState(origValue);
   const [menuVisible, setMenuVisible] = useState(false);
   const handleChangeText = (text) => {
-    origOnChange(text);
-    setValue(text);
-  };
-  useEffect(() => {
-    if(!data || value.length <3 ){
+    if(text.length <3 ){
       setMenuVisible(false);
     }else{
       setMenuVisible(true);
     }
-  }, [data,value]);
+    origOnChange(text);
+    setValue(text);
+  };
+
   return (
     <View style={[containerStyle]}>
       <TextInput
@@ -33,7 +32,7 @@ const Autocomplete = ({
             setMenuVisible(true);
           }
         }}
-        onBlur={() => {setMenuVisible(false);}}
+        onBlur={() => {setTimeout(()=>setMenuVisible(false),200)}}
         label={label}
         style={style}
         onChangeText={handleChangeText}
@@ -52,17 +51,17 @@ const Autocomplete = ({
           }}
           nativeID={`${cypressID}-menu`}
         >
-          {data.map((datum, i) => (
+          {data.map((suggestion, i) => (
             <Menu.Item
               key={i}
               style={{ width: '100%' }}
               onPress={() => {
-                setValue(datum);
-                setFormValue(datum);
-                console.log(datum);
+                console.log('suggestion', suggestion);
+                setValue(suggestion.label);
+                setFormValue(suggestion);
                 setMenuVisible(false);
               }}
-              title={datum}
+              title={suggestion.label}
             />
           ))}
         </View>

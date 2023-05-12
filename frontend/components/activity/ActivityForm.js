@@ -32,7 +32,7 @@ const ActivityForm = ({ navigation, route }) => {
   const [endTime, setEndTime] = useState(time);
   const [numberPersonMax, setNumberPersonMax] = useState(1);
   const [cost, setCost] = useState('0');
-  const [place, setPlace] = useState('');
+  const [place, setPlace] = useState({'label': '', 'coordinates': [0,0]});
   const [category, setCategory] = useState(Category.Sport);
   const [suggestions, setSuggestions] = useState([]);
   const dispatch = useDispatch();
@@ -89,7 +89,7 @@ const ActivityForm = ({ navigation, route }) => {
     setEndTime(time);
     setNumberPersonMax(1);
     setCost('0');
-    setPlace('');
+    setPlace({'label': '', 'coordinates': [0,0]});
     setCategory(Category.Sport);
   };
 
@@ -137,10 +137,19 @@ const ActivityForm = ({ navigation, route }) => {
       !activity.startDate ||
       !activity.endDate ||
       !activity.numberPersonMax ||
-      !activity.cost ||
+      activity.cost==null ||
       !activity.place ||
       !activity.category
     ) {
+      // console.log(activity.title);
+      // console.log(activity.description);
+      // console.log(activity.startDate);
+      // console.log(activity.endDate);
+      // console.log(activity.numberPersonMax);
+      // console.log(activity.cost);
+      // console.log(activity.place);
+      // console.log(activity.category);
+      
       setSnackbarVisible(true);
       setSnackbarType('error');
       setSnackbarMessage('Tous les champs doivent être remplis');
@@ -259,7 +268,7 @@ const ActivityForm = ({ navigation, route }) => {
           mode="outlined"
         />
         <Autocomplete
-            value={place}
+            value={place.label}
             style={[styles.textInput]}
             setFormValue={setPlace}
             containerStyle={{}}

@@ -68,12 +68,10 @@ test-e2e front:
   script:
     - npm ci --prefer-offline
     - npm run web &
-    - sleep 20
+    - npm install -g wait-on
+    - npm run web &
+    - wait-on http://localhost:19006
     - npm run test
-    # - npm install -g wait-on
-    # - npm run web &
-    # - wait-on http://localhost:19006
-    # - npm run test
   needs:
     - install front dependencies
   artifacts:

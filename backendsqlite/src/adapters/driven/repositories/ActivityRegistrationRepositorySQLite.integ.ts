@@ -20,6 +20,8 @@ const buildActivity = (objActivity: any) => {
     objActivity.numberPersonMax,
     objActivity.cost,
     objActivity.place,
+    objActivity.longitude,
+    objActivity.latitude,
     objActivity.category,
     objActivity.userId
   );

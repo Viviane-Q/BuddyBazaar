@@ -18,6 +18,8 @@ class ActivityRepositorySQLite implements ActivityRepository {
       activity.numberPersonMax,
       activity.cost,
       activity.place,
+      activity.longitude,
+      activity.latitude,
       activity.category,
       activity.userId
     );
@@ -37,6 +39,8 @@ class ActivityRepositorySQLite implements ActivityRepository {
       seqActivity.numberPersonMax,
       seqActivity.cost,
       seqActivity.place,
+      seqActivity.longitude,
+      seqActivity.latitude,
       seqActivity.category,
       seqActivity.userId
     );
@@ -114,6 +118,8 @@ class ActivityRepositorySQLite implements ActivityRepository {
         seqActivity.numberPersonMax,
         seqActivity.cost,
         seqActivity.place,
+        seqActivity.longitude,
+        seqActivity.latitude,
         seqActivity.category,
         seqActivity.userId,
         seqActivity.activitiesRegistrations.map((registration: any) => {
@@ -138,6 +144,8 @@ class ActivityRepositorySQLite implements ActivityRepository {
         seqActivity.numberPersonMax,
         seqActivity.cost,
         seqActivity.place,
+        seqActivity.longitude,
+        seqActivity.latitude,
         seqActivity.category,
         seqActivity.userId,
         seqActivity.activitiesRegistrations.map((registration: any) => {
@@ -168,6 +176,8 @@ class ActivityRepositorySQLite implements ActivityRepository {
         seqActivity.numberPersonMax,
         seqActivity.cost,
         seqActivity.place,
+        seqActivity.longitude,
+        seqActivity.latitude,
         seqActivity.category,
         seqActivity.userId,
         seqActivity.activitiesRegistrations.map((registration: any) => {

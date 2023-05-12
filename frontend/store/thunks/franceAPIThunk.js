@@ -9,7 +9,7 @@ export const checkAddress = createAsyncThunk('franceAPI/checkAddress', async (ar
     let res = [];
     if (response.ok) {
         data.features.forEach((feature) => {
-            res.push(feature.properties.label);
+            res.push({label: feature.properties.label, coordinates: feature.geometry.coordinates});
         });
     }
     return Promise.resolve({ res, error: !response.ok });
