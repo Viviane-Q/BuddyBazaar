@@ -1,6 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import getSocket from '../../socket';
-import { addMessage, setMessages } from '../slices/messagesSlice';
+import {
+  addMessage,
+  setMessages,
+  setLastMessageByActivity,
+} from '../slices/messagesSlice';
 import Constants from 'expo-constants';
 const BACKEND_URL = Constants.expoConfig.extra.backendUrl;
 
@@ -57,6 +61,25 @@ export const getMessages = createAsyncThunk(
     const data = await response.json();
     if (response.ok) {
       thunkAPI.dispatch(setMessages(data.messages));
+    }
+    return Promise.resolve({ res: data, error: !response.ok });
+  }
+);
+
+export const getLastMessages = createAsyncThunk(
+  'messages/getLastMessages',
+  async (args, thunkAPI) => {
+    const { token } = thunkAPI.getState().auth;
+    const response = await fetch(`${BACKEND_URL}/api/messages/last`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        token: `${token}`,
+      },
+    });
+    const data = await response.json();
+    if (response.ok) {
+      thunkAPI.dispatch(setLastMessageByActivity(data.messages));
     }
     return Promise.resolve({ res: data, error: !response.ok });
   }

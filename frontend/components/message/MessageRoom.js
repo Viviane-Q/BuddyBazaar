@@ -43,6 +43,11 @@ const MessageRoom = ({ route }) => {
       >
         {messagesList &&
           messagesList.map((message) => {
+            const timestamp = `${new Date(message.createdAt).toLocaleDateString(
+              'fr-FR'
+            )} ${new Date(message.createdAt)
+              .toLocaleTimeString('fr-FR')
+              .slice(0, -3)}`;
             return (
               <View
                 key={message.id}
@@ -61,7 +66,7 @@ const MessageRoom = ({ route }) => {
                   {message.content}
                 </BodyMedium>
                 <BodySmall style={{ color: theme.colors.primaryContainer }}>
-                  {message.createdAt.toLocaleString('fr-FR')}
+                  {timestamp}
                 </BodySmall>
               </View>
             );

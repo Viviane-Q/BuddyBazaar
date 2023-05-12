@@ -12,6 +12,8 @@ import ActivityForm from '../components/activity/ActivityForm';
 import ActivityDetails from '../components/activity/ActivityDetails';
 import { getUser } from '../store/thunks/authThunk';
 import MessageRoom from '../components/message/MessageRoom';
+import theme from '../theme';
+import TitleMedium from '../components/shared/typography/TitleMedium';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,10 +41,9 @@ const Stacks = () => {
       <Stack.Navigator
         initialRouteName="Landing"
         screenOptions={{
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
+          headerTitle: (props) => <TitleMedium>{props.children}</TitleMedium>,
           headerTitleAlign: 'left',
+          headerStyle: { backgroundColor: theme.colors.primaryContainer },
         }}
       >
         <Stack.Screen

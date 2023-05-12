@@ -8,15 +8,20 @@ import theme from '../theme';
 import { Image } from 'expo-image';
 import BodyMedium from '../components/shared/typography/BodyMedium';
 import TitleSmall from '../components/shared/typography/TitleSmall';
+import { getLastMessages } from '../store/thunks/messagesThunk';
 
 const MessagesPage = ({ navigation }) => {
   const userActivities = useSelector(
     (state) => state.activities.userActivities
   );
+  const lastMessageByActivity = useSelector(
+    (state) => state.messages.lastMessageByActivity
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getOwnActivities());
+    dispatch(getLastMessages());
   }, []);
 
   const showMessages = ({ activity }) => {
@@ -29,18 +34,34 @@ const MessagesPage = ({ navigation }) => {
         <View style={styles.viewContainer}>
           <TitleMedium>Mes messages</TitleMedium>
           {userActivities.map((activity) => {
+            const lastMessage = lastMessageByActivity.find(
+              (message) => message.activityId == activity.id
+            );
+            const timestamp = lastMessage
+              ? `${new Date(lastMessage.createdAt).toLocaleDateString(
+                  'fr-FR'
+                )} ${new Date(lastMessage.createdAt)
+                  .toLocaleTimeString('fr-FR')
+                  .slice(0, -3)}`
+              : '';
             return (
               <View key={activity.id}>
                 <List.Item
-                  title={() => <TitleSmall>{activity.title}</TitleSmall>}
-                  description={() => <BodyMedium>{'Last message'}</BodyMedium>}
+                  title={() => <TitleSmall numberOfLines={1}>{activity.title}</TitleSmall>}
+                  description={() => (
+                    <BodyMedium numberOfLines={1}>
+                      {lastMessage
+                        ? lastMessage.content
+                        : 'Encore aucun message envoyé'}
+                    </BodyMedium>
+                  )}
                   left={() => (
                     <Image
                       source={`https://picsum.photos/700?id=${activity.id}`}
                       style={styles.iconImage}
                     />
                   )}
-                  right={() => <BodyMedium>Timestamp</BodyMedium>}
+                  right={() => <BodyMedium>{timestamp}</BodyMedium>}
                   onPress={() => showMessages({ activity })}
                 />
                 <Divider
