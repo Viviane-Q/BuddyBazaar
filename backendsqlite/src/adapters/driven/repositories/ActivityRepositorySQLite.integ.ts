@@ -44,6 +44,23 @@ describe('ActivityRepositorySQLite integration tests', () => {
     anUser = buildUser(data.anUser);
   });
 
+  describe('getByUserIdAndActivityId', () => {
+    test('should return the activity if the user is the owner', async () => {
+      const activity = await activityRepository.getByUserIdAndActivityId(
+        anActivity.id as number,
+        anUser.id as number
+      );
+      expect(activity).toEqual(anActivity);
+    });
+    test('should return the activity if the user is a participant', async () => {
+      const activity = await activityRepository.getByUserIdAndActivityId(
+        anActivity2.id as number,
+        anUser.id as number
+      );
+      expect(activity).toEqual(anActivity2);
+    });
+  });
+
   describe('create', () => {
     test('should return the created activity', async () => {
       const activityToCreate = new Activity(

@@ -8,7 +8,7 @@ const registerForAnActivity = async (req: CustomRequest): Promise<boolean> => {
   const services = req.context.services as Services;
   try {
     const res = await RegisterForAnActivity({
-      activityId: parseInt(req.params.id),
+      activityId: parseInt(req.params.activityId),
       userId: req.user.id as number,
       activityRepository: services.activityRepository,
       activityRegistrationRepository: services.activityRegistrationRepository,
@@ -22,7 +22,7 @@ const registerForAnActivity = async (req: CustomRequest): Promise<boolean> => {
 const unregisterForAnActivity = (req: CustomRequest): Promise<boolean> => {
   const services = req.context.services as Services;
   return UnregisterForAnActivity({
-    activityId: parseInt(req.params.id),
+    activityId: parseInt(req.params.activityId),
     userId: req.user.id as number,
     activityRegistrationRepository: services.activityRegistrationRepository,
   });

@@ -8,7 +8,7 @@ const LandingPage = ({ navigation }) => {
   const { token } = useSelector((state) => state.auth);
   useEffect(() => {
     if (token) {
-      navigation.navigate('Home');
+      navigation.navigate('Discover');
     }
   }, [token]);
   return (
@@ -33,7 +33,7 @@ const LandingPage = ({ navigation }) => {
           Connexion
         </Button>
         <Button
-          onPress={() => navigation.navigate('Home')}
+          onPress={() => navigation.navigate('Discover')}
           mode="outlined"
           icon="map-search"
           style={styles.button}

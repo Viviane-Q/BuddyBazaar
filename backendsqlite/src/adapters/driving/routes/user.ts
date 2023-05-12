@@ -4,7 +4,7 @@ import CodeError from '../../../util/CodeError';
 import { CustomRequest } from '../types/CustomRequest';
 import { Resources } from '../../../core/security/Resources';
 import { Actions } from '../../../core/security/Actions';
-import can from '../../../core/security/can';
+import { can } from '../../../core/security/can';
 
 const router = Router();
 

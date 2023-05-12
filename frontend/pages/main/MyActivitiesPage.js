@@ -2,13 +2,15 @@ import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, View, Dimensions } from 'react-native';
 import { IconButton, Divider } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { getOwnActivities } from '../store/thunks/activitiesThunk';
-import ActivityCard from '../components/activity/ActivityCard';
-import TitleMedium from '../components/shared/typography/TitleMedium';
-import TitleSmall from '../components/shared/typography/TitleSmall';
-import theme from '../theme';
+import { getOwnActivities } from '../../store/thunks/activitiesThunk';
+import ActivityCard from '../../components/activity/ActivityCard';
+import TitleMedium from '../../components/shared/typography/TitleMedium';
+import TitleSmall from '../../components/shared/typography/TitleSmall';
+import theme from '../../theme';
+import { useIsFocused } from '@react-navigation/native';
 
 const MyActivitiesPage = ({ navigation }) => {
+  const isFocused = useIsFocused();
   const userId = useSelector((state) => state.auth.id);
   const userActivities = useSelector(
     (state) => state.activities.userActivities
@@ -28,8 +30,10 @@ const MyActivitiesPage = ({ navigation }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getOwnActivities());
-  }, []);
+    if (isFocused) {
+      dispatch(getOwnActivities());
+    }
+  }, [isFocused]);
 
   const createActivity = () => {
     navigation.navigate('ActivityForm');

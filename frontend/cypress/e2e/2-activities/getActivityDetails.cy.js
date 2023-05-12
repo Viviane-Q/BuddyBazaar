@@ -107,8 +107,118 @@ describe("Test de la page de détails d'une activité", () => {
       cy.intercept('GET', '/search/*', (req) => {
         req.reply({
           statusCode: 200,
-          body: { "type": "FeatureCollection", "version": "draft", "features": [{ "type": "Feature", "geometry": { "type": "Point", "coordinates": [4.835, 45.758] }, "properties": { "label": "Lyon", "score": 0.963941818181818, "id": "69123", "type": "municipality", "name": "Lyon", "postcode": "69001", "citycode": "69123", "x": 842627.75, "y": 6519256.98, "population": 522228, "city": "Lyon", "context": "69, Rhône, Auvergne-Rhône-Alpes", "importance": 0.60336, "municipality": "Lyon" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": [1.90357, 43.04293] }, "properties": { "label": "Lyon 09500 Saint-Quentin-la-Tour", "score": 0.9355990909090908, "id": "09274_3tp8vj", "name": "Lyon", "postcode": "09500", "citycode": "09274", "x": 610585.32, "y": 6216577.88, "city": "Saint-Quentin-la-Tour", "context": "09, Ariège, Occitanie", "type": "street", "importance": 0.29159, "street": "Lyon" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": [1.53869, 43.403589] }, "properties": { "label": "Lyons 31560 Saint-Léon", "score": 0.848940909090909, "id": "31495_y1rdbu", "name": "Lyons", "postcode": "31560", "citycode": "31495", "x": 581574.03, "y": 6257147.97, "city": "Saint-Léon", "context": "31, Haute-Garonne, Occitanie", "type": "street", "importance": 0.33835, "street": "Lyons" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": [-0.364374, 44.568035] }, "properties": { "label": "Lyonne 33210 Pujols-sur-Ciron", "score": 0.8470945454545454, "id": "33343_os02c6", "name": "Lyonne", "postcode": "33210", "citycode": "33343", "x": 432925.98, "y": 6391130.01, "city": "Pujols-sur-Ciron", "context": "33, Gironde, Nouvelle-Aquitaine", "type": "street", "importance": 0.31804, "street": "Lyonne" } }, { "type": "Feature", "geometry": { "type": "Point", "coordinates": [3.060065, 50.618539] }, "properties": { "label": "Rue de Lyon 59000 Lille", "score": 0.7078027272727272, "id": "59350_5753", "name": "Rue de Lyon", "postcode": "59000", "citycode": "59350", "oldcitycode": "59350", "x": 704258.02, "y": 7057948.8, "city": "Lille", "oldcity": "Lille", "context": "59, Nord, Hauts-de-France", "type": "street", "importance": 0.78583, "street": "Rue de Lyon" } }], "attribution": "BAN", "licence": "ETALAB-2.0", "query": "Lyon", "limit": 5 }
-        })
+          body: {
+            type: 'FeatureCollection',
+            version: 'draft',
+            features: [
+              {
+                type: 'Feature',
+                geometry: { type: 'Point', coordinates: [4.835, 45.758] },
+                properties: {
+                  label: 'Lyon',
+                  score: 0.963941818181818,
+                  id: '69123',
+                  type: 'municipality',
+                  name: 'Lyon',
+                  postcode: '69001',
+                  citycode: '69123',
+                  x: 842627.75,
+                  y: 6519256.98,
+                  population: 522228,
+                  city: 'Lyon',
+                  context: '69, Rhône, Auvergne-Rhône-Alpes',
+                  importance: 0.60336,
+                  municipality: 'Lyon',
+                },
+              },
+              {
+                type: 'Feature',
+                geometry: { type: 'Point', coordinates: [1.90357, 43.04293] },
+                properties: {
+                  label: 'Lyon 09500 Saint-Quentin-la-Tour',
+                  score: 0.9355990909090908,
+                  id: '09274_3tp8vj',
+                  name: 'Lyon',
+                  postcode: '09500',
+                  citycode: '09274',
+                  x: 610585.32,
+                  y: 6216577.88,
+                  city: 'Saint-Quentin-la-Tour',
+                  context: '09, Ariège, Occitanie',
+                  type: 'street',
+                  importance: 0.29159,
+                  street: 'Lyon',
+                },
+              },
+              {
+                type: 'Feature',
+                geometry: { type: 'Point', coordinates: [1.53869, 43.403589] },
+                properties: {
+                  label: 'Lyons 31560 Saint-Léon',
+                  score: 0.848940909090909,
+                  id: '31495_y1rdbu',
+                  name: 'Lyons',
+                  postcode: '31560',
+                  citycode: '31495',
+                  x: 581574.03,
+                  y: 6257147.97,
+                  city: 'Saint-Léon',
+                  context: '31, Haute-Garonne, Occitanie',
+                  type: 'street',
+                  importance: 0.33835,
+                  street: 'Lyons',
+                },
+              },
+              {
+                type: 'Feature',
+                geometry: {
+                  type: 'Point',
+                  coordinates: [-0.364374, 44.568035],
+                },
+                properties: {
+                  label: 'Lyonne 33210 Pujols-sur-Ciron',
+                  score: 0.8470945454545454,
+                  id: '33343_os02c6',
+                  name: 'Lyonne',
+                  postcode: '33210',
+                  citycode: '33343',
+                  x: 432925.98,
+                  y: 6391130.01,
+                  city: 'Pujols-sur-Ciron',
+                  context: '33, Gironde, Nouvelle-Aquitaine',
+                  type: 'street',
+                  importance: 0.31804,
+                  street: 'Lyonne',
+                },
+              },
+              {
+                type: 'Feature',
+                geometry: { type: 'Point', coordinates: [3.060065, 50.618539] },
+                properties: {
+                  label: 'Rue de Lyon 59000 Lille',
+                  score: 0.7078027272727272,
+                  id: '59350_5753',
+                  name: 'Rue de Lyon',
+                  postcode: '59000',
+                  citycode: '59350',
+                  oldcitycode: '59350',
+                  x: 704258.02,
+                  y: 7057948.8,
+                  city: 'Lille',
+                  oldcity: 'Lille',
+                  context: '59, Nord, Hauts-de-France',
+                  type: 'street',
+                  importance: 0.78583,
+                  street: 'Rue de Lyon',
+                },
+              },
+            ],
+            attribution: 'BAN',
+            licence: 'ETALAB-2.0',
+            query: 'Lyon',
+            limit: 5,
+          },
+        });
       });
       cy.visit('http://localhost:19006');
       cy.get('div').contains('Connexion').click();
@@ -116,9 +226,7 @@ describe("Test de la page de détails d'une activité", () => {
       cy.get('input').last().type('123456');
       cy.get('div').contains('Se connecter').click();
       // get button where it says Mes activités
-      cy.get(
-        '[data-testid="bottom-navigation-bar-content-wrapper"] > div:nth-child(3)'
-      ).click();
+      cy.get('a[href="/MyActivities"]').click();
     });
     it("Doit afficher les détails d'une activité avec les boutons de suppression et de modification", () => {
       cy.get('div').contains('Une activité').click();
@@ -141,7 +249,7 @@ describe("Test de la page de détails d'une activité", () => {
       cy.get('div').contains('Modifier une activité');
       cy.get('#placeInput').clear();
       cy.get('#placeInput').type('Lyon');
-      cy.get('#placeInput-menu > div').eq(0).click()
+      cy.get('#placeInput-menu > div').eq(0).click();
       cy.get('#validateButtonNewActivity').click();
       cy.get('div').contains('Lyon');
     });
@@ -154,7 +262,7 @@ describe("Test de la page de détails d'une activité", () => {
     });
   });
 
-  describe("En tant que non connecté et non détenteur de l'actiivité", () => {
+  describe("En tant que non connecté et non détenteur de l'activité", () => {
     beforeEach(() => {
       cy.intercept('GET', '/api/activities*', (req) => {
         req.reply({
@@ -184,7 +292,7 @@ describe("Test de la page de détails d'une activité", () => {
     });
   });
 
-  describe("En tant que connecté et non détenteur de l'actiivité", () => {
+  describe("En tant que connecté et non détenteur de l'activité", () => {
     beforeEach(() => {
       cy.intercept('GET', '/api/activities/by-user', (req) => {
         const token = req.headers.token;
@@ -267,6 +375,7 @@ describe("Test de la page de détails d'une activité", () => {
       cy.get('div').contains('Sport');
       cy.get('#editActivityButton').should('not.exist');
       cy.get('#deleteActivityButton').should('not.exist');
+      cy.get('#registerActivityButton').scrollIntoView();
       cy.get('#registerActivityButton').should('be.visible');
       cy.get('#unregisterActivityButton').should('not.exist');
     });

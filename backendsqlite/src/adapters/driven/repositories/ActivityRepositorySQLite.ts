@@ -4,6 +4,55 @@ import models from '../models';
 import { Op, FindOptions } from 'sequelize';
 
 class ActivityRepositorySQLite implements ActivityRepository {
+  async getByUserIdAndActivityId(
+    activityId: number,
+    userId: number
+  ): Promise<Activity | null> {
+    let activity = await models.activities.findOne({
+      include: [
+        {
+          model: models.activitiesRegistrations,
+        },
+      ],
+      where: {
+        id: activityId,
+        userId: userId,
+      },
+    });
+    if (!activity) {
+      activity = await models.activities.findOne({
+        include: [
+          {
+            model: models.activitiesRegistrations,
+            where: { userId, activityId },
+          },
+        ],
+      });
+    }
+    if (activity) {
+      return new Activity(
+        activity.id,
+        activity.title,
+        activity.description,
+        activity.startDate,
+        activity.endDate,
+        activity.numberPersonMax,
+        activity.cost,
+        activity.place,
+        activity.longitude,
+        activity.latitude,
+        activity.category,
+        activity.userId,
+        activity.dataValues.activitiesRegistrations?.map(
+          (registration: any) => {
+            return registration.userId;
+          }
+        )
+      );
+    }
+    return null;
+  }
+
   async getById(activityId: number): Promise<Activity | null> {
     const activity = await models.activities.findByPk(activityId);
     if (!activity) {
@@ -161,7 +210,7 @@ class ActivityRepositorySQLite implements ActivityRepository {
         {
           model: models.activitiesRegistrations,
           where: {
-            userId: { [Op.in]: [userId] },
+            userId,
           },
         },
       ],

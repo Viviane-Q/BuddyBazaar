@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
-import Category from '../entities/Category';
-import ActivityCard from '../components/activity/ActivityCard';
-import theme from '../theme';
-import TitleMedium from '../components/shared/typography/TitleMedium';
+import Category from '../../entities/Category';
+import ActivityCard from '../../components/activity/ActivityCard';
+import theme from '../../theme';
+import TitleMedium from '../../components/shared/typography/TitleMedium';
 import { useDispatch } from 'react-redux';
 import {
   getActivitiesByCategory,
   getActivitiesByDateRange,
-} from '../store/thunks/activitiesThunk';
+} from '../../store/thunks/activitiesThunk';
+import { useIsFocused } from '@react-navigation/native';
 
-const DiscoverPage = ({ jumpTo, navigation }) => {
+const DiscoverPage = ({ navigation }) => {
+  const isFocused = useIsFocused();
   const [activitiesTonight, setActivitiesTonight] = useState([]);
   const [activitiesThisWeekend, setActivitiesThisWeekend] = useState([]);
 
@@ -45,7 +47,7 @@ const DiscoverPage = ({ jumpTo, navigation }) => {
         weekEndStart.getDate() + ((dayOfWeek + 7 - weekEndStart.getDay()) % 7)
       );
     }
-    const weekEndEnd = new Date(weekEndStart)
+    const weekEndEnd = new Date(weekEndStart);
     // if weekEndStart is sunday, get the next day
     if (weekEndStart.getDay() == 0) {
       weekEndEnd.setDate(weekEndEnd.getDate() + 1);
@@ -66,13 +68,15 @@ const DiscoverPage = ({ jumpTo, navigation }) => {
   };
 
   useEffect(() => {
-    getActivitiesTonight();
-    getActivitiesThisWeekend();
-  }, []);
+    if (isFocused) {
+      getActivitiesTonight();
+      getActivitiesThisWeekend();
+    }
+  }, [isFocused]);
 
   const searchCategory = (category) => {
     dispatch(getActivitiesByCategory({ category }));
-    jumpTo('search');
+    navigation.navigate('Search');
   };
 
   return (

@@ -39,9 +39,6 @@ export const postNewActivity = createAsyncThunk(
       body: JSON.stringify(activity),
     });
     const data = await response.json();
-    if (response.ok) {
-      thunkAPI.dispatch(getOwnActivities());
-    }
     return Promise.resolve({ res: data, error: !response.ok });
   }
 );
@@ -98,9 +95,6 @@ export const deleteActivity = createAsyncThunk(
       },
     });
     const data = await response.json();
-    if (response.ok) {
-      thunkAPI.dispatch(getOwnActivities());
-    }
     return Promise.resolve({ res: data, error: !response.ok });
   }
 );
@@ -122,9 +116,6 @@ export const updateActivity = createAsyncThunk(
       }
     );
     const data = await response.json();
-    if (response.ok) {
-      thunkAPI.dispatch(getOwnActivities());
-    }
     return Promise.resolve({ res: data, error: !response.ok });
   }
 );
@@ -144,9 +135,6 @@ export const registerForActivity = createAsyncThunk(
         },
       })
     const data = await response.json();
-    if (response.ok) {
-      thunkAPI.dispatch(getOwnActivities());
-    }
     return Promise.resolve({ res: data, error: !response.ok });
   }
 );
@@ -166,9 +154,6 @@ export const unregisterForActivity = createAsyncThunk(
         },
       })
     const data = await response.json();
-    if (response.ok) {
-      thunkAPI.dispatch(getOwnActivities());
-    }
     return Promise.resolve({ res: data, error: !response.ok });
   }
 );

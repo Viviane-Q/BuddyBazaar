@@ -4,16 +4,14 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import theme from './theme';
-import Stacks from './pages/Stacks';
-// For icons:  https://oblador.github.io/react-native-vector-icons/
-
+import Navigation from './pages/navigation/Navigation';
 
 export default function App() {
 	return (
 		<PaperProvider theme={theme}>
 			<SafeAreaView style={{ flex: 1 }}>
 				<Provider store={store}>
-					<Stacks />
+					<Navigation />
 				</Provider>
 			</SafeAreaView>
 		</PaperProvider>

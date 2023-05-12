@@ -1,38 +1,38 @@
 import { Request, Response, Router } from 'express';
-import CodeError from '../../../util/CodeError';
-import { CustomRequest } from '../types/CustomRequest';
-import ActivityController from '../controllers/ActivityController';
-import ActivityRegistrationController from '../controllers/ActivityRegistrationController';
-import { Resources } from '../../../core/security/Resources';
-import { Actions } from '../../../core/security/Actions';
-import can from '../../../core/security/can';
+import CodeError from '../../../../util/CodeError';
+import { CustomRequest } from '../../types/CustomRequest';
+import ActivityController from '../../controllers/ActivityController';
+import ActivityRegistrationController from '../../controllers/ActivityRegistrationController';
+import { Resources } from '../../../../core/security/Resources';
+import { Actions } from '../../../../core/security/Actions';
+import { can } from '../../../../core/security/can';
+import message from './message';
 
-const router = Router();
+const router = Router({ mergeParams: true });
 
-router.get(
-  '/',
-  async (req: Request, res: Response) => {
-    try {
-      const activities = await ActivityController.getActivities(
-        req as CustomRequest
-      );
-      res.status(200).json({
-        message: 'Activities retrieved',
-        activities: activities.map((activity) => activity.toObject()),
+router.use('/:activityId/messages', message);
+
+router.get('/', async (req: Request, res: Response) => {
+  try {
+    const activities = await ActivityController.getActivities(
+      req as CustomRequest
+    );
+    res.status(200).json({
+      message: 'Activities retrieved',
+      activities: activities.map((activity) => activity.toObject()),
+    });
+  } catch (err) {
+    if (err instanceof CodeError) {
+      res.status(err.code).json({
+        message: err.message,
       });
-    } catch (err) {
-      if (err instanceof CodeError) {
-        res.status(err.code).json({
-          message: err.message,
-        });
-      } else {
-        res.status(500).json({
-          message: 'Internal server error',
-        });
-      }
+    } else {
+      res.status(500).json({
+        message: 'Internal server error',
+      });
     }
   }
-);
+});
 
 router.post(
   '/',
@@ -92,7 +92,7 @@ router.get(
 );
 
 router.get(
-  '/:id',
+  '/:activityId',
   can(Resources.ACTIVITY, Actions.READONE),
   async (req: Request, res: Response) => {
     try {
@@ -124,7 +124,7 @@ router.get(
 );
 
 router.put(
-  '/:id',
+  '/:activityId',
   can(Resources.ACTIVITY, Actions.UPDATE),
   async (req: Request, res: Response) => {
     try {
@@ -155,7 +155,7 @@ router.put(
 );
 
 router.delete(
-  '/:id',
+  '/:activityId',
   can(Resources.ACTIVITY, Actions.DELETE),
   async (req: Request, res: Response) => {
     try {
@@ -186,7 +186,7 @@ router.delete(
 );
 
 router.post(
-  '/:id/register',
+  '/:activityId/register',
   can(Resources.ACTIVITY, Actions.READ),
   async (req: Request, res: Response) => {
     try {
@@ -217,13 +217,14 @@ router.post(
 );
 
 router.post(
-  '/:id/unregister',
+  '/:activityId/unregister',
   can(Resources.ACTIVITY, Actions.READ),
   async (req: Request, res: Response) => {
     try {
-      const result = await ActivityRegistrationController.unregisterForAnActivity(
-        req as CustomRequest
-      );
+      const result =
+        await ActivityRegistrationController.unregisterForAnActivity(
+          req as CustomRequest
+        );
       if (!result) {
         res.status(400).json({
           message: 'De-registration failed',

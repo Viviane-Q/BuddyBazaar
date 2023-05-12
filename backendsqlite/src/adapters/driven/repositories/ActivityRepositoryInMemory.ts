@@ -91,6 +91,10 @@ class ActivityRepositoryInMemory implements ActivityRepository {
     this.activities.splice(index, 1);
     return Promise.resolve(true);
   }
+
+  getByUserIdAndActivityId(activityId: number, userId: number): Promise<Activity | null> {
+    throw new Error('Method not implemented.');
+  }
 }
 
 export default ActivityRepositoryInMemory;

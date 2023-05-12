@@ -6,17 +6,21 @@ import ActivityRepository from '../../domain/interfaces/repositories/ActivityRep
 import ActivityRepositorySQLite from '../driven/repositories/ActivityRepositorySQLite';
 import ActivityRegistrationRepository from '../../domain/interfaces/repositories/ActivityRegistrationRepository';
 import ActivityRegistrationRepositorySQLite from '../driven/repositories/ActivityRegistrationRepositorySQLite';
+import MessageRepositorySQLite from '../driven/repositories/MessageRepositorySQLite';
+import MessageRepository from '../../domain/interfaces/repositories/MessageRepository';
 
 const userRepository = new UserRepositorySQLite();
 const encryption = new EncryptionLib();
 const activityRepository = new ActivityRepositorySQLite();
 const activityRegistrationRepository = new ActivityRegistrationRepositorySQLite();
+const messageRepository = new MessageRepositorySQLite();
 
 export interface Services {
   userRepository: UserRepository;
   encryption: Encryption;
   activityRepository: ActivityRepository;
   activityRegistrationRepository: ActivityRegistrationRepository;
+  messageRepository: MessageRepository;
 }
 
 export default () => {
@@ -25,5 +29,6 @@ export default () => {
     encryption,
     activityRepository,
     activityRegistrationRepository,
+    messageRepository,
   };
 };

@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Button, Snackbar } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { setEmail } from '../store/slices/authSlice';
-import { setName } from '../store/slices/authSlice';
-import { registerUser } from '../store/thunks/authThunk';
+import { setEmail, setName } from '../../store/slices/authSlice';
+import { registerUser } from '../../store/thunks/authThunk';
 
 const RegisterPage = () => {
   const dispatch = useDispatch();

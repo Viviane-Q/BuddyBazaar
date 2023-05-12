@@ -84,7 +84,7 @@ const getActivitiesByUser = (req: CustomRequest): Promise<Activity[]> => {
 const getActivityById = (req: CustomRequest): Promise<Activity | null> => {
   const services = req.context.services as Services;
   return GetActivityById({
-    activityId: parseInt(req.params.id),
+    activityId: parseInt(req.params.activityId),
     activityRepository: services.activityRepository,
   });
 };
@@ -146,7 +146,7 @@ const updateActivity = (req: CustomRequest): Promise<boolean> => {
 
 const deleteActivity = (req: CustomRequest): Promise<boolean> => {
   const services = req.context.services as Services;
-  return services.activityRepository.delete(parseInt(req.params.id));
+  return services.activityRepository.delete(parseInt(req.params.activityId));
 };
 
 export default {
