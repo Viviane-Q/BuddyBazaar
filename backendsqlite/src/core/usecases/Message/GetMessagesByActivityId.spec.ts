@@ -2,6 +2,7 @@ import Message from '../../../domain/entities/Message';
 import MessageRepositoryInMemory from '../../../adapters/driven/repositories/MessageRepositoryInMemory';
 import MessageFixtures from '../../../domain/entities/Message.fixtures';
 import GetMessagesByActivityId from './GetMessagesByActivityId';
+import ActivityFixtures from '../../../domain/entities/Activity.fixtures';
 
 const messageRepository = new MessageRepositoryInMemory();
 
@@ -20,10 +21,10 @@ describe('Feature: an user retrives the messages of an activity', () => {
   test('Example: User wants to retrieve the message he sent', async () => {
     givenMessages([
       MessageFixtures.messageFromJeanToClimbing,
-      MessageFixtures.messageFromJeanToHiking,
-      MessageFixtures.messageFromMartinToHiking,
+      MessageFixtures.messageFromJeanToCinema,
+      MessageFixtures.messageFromMartinToCinema,
     ]);
-    const activityMessages = await whenUserRetrivesMessagesForAnActivity(1);
+    const activityMessages = await whenUserRetrivesMessagesForAnActivity(ActivityFixtures.activityClimbing.id as number);
     expect(activityMessages).toEqual([
       MessageFixtures.messageFromJeanToClimbing,
     ]);
@@ -31,13 +32,13 @@ describe('Feature: an user retrives the messages of an activity', () => {
   test("Example: User wants to retrieve the messages he's received and he's sent", async () => {
     givenMessages([
       MessageFixtures.messageFromJeanToClimbing,
-      MessageFixtures.messageFromJeanToHiking,
-      MessageFixtures.messageFromMartinToHiking,
+      MessageFixtures.messageFromJeanToCinema,
+      MessageFixtures.messageFromMartinToCinema,
     ]);
-    const activityMessages = await whenUserRetrivesMessagesForAnActivity(2);
+    const activityMessages = await whenUserRetrivesMessagesForAnActivity(ActivityFixtures.activityCinema.id as number);
     expect(activityMessages).toEqual([
-      MessageFixtures.messageFromJeanToHiking,
-      MessageFixtures.messageFromMartinToHiking,
+      MessageFixtures.messageFromJeanToCinema,
+      MessageFixtures.messageFromMartinToCinema,
     ]);
   });
 });

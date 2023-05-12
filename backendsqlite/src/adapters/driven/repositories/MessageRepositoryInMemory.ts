@@ -26,6 +26,19 @@ class MessageRepositoryInMemory implements MessageRepository {
       this.messages.filter((message) => message.activityId === activityId)
     );
   }
+
+  getLastMessagesForActivities(activitiesId: number[]): Promise<Message[]> {
+    const lastMessages: Message[] = [];
+    activitiesId.forEach((activityId) => {
+      const messagesForActivity = this.messages.filter(
+        (message) => message.activityId === activityId
+      );
+      if (messagesForActivity.length > 0) {
+        lastMessages.push(messagesForActivity[messagesForActivity.length - 1]);
+      }
+    });
+    return Promise.resolve(lastMessages);
+  }
 }
 
 export default MessageRepositoryInMemory;
