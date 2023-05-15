@@ -51,7 +51,7 @@ export const getUser = createAsyncThunk('users/getUser', async (args, thunkAPI) 
     },
   });
   const data = await response.json();
-  if (data) {
+  if (data && response.ok) {
     // update store
     thunkAPI.dispatch(setUserId(data.user.id));
     thunkAPI.dispatch(setName(data.user.name));

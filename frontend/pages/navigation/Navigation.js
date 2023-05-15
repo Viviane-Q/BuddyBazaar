@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -14,6 +14,7 @@ import SearchStackScreen from './SearchStackScreen';
 import MyActivitiesStackScreen from './MyActivitiesStackScreen';
 import MessagesStackScreen from './MessagesStackScreen';
 import { Button } from 'react-native-paper';
+import RNRestart from 'react-native-restart';
 
 // TODO move this to a separate file
 const ProfileRoute = ({ navigation }) => {
@@ -35,7 +36,7 @@ const ProfileRoute = ({ navigation }) => {
 
 const Tab = createBottomTabNavigator();
 
-export default function Navigation({ navigation }) {
+export default function Navigation() {
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -55,7 +56,10 @@ export default function Navigation({ navigation }) {
         if (res.payload.error) {
           AsyncStorage.removeItem('token');
           dispatch(setToken(null));
-          navigation.navigate('Landing');
+          if(Platform.OS === 'ios' || Platform.OS === 'android')
+            RNRestart.restart(); // in order to redirect to landing page
+          else
+            window.location.reload();
         }
       });
     }

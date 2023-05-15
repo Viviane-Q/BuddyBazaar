@@ -3,6 +3,18 @@
 
 describe('Test de la page de connexion', () => {
   beforeEach(() => {
+    cy.intercept('GET', '/api/users/me' , (req) => {
+      req.reply({
+        statusCode: 200,
+        body: {
+          user: {
+            id: 1,
+            name: 'Jean Dupont',
+            email: '',
+          },
+        },
+      });
+    });
     cy.intercept('POST', '/api/users/signin', (req) => {
       if (req.body.email === 'Sebastien.Viardot@grenoble-inp.fr' && req.body.password === '123456') {
         req.reply({
