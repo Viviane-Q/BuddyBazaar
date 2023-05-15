@@ -14,7 +14,9 @@ import SearchStackScreen from './SearchStackScreen';
 import MyActivitiesStackScreen from './MyActivitiesStackScreen';
 import MessagesStackScreen from './MessagesStackScreen';
 import RNRestart from 'react-native-restart';
+import UserProfileStackScreen from './UserProfileStackScreen';
 
+// TODO move this to a separate file
 
 const Tab = createBottomTabNavigator();
 
@@ -129,8 +131,8 @@ export default function Navigation() {
               }}
             />
             <Tab.Screen
-              name="ProfileScreen"
-              component={ProfileRoute}
+              name="Profile"
+              component={UserProfileStackScreen}
               options={{
                 tabBarIcon: ({ focused, color }) => (
                   <MaterialCommunityIcons

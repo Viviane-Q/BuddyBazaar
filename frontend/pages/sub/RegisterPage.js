@@ -93,6 +93,7 @@ const RegisterPage = () => {
             onChangeText={handleName}
             value={name}
             mode="outlined"
+            onSubmitEditing={handleRegister}
           />
           <TextInput
             label="Adresse email"
@@ -100,12 +101,13 @@ const RegisterPage = () => {
             onChangeText={handleEmail}
             value={email}
             mode="outlined"
+            onSubmitEditing={handleRegister}
           />
           <TextInput
             label="Mot de passe"
             placeholder="Mot de passe"
             secureTextEntry={true}
-            onChangeText={setPassword}
+            onSubmitEditing={handleRegister}
             value={password}
             mode="outlined"
           />
