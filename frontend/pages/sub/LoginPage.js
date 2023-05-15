@@ -51,7 +51,7 @@ const LoginPage = ({ navigation }) => {
   };
   useEffect(() => {
     if (token) {
-      navigation.navigate('Discover');
+      navigation.navigate('DiscoverScreen');
     }
   }, [token]);
   return (

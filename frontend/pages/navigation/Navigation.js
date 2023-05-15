@@ -39,6 +39,7 @@ const Tab = createBottomTabNavigator();
 export default function Navigation() {
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
   useEffect(() => {
     async function retrieveToken() {
       const token = await AsyncStorage.getItem('token');
@@ -68,7 +69,7 @@ export default function Navigation() {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="Landing"
+        initialRouteName="LandingScreen"
         screenOptions={{
           tabBarActiveBackgroundColor: theme.colors.secondary,
           tabBarActiveTintColor: theme.colors.secondaryContainer,
@@ -80,7 +81,7 @@ export default function Navigation() {
         nativeId="tabBar"
       >
         <Tab.Screen
-          name="Landing"
+          name="LandingScreen"
           component={LandingStackScreen}
           options={{
             tabBarItemStyle: {
@@ -92,7 +93,7 @@ export default function Navigation() {
           }}
         />
         <Tab.Screen
-          name="Discover"
+          name="DiscoverScreen"
           component={DiscoverStackScreen}
           options={{
             tabBarIcon: ({ focused, color }) => (
@@ -105,7 +106,7 @@ export default function Navigation() {
           }}
         />
         <Tab.Screen
-          name="Search"
+          name="SearchScreen"
           component={SearchStackScreen}
           options={{
             tabBarIcon: ({ focused, color }) => (
@@ -120,7 +121,7 @@ export default function Navigation() {
         {token ? (
           <Fragment>
             <Tab.Screen
-              name="MyActivities"
+              name="MyActivitiesScreen"
               component={MyActivitiesStackScreen}
               options={{
                 tabBarIcon: ({ focused, color }) => (
@@ -133,7 +134,7 @@ export default function Navigation() {
               }}
             />
             <Tab.Screen
-              name="Messages"
+              name="MessagesScreen"
               component={MessagesStackScreen}
               options={{
                 tabBarIcon: ({ focused, color }) => (
@@ -146,7 +147,7 @@ export default function Navigation() {
               }}
             />
             <Tab.Screen
-              name="Profile"
+              name="ProfileScreen"
               component={ProfileRoute}
               options={{
                 tabBarIcon: ({ focused, color }) => (
