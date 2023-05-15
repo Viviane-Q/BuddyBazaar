@@ -23,6 +23,7 @@ const MessageRoom = ({ navigation, route }) => {
   const scrollViewRef = useRef();
 
   useEffect(() => {
+    // join socket room and listen to messages
     dispatch(joinRoom({ activityId }));
     dispatch(listenToMessages({ activityId }));
     dispatch(getMessages({ activityId }));
