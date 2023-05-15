@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, useRoute } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useDispatch, useSelector } from 'react-redux';
 import { setToken } from '../../store/slices/authSlice';
@@ -35,7 +35,7 @@ const ProfileRoute = ({ navigation }) => {
 
 const Tab = createBottomTabNavigator();
 
-export default function Navigation() {
+export default function Navigation({ navigation }) {
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -50,7 +50,14 @@ export default function Navigation() {
 
   useEffect(() => {
     if (token) {
-      dispatch(getUser());
+      const ckeckToken = dispatch(getUser());
+      ckeckToken.then((res) => {
+        if (res.payload.error) {
+          AsyncStorage.removeItem('token');
+          dispatch(setToken(null));
+          navigation.navigate('Landing');
+        }
+      });
     }
   }, [token]);
 
@@ -73,6 +80,9 @@ export default function Navigation() {
           component={LandingStackScreen}
           options={{
             tabBarItemStyle: {
+              display: 'none',
+            },
+            tabBarStyle: {
               display: 'none',
             },
           }}
