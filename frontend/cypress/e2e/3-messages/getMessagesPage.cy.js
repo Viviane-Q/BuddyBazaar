@@ -46,6 +46,18 @@ const lastMessages = [
 
 describe("Test de la page des messages de l'utilisateur", () => {
   beforeEach(() => {
+    cy.intercept('GET', '/api/users/me' , (req) => {
+      req.reply({
+        statusCode: 200,
+        body: {
+          user: {
+            id: 1,
+            name: 'Jean Dupont',
+            email: '',
+          },
+        },
+      });
+    });
     cy.intercept('POST', '/api/users/signin', (req) => {
       req.reply({
         statusCode: 200,

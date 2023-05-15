@@ -4,6 +4,18 @@ const activities = [{ "id": 1, "title": "Une activité", "description": "Une des
 
 describe('Test de la page des activités de l\'utilisateur', () => {
     beforeEach(() => {
+        cy.intercept('GET', '/api/users/me' , (req) => {
+            req.reply({
+              statusCode: 200,
+              body: {
+                user: {
+                  id: 1,
+                  name: 'Jean Dupont',
+                  email: '',
+                },
+              },
+            });
+          });
         cy.intercept('GET', '/api/activities/by-user', (req) => {
             const token = req.headers.token;
             if (token !== '7WK5T79u5mIzjIXXi2oI9Fglmgivv7RAJ7izyj9tUyQ')
