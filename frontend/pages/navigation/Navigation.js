@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -14,6 +14,7 @@ import SearchStackScreen from './SearchStackScreen';
 import MyActivitiesStackScreen from './MyActivitiesStackScreen';
 import MessagesStackScreen from './MessagesStackScreen';
 import { Button } from 'react-native-paper';
+import RNRestart from 'react-native-restart';
 
 // TODO move this to a separate file
 const ProfileRoute = ({ navigation }) => {
@@ -38,6 +39,7 @@ const Tab = createBottomTabNavigator();
 export default function Navigation() {
   const { token } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
+
   useEffect(() => {
     async function retrieveToken() {
       const token = await AsyncStorage.getItem('token');
@@ -50,35 +52,48 @@ export default function Navigation() {
 
   useEffect(() => {
     if (token) {
-      dispatch(getUser());
+      const ckeckToken = dispatch(getUser());
+      ckeckToken.then((res) => {
+        if (res.payload.error) {
+          AsyncStorage.removeItem('token');
+          dispatch(setToken(null));
+          if(Platform.OS === 'ios' || Platform.OS === 'android')
+            RNRestart.restart(); // in order to redirect to landing page
+          else
+            window.location.reload();
+        }
+      });
     }
   }, [token]);
 
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName="Landing"
+        initialRouteName="LandingScreen"
         screenOptions={{
           tabBarActiveBackgroundColor: theme.colors.secondary,
           tabBarActiveTintColor: theme.colors.secondaryContainer,
           tabBarInactiveTintColor: theme.colors.secondaryContainer,
-          tabBarStyle: styles.navigationBar,
+          tabBarStyle: navigationStyles.navigationBar,
           headerShown: false,
           tabBarLabel: () => null,
         }}
         nativeId="tabBar"
       >
         <Tab.Screen
-          name="Landing"
+          name="LandingScreen"
           component={LandingStackScreen}
           options={{
             tabBarItemStyle: {
               display: 'none',
             },
+            tabBarStyle: {
+              display: 'none',
+            },
           }}
         />
         <Tab.Screen
-          name="Discover"
+          name="DiscoverScreen"
           component={DiscoverStackScreen}
           options={{
             tabBarIcon: ({ focused, color }) => (
@@ -91,7 +106,7 @@ export default function Navigation() {
           }}
         />
         <Tab.Screen
-          name="Search"
+          name="SearchScreen"
           component={SearchStackScreen}
           options={{
             tabBarIcon: ({ focused, color }) => (
@@ -106,7 +121,7 @@ export default function Navigation() {
         {token ? (
           <Fragment>
             <Tab.Screen
-              name="MyActivities"
+              name="MyActivitiesScreen"
               component={MyActivitiesStackScreen}
               options={{
                 tabBarIcon: ({ focused, color }) => (
@@ -119,7 +134,7 @@ export default function Navigation() {
               }}
             />
             <Tab.Screen
-              name="Messages"
+              name="MessagesScreen"
               component={MessagesStackScreen}
               options={{
                 tabBarIcon: ({ focused, color }) => (
@@ -132,7 +147,7 @@ export default function Navigation() {
               }}
             />
             <Tab.Screen
-              name="Profile"
+              name="ProfileScreen"
               component={ProfileRoute}
               options={{
                 tabBarIcon: ({ focused, color }) => (
@@ -151,9 +166,13 @@ export default function Navigation() {
   );
 }
 
-const styles = StyleSheet.create({
+const navigationStyles = StyleSheet.create({
   navigationBar: {
     backgroundColor: theme.colors.primary,
     height: 60,
   },
 });
+
+export {
+  navigationStyles
+}

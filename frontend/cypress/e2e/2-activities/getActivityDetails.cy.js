@@ -226,7 +226,7 @@ describe("Test de la page de détails d'une activité", () => {
       cy.get('input').last().type('123456');
       cy.get('div').contains('Se connecter').click();
       // get button where it says Mes activités
-      cy.get('a[href="/MyActivities"]').click();
+      cy.get('a[href="/MyActivitiesScreen"]').click();
     });
     it("Doit afficher les détails d'une activité avec les boutons de suppression et de modification", () => {
       cy.get('div').contains('Une activité').click();

@@ -45,6 +45,18 @@ const messages = [
 
 describe("Test de la page des messages d'une activité", () => {
   beforeEach(() => {
+    cy.intercept('GET', '/api/users/me' , (req) => {
+      req.reply({
+        statusCode: 200,
+        body: {
+          user: {
+            id: 1,
+            name: 'Jean Dupont',
+            email: '',
+          },
+        },
+      });
+    });
     cy.intercept('POST', '/api/users/signin', (req) => {
       req.reply({
         statusCode: 200,
@@ -106,7 +118,7 @@ describe("Test de la page des messages d'une activité", () => {
     cy.get('input').first().type('jean.dupont@mail.com');
     cy.get('input').last().type('123456');
     cy.get('div').contains('Se connecter').click();
-    cy.get('a[href="/Messages"]').click();
+    cy.get('a[href="/MessagesScreen"]').click();
   });
   it("Doit afficher la liste des messages de l'activité sélectionnée", () => {
     cy.get('div').contains(activities[0].title).click();

@@ -96,7 +96,7 @@ const ActivityForm = ({ navigation, route }) => {
   const sendActivity = () => {
     // check if startTime is a valid time
     const regexTime = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
-    const regexDate = /^(0[1-9]|1[012])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d\d$/;
+    const regexDate = /^([0-2][1-9]|3[0-1])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d\d$/;
     if (!regexTime.test(startTime) || !regexTime.test(endTime)) {
       setSnackbarVisible(true);
       setSnackbarType('error');
@@ -107,7 +107,7 @@ const ActivityForm = ({ navigation, route }) => {
       setSnackbarVisible(true);
       setSnackbarType('error');
       setSnackbarMessage('Date invalide');
-      return;
+        return;
     }
     const startDateToSend = new Date();
     startDateToSend.setFullYear(startDate.split('/')[2]);

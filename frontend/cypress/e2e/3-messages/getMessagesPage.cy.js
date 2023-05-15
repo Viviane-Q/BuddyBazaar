@@ -46,6 +46,18 @@ const lastMessages = [
 
 describe("Test de la page des messages de l'utilisateur", () => {
   beforeEach(() => {
+    cy.intercept('GET', '/api/users/me' , (req) => {
+      req.reply({
+        statusCode: 200,
+        body: {
+          user: {
+            id: 1,
+            name: 'Jean Dupont',
+            email: '',
+          },
+        },
+      });
+    });
     cy.intercept('POST', '/api/users/signin', (req) => {
       req.reply({
         statusCode: 200,
@@ -86,7 +98,7 @@ describe("Test de la page des messages de l'utilisateur", () => {
     cy.get('input').first().type('Sebastien.Viardot@grenoble-inp.fr');
     cy.get('input').last().type('123456');
     cy.get('div').contains('Se connecter').click();
-    cy.get('a[href="/Messages"]').click();
+    cy.get('a[href="/MessagesScreen"]').click();
   });
   it('Doit afficher la liste des chats pour chaque activité', () => {
     activities.forEach((activity) => {

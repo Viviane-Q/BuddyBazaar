@@ -4,6 +4,18 @@ const activities = [{ "id": 1, "title": "Une activité", "description": "Une des
 
 describe('Test de la page des activités de l\'utilisateur', () => {
     beforeEach(() => {
+        cy.intercept('GET', '/api/users/me' , (req) => {
+            req.reply({
+              statusCode: 200,
+              body: {
+                user: {
+                  id: 1,
+                  name: 'Jean Dupont',
+                  email: '',
+                },
+              },
+            });
+          });
         cy.intercept('GET', '/api/activities/by-user', (req) => {
             const token = req.headers.token;
             if (token !== '7WK5T79u5mIzjIXXi2oI9Fglmgivv7RAJ7izyj9tUyQ')
@@ -76,7 +88,7 @@ describe('Test de la page des activités de l\'utilisateur', () => {
         cy.get('input').last().type('123456')
         cy.get('div').contains('Se connecter').click()
         // get button where it says Mes activités
-        cy.get('a[href="/MyActivities"]').click();
+        cy.get('a[href="/MyActivitiesScreen"]').click();
     })
     it('Doit afficher au moins une activité sur la page des propres activités', () => {
         cy.get('div').contains('Une activit\u00E9').should('be.visible')

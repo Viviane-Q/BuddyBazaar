@@ -12,8 +12,9 @@ import {
   listenToMessages,
   getMessages,
 } from '../../store/thunks/messagesThunk';
+import { navigationStyles } from '../navigation/Navigation';
 
-const MessageRoom = ({ route }) => {
+const MessageRoom = ({ navigation, route }) => {
   const messagesList = useSelector((state) => state.messages.messages);
   const userId = useSelector((state) => state.auth.id);
   const activityId = route.params.activity.id;
@@ -25,6 +26,16 @@ const MessageRoom = ({ route }) => {
     dispatch(joinRoom({ activityId }));
     dispatch(listenToMessages({ activityId }));
     dispatch(getMessages({ activityId }));
+    // hide tab bar
+    navigation.getParent().setOptions({
+      tabBarStyle: { display: 'none' },
+    });
+    return () => {
+      // show tab bar when leaving screen
+      navigation.getParent().setOptions({
+        tabBarStyle: navigationStyles.navigationBar,
+      });
+    };
   }, []);
 
   const sendMessageHandler = () => {
