@@ -118,7 +118,7 @@ describe("Test de la page des messages d'une activité", () => {
     cy.get('input').first().type('jean.dupont@mail.com');
     cy.get('input').last().type('123456');
     cy.get('div').contains('Se connecter').click();
-    cy.get('a[href="/Messages"]').click();
+    cy.get('a[href="/MessagesScreen"]').click();
   });
   it("Doit afficher la liste des messages de l'activité sélectionnée", () => {
     cy.get('div').contains(activities[0].title).click();

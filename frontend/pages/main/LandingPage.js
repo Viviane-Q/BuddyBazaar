@@ -33,7 +33,7 @@ const LandingPage = ({ navigation }) => {
           Connexion
         </Button>
         <Button
-          onPress={() => navigation.navigate('Discover')}
+          onPress={() => navigation.navigate('DiscoverScreen')}
           mode="outlined"
           icon="map-search"
           style={styles.button}

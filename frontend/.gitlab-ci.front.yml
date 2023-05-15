@@ -69,7 +69,7 @@ test-e2e front:
   script:
     - npm ci --prefer-offline
     - npm install -g wait-on
-    - npm run web &
+    - BACKEND_URL="" npm run web &
     - wait-on http://localhost:19006
     - npm run test
   needs:
