@@ -13,26 +13,8 @@ import DiscoverStackScreen from './DiscoverStackScreen';
 import SearchStackScreen from './SearchStackScreen';
 import MyActivitiesStackScreen from './MyActivitiesStackScreen';
 import MessagesStackScreen from './MessagesStackScreen';
-import { Button } from 'react-native-paper';
 import RNRestart from 'react-native-restart';
 
-// TODO move this to a separate file
-const ProfileRoute = ({ navigation }) => {
-  const dispatch = useDispatch();
-  const token = useSelector((state) => state.auth.token);
-  const disconnect = () => {
-    dispatch(setToken(null));
-    AsyncStorage.removeItem('token');
-    navigation.navigate('Landing');
-  };
-  return (
-    token && (
-      <Button onPress={disconnect} mode="outlined" style={{ marginTop: 50 }}>
-        Se déconnecter
-      </Button>
-    )
-  );
-};
 
 const Tab = createBottomTabNavigator();
 

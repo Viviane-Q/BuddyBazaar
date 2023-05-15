@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { setName, setToken, setUserId } from '../slices/authSlice'
+import { setEmail, setName, setToken, setUserId } from '../slices/authSlice'
 import Constants from 'expo-constants';
 const BACKEND_URL = Constants.expoConfig.extra.backendUrl;
 
@@ -55,6 +55,7 @@ export const getUser = createAsyncThunk('users/getUser', async (args, thunkAPI) 
     // update store
     thunkAPI.dispatch(setUserId(data.user.id));
     thunkAPI.dispatch(setName(data.user.name));
+    thunkAPI.dispatch(setEmail(data.user.email));
   }
   return Promise.resolve({error:!response.ok,res:data});
 });
