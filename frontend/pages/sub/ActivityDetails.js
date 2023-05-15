@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Image } from 'expo-image';
 import TitleMedium from '../../components/shared/typography/TitleMedium';
@@ -12,6 +12,7 @@ import {
 } from '../../store/thunks/activitiesThunk';
 import theme from '../../theme';
 import TitleSmall from '../../components/shared/typography/TitleSmall';
+import { navigationStyles } from '../navigation/Navigation';
 
 const ActivityDetails = ({ navigation, route }) => {
   const [activity, setActivity] = useState(route.params.activity);
@@ -29,6 +30,19 @@ const ActivityDetails = ({ navigation, route }) => {
   const endDate = `${new Date(activity.endDate).toLocaleDateString(
     'fr-FR'
   )} ${new Date(activity.endDate).toLocaleTimeString('fr-FR').slice(0, -3)}`;
+
+  useEffect(() => {
+    // hide tab bar
+    navigation.getParent().setOptions({
+      tabBarStyle: { display: 'none' },
+    });
+    return () => {
+      // show tab bar when leaving screen
+      navigation.getParent().setOptions({
+        tabBarStyle: navigationStyles.navigationBar,
+      });
+    };
+  }, []);
 
   const deleteActivityHandler = () => {
     const res = dispatch(
@@ -90,9 +104,8 @@ const ActivityDetails = ({ navigation, route }) => {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={styles.container}>
       <ScrollView>
-        <View style={styles.container}>
           <View>
             <Image
               source={`https://picsum.photos/700?id=${activity.id}`}
@@ -217,7 +230,6 @@ const ActivityDetails = ({ navigation, route }) => {
           >
             {snackbarMessage}
           </Snackbar>
-        </View>
       </ScrollView>
     </View>
   );

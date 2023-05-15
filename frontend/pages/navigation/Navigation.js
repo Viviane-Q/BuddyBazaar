@@ -74,7 +74,7 @@ export default function Navigation() {
           tabBarActiveBackgroundColor: theme.colors.secondary,
           tabBarActiveTintColor: theme.colors.secondaryContainer,
           tabBarInactiveTintColor: theme.colors.secondaryContainer,
-          tabBarStyle: styles.navigationBar,
+          tabBarStyle: navigationStyles.navigationBar,
           headerShown: false,
           tabBarLabel: () => null,
         }}
@@ -166,9 +166,13 @@ export default function Navigation() {
   );
 }
 
-const styles = StyleSheet.create({
+const navigationStyles = StyleSheet.create({
   navigationBar: {
     backgroundColor: theme.colors.primary,
     height: 60,
   },
 });
+
+export {
+  navigationStyles
+}
