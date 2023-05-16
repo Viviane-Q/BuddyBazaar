@@ -8,7 +8,6 @@ export default ({
   endDate,
   numberPersonMax,
   cost,
-  place,
   category,
 }: {
   activityRepository: ActivityRepository;
@@ -20,5 +19,5 @@ export default ({
   place?: string;
   category?: string;
 }): Promise<Activity[]> => {
-  return activityRepository.getAll(querySearch, startDate, endDate, numberPersonMax, cost, place, category);
+  return activityRepository.getAll(querySearch, startDate, endDate, numberPersonMax, cost, category);
 };
