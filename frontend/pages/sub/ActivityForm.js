@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, View, StyleSheet, Text } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
 import { Button, TextInput, Snackbar } from 'react-native-paper';
-import { MaskedTextInput } from "react-native-mask-text";
+import { MaskedTextInput } from 'react-native-mask-text';
 import { useDispatch } from 'react-redux';
 import {
   postNewActivity,
@@ -12,8 +11,7 @@ import Category from '../../entities/Category';
 import theme from '../../theme';
 import Autocomplete from '../../components/shared/form/Autocomplete';
 import { checkAddress } from '../../store/thunks/franceAPIThunk';
-
-// get current date and time without seconds
+import CustomPicker from '../../components/shared/form/CustomPicker';
 
 const ActivityForm = ({ navigation, route }) => {
   const [snackbarVisible, setSnackbarVisible] = useState(false);
@@ -22,8 +20,22 @@ const ActivityForm = ({ navigation, route }) => {
     'Une erreur est survenue'
   );
   const isUpdate = route?.params?.activity?.id;
-  const today = isUpdate ? new Date(route.params.activity.startDate).toLocaleDateString('fr-FR').split('/').join('-').replaceAll('-','/'):new Date().toLocaleDateString('fr-FR').split('/').join('-').replaceAll('-', '/');
-  const time = isUpdate ? new Date(route.params.activity.endDate).toLocaleTimeString('fr-FR', { hour12: false }).slice(0, -3):new Date().toLocaleTimeString('fr-FR', { hour12: false }).slice(0, -3);
+  const today = isUpdate
+    ? new Date(route.params.activity.startDate)
+        .toLocaleDateString('fr-FR')
+        .split('/')
+        .join('-')
+        .replaceAll('-', '/')
+    : new Date()
+        .toLocaleDateString('fr-FR')
+        .split('/')
+        .join('-')
+        .replaceAll('-', '/');
+  const time = isUpdate
+    ? new Date(route.params.activity.endDate)
+        .toLocaleTimeString('fr-FR', { hour12: false })
+        .slice(0, -3)
+    : new Date().toLocaleTimeString('fr-FR', { hour12: false }).slice(0, -3);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [startDate, setStartDate] = useState(today);
@@ -32,7 +44,7 @@ const ActivityForm = ({ navigation, route }) => {
   const [endTime, setEndTime] = useState(time);
   const [numberPersonMax, setNumberPersonMax] = useState(1);
   const [cost, setCost] = useState('0');
-  const [place, setPlace] = useState({'label': '', 'coordinates': [0,0]});
+  const [place, setPlace] = useState({ label: '', coordinates: [0, 0] });
   const [category, setCategory] = useState(Category.Sport);
   const [suggestions, setSuggestions] = useState([]);
   const dispatch = useDispatch();
@@ -42,10 +54,10 @@ const ActivityForm = ({ navigation, route }) => {
   }, []);
 
   const getSuggestions = (address) => {
-    if(address.trim().length >= 3) {
-      const res = dispatch(checkAddress({ address }))
+    if (address.trim().length >= 3) {
+      const res = dispatch(checkAddress({ address }));
       res.then((data) => {
-        if(!data.payload || data.payload.error) {
+        if (!data.payload || data.payload.error) {
           setSnackbarVisible(true);
           setSnackbarType('error');
           setSnackbarMessage(data.payload.message);
@@ -54,20 +66,43 @@ const ActivityForm = ({ navigation, route }) => {
         setSuggestions(data.payload.res);
       });
     }
-  }
-    
+  };
+
   const initActivity = () => {
     if (isUpdate) {
       const activity = route.params.activity;
       setTitle(activity.title);
       setDescription(activity.description);
-      setStartDate(new Date(activity.startDate).toLocaleDateString('fr-FR').split('/').join('-').replaceAll('-', '/'));
-      setEndDate(new Date(activity.endDate).toLocaleDateString('fr-FR').split('/').join('-').replaceAll('-', '/'));
-      setStartTime(new Date(activity.startDate).toLocaleTimeString('fr-FR', { hour12: false }).slice(0, -3));
-      setEndTime(new Date(activity.endDate).toLocaleTimeString('fr-FR', { hour12: false }).slice(0, -3));
+      setStartDate(
+        new Date(activity.startDate)
+          .toLocaleDateString('fr-FR')
+          .split('/')
+          .join('-')
+          .replaceAll('-', '/')
+      );
+      setEndDate(
+        new Date(activity.endDate)
+          .toLocaleDateString('fr-FR')
+          .split('/')
+          .join('-')
+          .replaceAll('-', '/')
+      );
+      setStartTime(
+        new Date(activity.startDate)
+          .toLocaleTimeString('fr-FR', { hour12: false })
+          .slice(0, -3)
+      );
+      setEndTime(
+        new Date(activity.endDate)
+          .toLocaleTimeString('fr-FR', { hour12: false })
+          .slice(0, -3)
+      );
       setNumberPersonMax(activity.numberPersonMax);
       setCost(activity.cost);
-      setPlace({label: activity.place, coordinates: [activity.longitude, activity.latitude]});
+      setPlace({
+        label: activity.place,
+        coordinates: [activity.longitude, activity.latitude],
+      });
       setCategory(activity.category);
     }
   };
@@ -89,14 +124,15 @@ const ActivityForm = ({ navigation, route }) => {
     setEndTime(time);
     setNumberPersonMax(1);
     setCost('0');
-    setPlace({'label': '', 'coordinates': [0,0]});
+    setPlace({ label: '', coordinates: [0, 0] });
     setCategory(Category.Sport);
   };
 
   const sendActivity = () => {
     // check if startTime is a valid time
     const regexTime = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
-    const regexDate = /^([0-2][1-9]|3[0-1])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d\d$/;
+    const regexDate =
+      /^([0-2][1-9]|3[0-1])\/(0[1-9]|[12][0-9]|3[01])\/(19|20)\d\d$/;
     if (!regexTime.test(startTime) || !regexTime.test(endTime)) {
       setSnackbarVisible(true);
       setSnackbarType('error');
@@ -107,7 +143,7 @@ const ActivityForm = ({ navigation, route }) => {
       setSnackbarVisible(true);
       setSnackbarType('error');
       setSnackbarMessage('Date invalide');
-        return;
+      return;
     }
     const startDateToSend = new Date();
     startDateToSend.setFullYear(startDate.split('/')[2]);
@@ -139,11 +175,10 @@ const ActivityForm = ({ navigation, route }) => {
       !activity.startDate ||
       !activity.endDate ||
       !activity.numberPersonMax ||
-      activity.cost==null ||
+      activity.cost == null ||
       !activity.place ||
       !activity.category
     ) {
-      
       setSnackbarVisible(true);
       setSnackbarType('error');
       setSnackbarMessage('Tous les champs doivent être remplis');
@@ -151,10 +186,10 @@ const ActivityForm = ({ navigation, route }) => {
     }
     const res = isUpdate
       ? dispatch(
-        updateActivity({
-          activity: { id: route.params.activity.id, ...activity },
-        })
-      )
+          updateActivity({
+            activity: { id: route.params.activity.id, ...activity },
+          })
+        )
       : dispatch(postNewActivity({ activity }));
     res.then((res) => {
       if (!res.payload || res.payload.error) {
@@ -262,30 +297,24 @@ const ActivityForm = ({ navigation, route }) => {
           mode="outlined"
         />
         <Autocomplete
-            value={place.label}
-            style={[styles.textInput]}
-            setFormValue={setPlace}
-            containerStyle={{}}
-            cypressID="placeInput"
-            label="Lieu"
-            data={suggestions}
-            menuStyle={{backgroundColor: 'white'}}
-            onChange={getSuggestions}
-          />
-        <View style={styles.pickerContainer}>
-          <Picker
-            label="Catégorie"
-            placeholder="Catégorie"
-            onValueChange={setCategory}
-            selectedValue={category}
-            style={styles.picker}
-            nativeID="categoryPicker"
-          >
-            {Object.values(Category).map((category, key) => (
-              <Picker.Item label={category} value={category} key={key} />
-            ))}
-          </Picker>
-        </View>
+          value={place.label}
+          style={[styles.textInput]}
+          setFormValue={setPlace}
+          containerStyle={{}}
+          cypressID="placeInput"
+          label="Lieu"
+          data={suggestions}
+          menuStyle={{ backgroundColor: 'white' }}
+          onChange={getSuggestions}
+        />
+        <CustomPicker
+          label={'Catégorie'}
+          placeholder={'Catégorie'}
+          nativeID={'categoryInput'}
+          items={Object.values(Category)}
+          selectedValue={category}
+          onValueChange={setCategory}
+        />
         <View style={styles.modalButtonsContainer}>
           <Button
             onPress={sendActivity}
