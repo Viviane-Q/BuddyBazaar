@@ -1,13 +1,17 @@
 /// <reference types="cypress" />
 
 
-describe('Test de la redirection en cas de token invalide', () => {
+describe('Test de la redirection en cas de déconnexion', () => {
     beforeEach(() => {
         cy.intercept('GET', '/api/users/me', (req) => {
             req.reply({
-                statusCode: 401,
+                statusCode: 200,
                 body: {
-                    message: 'Invalid token',
+                    user: {
+                        id: 1,
+                        name: 'Jean Dupont',
+                        email: '',
+                    },
                 },
             });
         });
@@ -39,13 +43,14 @@ describe('Test de la redirection en cas de token invalide', () => {
         });
 
         cy.visit('http://localhost:19006')
-        // get button where it says Se connecter
         cy.get('div').contains('Connexion').click()
-    })
-    it('Doit rediriger vers la page d\'acceuil', () => {
         cy.get('input').first().type('Sebastien.Viardot@grenoble-inp.fr')
         cy.get('input').last().type('123456')
         cy.get('div').contains('Se connecter').click()
+        cy.get('a[href="/UserProfileScreen"]').click()
+    })
+    it('Doit rediriger vers la page d\'acceuil', () => {
+        cy.get('div').contains('Se déconnecter').click()
         cy.get('div').contains('Connexion').should('be.visible')
     })
 })

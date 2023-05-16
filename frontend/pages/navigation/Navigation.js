@@ -131,7 +131,7 @@ export default function Navigation() {
               }}
             />
             <Tab.Screen
-              name="Profile"
+              name="UserProfileScreen"
               component={UserProfileStackScreen}
               options={{
                 tabBarIcon: ({ focused, color }) => (
