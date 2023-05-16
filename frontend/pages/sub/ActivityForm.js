@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, StyleSheet, Text } from 'react-native';
+import { ScrollView, View, StyleSheet } from 'react-native';
 import { Button, TextInput, Snackbar } from 'react-native-paper';
-import { MaskedTextInput } from 'react-native-mask-text';
 import { useDispatch } from 'react-redux';
 import {
   postNewActivity,
@@ -12,6 +11,7 @@ import theme from '../../theme';
 import Autocomplete from '../../components/shared/form/Autocomplete';
 import { checkAddress } from '../../store/thunks/franceAPIThunk';
 import CustomPicker from '../../components/shared/form/CustomPicker';
+import DateTimePicker from '../../components/shared/form/DateTimePicker';
 
 const ActivityForm = ({ navigation, route }) => {
   const [snackbarVisible, setSnackbarVisible] = useState(false);
@@ -226,56 +226,18 @@ const ActivityForm = ({ navigation, route }) => {
           nativeID="descriptionInput"
           mode="outlined"
         />
-        <View style={styles.dateContainer}>
-          <View style={styles.datePickerRow}>
-            <View style={styles.datePickerContainer}>
-              <Text>Date de début</Text>
-              <MaskedTextInput
-                placeholder="JJ/MM/AAAA"
-                mask="99/99/9999"
-                onChangeText={setStartDate}
-                defaultValue={today}
-                style={styles.dateInput}
-                keyboardType="numeric"
-              />
-            </View>
-            <View style={styles.datePickerContainer}>
-              <Text>Heure de début</Text>
-              <MaskedTextInput
-                placeholder="hh:mm"
-                mask="99:99"
-                onChangeText={setStartTime}
-                defaultValue={time}
-                style={styles.dateInput}
-                keyboardType="numeric"
-              />
-            </View>
-          </View>
-          <View style={styles.datePickerRow}>
-            <View style={styles.datePickerContainer}>
-              <Text>Date de fin</Text>
-              <MaskedTextInput
-                placeholder="JJ/MM/AAAA"
-                mask="99/99/9999"
-                onChangeText={setEndDate}
-                defaultValue={today}
-                style={styles.dateInput}
-                keyboardType="numeric"
-              />
-            </View>
-            <View style={styles.datePickerContainer}>
-              <Text>Heure de fin</Text>
-              <MaskedTextInput
-                placeholder="hh:mm"
-                mask="99:99"
-                onChangeText={setEndTime}
-                defaultValue={time}
-                style={styles.dateInput}
-                keyboardType="numeric"
-              />
-            </View>
-          </View>
-        </View>
+        <DateTimePicker
+          {...{
+            defaultStartDate: today,
+            defaultStartTime: time,
+            defaultEndDate: today,
+            defaultEndTime: time,
+            setStartDate,
+            setStartTime,
+            setEndDate,
+            setEndTime,
+          }}
+        />
         <TextInput
           label="Nombre de participants maximum"
           placeholder="Nombre de participants maximum"
@@ -355,37 +317,6 @@ const styles = StyleSheet.create({
   },
   textInput: {
     backgroundColor: theme.colors.primaryContainer,
-    marginVertical: 10,
-    marginHorizontal: 30,
-  },
-  picker: {
-    backgroundColor: theme.colors.primaryContainer,
-  },
-  pickerContainer: {
-    borderRadius: 4,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderColor: theme.colors.outline,
-    overflow: 'hidden',
-    marginVertical: 10,
-    marginHorizontal: 31,
-  },
-  dateInput: {
-    margin: 0,
-  },
-  datePickerContainer: {
-    backgroundColor: theme.colors.primaryContainer,
-    borderRadius: 4,
-    padding: 5,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    borderColor: theme.colors.outline,
-    overflow: 'hidden',
-    width: '45%',
-  },
-  datePickerRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     marginVertical: 10,
     marginHorizontal: 30,
   },
