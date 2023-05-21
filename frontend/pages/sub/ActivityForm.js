@@ -214,6 +214,7 @@ const ActivityForm = ({ navigation, route }) => {
           style={styles.textInput}
           nativeID="titleInput"
           mode="outlined"
+          onSubmitEditing={sendActivity}
         />
         <TextInput
           label="Description"
@@ -225,6 +226,7 @@ const ActivityForm = ({ navigation, route }) => {
           style={styles.textInput}
           nativeID="descriptionInput"
           mode="outlined"
+          onSubmitEditing={sendActivity}
         />
         <DateTimePicker
           {...{
@@ -247,6 +249,7 @@ const ActivityForm = ({ navigation, route }) => {
           style={styles.textInput}
           nativeID="numberPersonMaxInput"
           mode="outlined"
+          onSubmitEditing={sendActivity}
         />
         <TextInput
           label="Coût"
@@ -257,6 +260,7 @@ const ActivityForm = ({ navigation, route }) => {
           style={styles.textInput}
           nativeID="costInput"
           mode="outlined"
+          onSubmitEditing={sendActivity}
         />
         <Autocomplete
           value={place.label}

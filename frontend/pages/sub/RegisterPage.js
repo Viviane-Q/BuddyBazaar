@@ -93,6 +93,8 @@ const RegisterPage = () => {
             onChangeText={handleName}
             value={name}
             mode="outlined"
+            onSubmitEditing={handleRegister}
+            nativeID='registerNameInput'
           />
           <TextInput
             label="Adresse email"
@@ -100,6 +102,8 @@ const RegisterPage = () => {
             onChangeText={handleEmail}
             value={email}
             mode="outlined"
+            onSubmitEditing={handleRegister}
+            nativeID='registerEmailInput'
           />
           <TextInput
             label="Mot de passe"
@@ -108,6 +112,8 @@ const RegisterPage = () => {
             onChangeText={setPassword}
             value={password}
             mode="outlined"
+            onSubmitEditing={handleRegister}
+            nativeID='registerPasswordInput'
           />
         </View>
         <Button
@@ -115,6 +121,7 @@ const RegisterPage = () => {
           onPress={handleRegister}
           mode="outlined"
           icon="account-multiple-plus"
+          nativeID='registerButton'
         >
           S&apos;inscrire
         </Button>

@@ -77,6 +77,7 @@ const LoginPage = ({ navigation }) => {
             onChangeText={handleEmail}
             value={email}
             mode="outlined"
+            onSubmitEditing={handleLogin}
           />
           <TextInput
             label="Mot de passe"
@@ -85,6 +86,7 @@ const LoginPage = ({ navigation }) => {
             onChangeText={setPassword}
             value={password}
             mode="outlined"
+            onSubmitEditing={handleLogin}
           />
         </View>
         <Button style={styles.button} onPress={handleLogin} mode="contained" icon="login">
