@@ -36,7 +36,6 @@ export const listenToMessages = createAsyncThunk(
   async (args, thunkAPI) => {
     const { token } = thunkAPI.getState().auth;
     const socket = getSocket(token);
-    console.log(socket.hasListeners('message:emit'))
     if (!socket.hasListeners('message:emit')) {
       socket.on('message:emit', (message) => {
         // update message list
