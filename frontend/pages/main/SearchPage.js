@@ -68,10 +68,11 @@ const SearchPage = ({ navigation }) => {
         <TitleMedium>Recherche</TitleMedium>
         <View style={styles.searchBarContainer}>
           <Searchbar
-            placeholder="Search"
+            placeholder="Rechercher"
             onChangeText={setSearchQuery}
             value={querySearch}
             style={styles.searchBar}
+            nativeID="searchBar"
           />
           <IconButton
             icon={
