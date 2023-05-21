@@ -4,21 +4,21 @@ import TitleMedium from '../../components/shared/typography/TitleMedium';
 import theme from '../../theme';
 import UserProfilePage from '../main/UserProfilePage';
 
-const MessagesStack = createNativeStackNavigator();
+const UserStack = createNativeStackNavigator();
 
 export default function UserProfileStackScreen() {
   return (
-    <MessagesStack.Navigator
+    <UserStack.Navigator
       screenOptions={{
         headerTitle: (props) => <TitleMedium>{props.children}</TitleMedium>,
         headerStyle: { backgroundColor: theme.colors.primaryContainer },
       }}
     >
-      <MessagesStack.Screen
+      <UserStack.Screen
         name="UserProfilePage"
         component={UserProfilePage}
         options={{ headerShown: false }}
       />
-    </MessagesStack.Navigator>
+    </UserStack.Navigator>
   );
 }

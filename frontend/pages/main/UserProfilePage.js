@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { Button, TextInput} from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from "../../store/thunks/authThunk";
 import { setToken } from "../../store/slices/authSlice";
 import TitleMedium from "../../components/shared/typography/TitleMedium";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,24 +10,12 @@ const UserProfilePage = ({ navigation }) => {
 	const dispatch = useDispatch();
 	const { name, email } = useSelector((state) => state.auth);
 
-	useEffect(() => {
-		const fetchUser = async () => {
-			const res = await dispatch(getUser());
-			if (!res.payload) {
-				setSnackbarVisible(true);
-				setSnackbarType('error');
-				setSnackbarMessage('Une erreur est survenue');
-			}
-		};
-
-		fetchUser();
-	}, []);
-
 	const disconnect = () => {
 		dispatch(setToken(null));
 		AsyncStorage.removeItem('token');
 		navigation.navigate('Landing');
 	};
+
 	return (
 		<View style={styles.container}>
 			<ScrollView>
