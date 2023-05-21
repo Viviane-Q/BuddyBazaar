@@ -81,12 +81,12 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.outline,
     overflow: 'hidden',
     width: '45%',
+    flex: 1,
   },
   datePickerRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     marginVertical: 10,
-    marginHorizontal: 30,
+    gap: 14,
   },
 });
 

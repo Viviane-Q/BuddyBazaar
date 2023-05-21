@@ -314,11 +314,11 @@ const styles = StyleSheet.create({
   newActivityForm: {
     backgroundColor: theme.colors.background,
     flexGrow: 1,
+    paddingHorizontal: 30,
   },
   textInput: {
     backgroundColor: theme.colors.primaryContainer,
     marginVertical: 10,
-    marginHorizontal: 30,
   },
   error: {
     backgroundColor: '#e35d6a',

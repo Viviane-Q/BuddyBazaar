@@ -21,6 +21,7 @@ const CustomPicker = ({
         onValueChange={onValueChange}
         selectedValue={selectedValue}
       >
+        <Picker.Item key={-1} label='Sélectionnez une catégorie' value="" />
         {items.map((value, key) => (
           <Picker.Item label={value} value={value} key={key} />
         ))}
@@ -37,7 +38,6 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.outline,
     overflow: 'hidden',
     marginVertical: 10,
-    marginHorizontal: 31,
   },
   picker: {
     backgroundColor: theme.colors.primaryContainer,
