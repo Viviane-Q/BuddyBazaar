@@ -9,7 +9,6 @@ interface ActivityRepository {
     endDate?: Date,
     numberPersonMax?: number,
     cost?: number,
-    place?: string,
     category?: string
   ): Promise<Activity[]>;
   getAllByUserId(userId: number): Promise<Activity[]>;

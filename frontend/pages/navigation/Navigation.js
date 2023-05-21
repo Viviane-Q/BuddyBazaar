@@ -77,6 +77,7 @@ export default function Navigation() {
           tabBarStyle: navigationStyles.navigationBar,
           headerShown: false,
           tabBarLabel: () => null,
+          tabBarHideOnKeyboard: true,
         }}
         nativeId="tabBar"
       >

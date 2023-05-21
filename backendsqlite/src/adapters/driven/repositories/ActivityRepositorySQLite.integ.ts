@@ -192,11 +192,11 @@ describe('ActivityRepositorySQLite integration tests', () => {
       expect(activies).toEqual([anActivity2]);
     });
     test('should get all activities in Grenoble', async () => {
-      const activies = await activityRepository.getAll(undefined, undefined, undefined, undefined, undefined, 'Grenoble');
+      const activies = await activityRepository.getAll('Grenoble');
       expect(activies).toEqual([anActivity, anActivity3]);
     });
     test('should get all activities in Sport category', async () => {
-      const activies = await activityRepository.getAll(undefined, undefined, undefined, undefined, undefined, undefined, 'Sport');
+      const activies = await activityRepository.getAll(undefined, undefined, undefined, undefined, undefined, 'Sport');
       expect(activies).toEqual([anActivity]);
     });
   });

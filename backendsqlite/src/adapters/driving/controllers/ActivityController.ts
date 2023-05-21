@@ -17,7 +17,6 @@ const getActivities = (req: CustomRequest): Promise<Activity[]> => {
     endDate: new Date(req.query.endDate as string),
     numberPersonMax: parseInt(req.query.numberPersonMax as string),
     cost: parseInt(req.query.cost as string),
-    place: req.query.place as string,
     category: req.query.category as string,
   });
 };

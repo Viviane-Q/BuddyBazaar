@@ -101,7 +101,6 @@ class ActivityRepositorySQLite implements ActivityRepository {
     endDate?: Date,
     numberPersonMax?: number,
     cost?: number,
-    place?: string,
     category?: string
   ): Promise<Activity[]> {
     const now = new Date();
@@ -116,6 +115,7 @@ class ActivityRepositorySQLite implements ActivityRepository {
         [Op.or]: [
           { title: { [Op.like]: `%${querySearch}%` } },
           { description: { [Op.like]: `%${querySearch}%` } },
+          { place: { [Op.like]: `%${querySearch}%` } },
         ],
       };
     }
@@ -141,12 +141,6 @@ class ActivityRepositorySQLite implements ActivityRepository {
       options.where = {
         ...options.where,
         cost: { [Op.lte]: cost },
-      };
-    }
-    if (place) {
-      options.where = {
-        ...options.where,
-        place: { [Op.like]: `%${place}%` },
       };
     }
     if (category) {

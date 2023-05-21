@@ -29,7 +29,6 @@ class ActivityRepositoryInMemory implements ActivityRepository {
     endDate?: Date,
     numberPersonMax?: number,
     cost?: number,
-    place?: string,
     category?: string
   ): Promise<Activity[]> {
     let activities = this.activities;

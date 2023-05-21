@@ -43,6 +43,67 @@ export const postNewActivity = createAsyncThunk(
   }
 );
 
+export const getFilteredActivities = createAsyncThunk(
+  'activities/getFilteredActivities',
+  async (args, thunkAPI) => {
+    const {
+      querySearch,
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+      category,
+      cost,
+      numberPersonMax,
+    } = args;
+    let queryString = '';
+    if (querySearch) {
+      queryString += `querySearch=${querySearch}&`;
+    }
+    if (category) {
+      queryString += `category=${category}&`;
+    }
+    if (cost) {
+      queryString += `cost=${cost}&`;
+    }
+    if (numberPersonMax) {
+      queryString += `numberPersonMax=${numberPersonMax}&`;
+    }
+    if (startDate && startTime) {
+      const startDateToSend = new Date();
+      startDateToSend.setFullYear(startDate.split('/')[2]);
+      startDateToSend.setMonth(startDate.split('/')[1] - 1);
+      startDateToSend.setDate(startDate.split('/')[0]);
+      startDateToSend.setHours(parseInt(startTime.split(':')[0]));
+      startDateToSend.setMinutes(parseInt(startTime.split(':')[1]));
+      queryString += `startDate=${startDateToSend.toISOString()}&`;
+    }
+    if (endDate && endTime) {
+      const endDateToSend = new Date();
+      endDateToSend.setFullYear(endDate.split('/')[2]);
+      endDateToSend.setMonth(endDate.split('/')[1] - 1);
+      endDateToSend.setDate(endDate.split('/')[0]);
+      endDateToSend.setHours(parseInt(endTime.split(':')[0]));
+      endDateToSend.setMinutes(parseInt(endTime.split(':')[1]));
+      queryString += `endDate=${endDateToSend.toISOString()}&`;
+    }
+    const response = await fetch(
+      `${BACKEND_URL}/api/activities?${queryString}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      }
+    );
+    const data = await response.json();
+    if (response.ok) {
+      thunkAPI.dispatch(setSearchedActivities(data.activities));
+    }
+    return Promise.resolve({ res: data, error: !response.ok });
+  }
+);
+
 export const getActivitiesByCategory = createAsyncThunk(
   'activities/getActivitiesByCategory',
   async (args, thunkAPI) => {
@@ -65,7 +126,7 @@ export const getActivitiesByCategory = createAsyncThunk(
 );
 
 export const getActivitiesByDateRange = createAsyncThunk(
-  'activities/getActivitiesByCategory',
+  'activities/getActivitiesByDateRange',
   async (args) => {
     const { startDate, endDate } = args;
     const response = await fetch(
@@ -133,7 +194,8 @@ export const registerForActivity = createAsyncThunk(
           'Content-Type': 'application/json',
           token: `${token}`,
         },
-      })
+      }
+    );
     const data = await response.json();
     return Promise.resolve({ res: data, error: !response.ok });
   }
@@ -152,7 +214,8 @@ export const unregisterForActivity = createAsyncThunk(
           'Content-Type': 'application/json',
           token: `${token}`,
         },
-      })
+      }
+    );
     const data = await response.json();
     return Promise.resolve({ res: data, error: !response.ok });
   }
