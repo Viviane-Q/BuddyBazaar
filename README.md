@@ -34,7 +34,7 @@ Le _domain_ contient les _entities_, c'est-à-dire le modèle des données qu'on
     - services divers (chiffrage, etc.)
 
 #### 2. Core
-Le _core_ contient le coeur de l'application, là où se trouve toute la logique métier. Elle est isolée des dépendances externes et est donc plus facilement testable. Elle est découpée en _use cases_ (cas d'usage) et chacun d'eux représente une fonctionnalité. Le paramétrage se fait via les _entities_ du métier qui vont être manipulés et les _interfaces_ qui permettent de changer d'implémentation en fonction du besoin (par exemple, utiliser des inMemory ou fake lors des tests).
+Le _core_ contient le coeur de l'application, là où se trouve toute la logique métier. Elle est isolée des dépendances externes et est donc plus facilement testable. Elle est découpée en _use cases_ (cas d'usage) et chacun d'eux représente une fonctionnalité. Le paramétrage se fait via les _entities_ du métier qui vont être manipulés et les _interfaces_ qui permettent de changer d'implémentation en fonction du besoin (par exemple, utiliser des inMemory ou fake lors des tests). Le _core_ contient aussi un répertoire _security_ qui porte sur toute la gestion des règles métiers d'accès aux routes du backend et donc aux _use cases_.
 
 - Use cases :
     - User
@@ -58,6 +58,14 @@ Le _core_ contient le coeur de l'application, là où se trouve toute la logique
 - Scénarii d'usage clés :
 TODO : diagramme de séquence
 
+- Gestion des utilisateurs :
+Dans _security_ on retrouve :
+    - les _Actions_ possible pour l'utilisateur : create, read, update, readone, delete
+    - les _Resources_ disponibles sur l'application : activity, user, message
+    - les _rbacCheckFunctions_ qui contiennent un ensemble de fonctions de vérification de droit d'accès
+    - les _rbacRules_ qui sont sous la forme d'un dictionnaire dont la combinaison des _Actions_ et des _Resources_ correspond à une _rbackCheckFunctions_ à exécuter
+    - le _can_ où l'on retrouve les fonctions vérifiant l'authentification de l'utilisateur et faisant appel aux _rbacRules_ pour vérfier le droit d'accès. Ces fonctions sont utilisées en tant que middleware sur les routes du backend et sur les listeners des sockets
+
 #### 3. Adapters
 Les _adapters_ contient les implémentations répondant aux contrats d'utilisation (_interfaces_) du coeur de notre application.
 Il existe deux catégories d'_adapters_ :
@@ -68,14 +76,10 @@ Il existe deux catégories d'_adapters_ :
 #### 1. Tests unitaires (spec)
 La portée de ces tests ne s'arrête qu'au use cases (donc une fonctionnalité), c'est pour cela qu'on substitue les implémentations concrètes par des fakes. Leur objectif est de documenter les comportements métiers de notre application à travers des exemples de scénarios. Ils sont aussi indépendants des uns des autres et sont donc exécutables en parallèle.
 
-#### 2. Tests d'intégration
+#### 2. Tests d'intégration (integ)
 Ces tests ont simplement pour objectif de vérifier que les adapters respectent les contrats définis dans l'application. Donc on va faire appel ici à une vraie base de données et aux services réels pour les driven adapters. Dans le cas des driving adapters, les tests API permet de vérifier que nos controllers passent les bonnes informations à nos use cases.
-
-TODO : à faire sur des repos plus complexes
 
 #### 3. Tests end-to-end (e2e)
 Comme l'indique le nom, ce sont des tests bout en bout qui vérifient que l'API du backend retourne bien ce qui est attendu et qui passent donc à travers toutes les couches de l'architecture. Dans notre cas, la couverture est faite via les tests API.
-
-### Gestion des utilisateurs
 
 ### Webservices utilisés
