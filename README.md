@@ -26,8 +26,8 @@ TODO : schéma
 #### 1. Domain
 Le _domain_ contient les _entities_, c'est-à-dire le modèle des données qu'on va manipuler et les _interfaces_ qui définissent les contrats d'utilisation des systèmes externes.
 
-- Entities :
-TODO : faire un diagramme de classe
+- Entities/Models :
+![classDiagram](./docs/classDiagram.jpg)
 
 - Interfaces : 
     - repositories : accès aux tables de la base de données
