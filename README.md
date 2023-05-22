@@ -37,10 +37,28 @@ Le _domain_ contient les _entities_, c'est-à-dire le modèle des données qu'on
 Le _core_ contient le coeur de l'application, là où se trouve toute la logique métier. Elle est isolée des dépendances externes et est donc plus facilement testable. Elle est découpée en _use cases_ (cas d'usage) et chacun d'eux représente une fonctionnalité. Le paramétrage se fait via les _entities_ du métier qui vont être manipulés et les _interfaces_ qui permettent de changer d'implémentation en fonction du besoin (par exemple, utiliser des inMemory ou fake lors des tests).
 
 - Use cases :
-    - RegisterUser : Inscrire un utilisateur
-    - SignInUser : Connecter un utilisateur
+    - User
+        - RegisterUser : Inscrire un utilisateur
+        - SignInUser : Connecter un utilisateur
+    - Activity :
+        - CreateActivity : Créer une activité
+        - DeleteActivity : Supprimer une activité
+        - GetActivities : Récupérer les activités (toutes ou certaines avec filtres)
+        - GetActivitiesByUser : Récupérer toutes les activités liées à un utilisateur (détenteur ou participant)
+        - GetActivityById : Récupérer une activité par son id interne
+        - UpdateActivity : Mettre à jour une activité
+    - ActivityRegistration :
+        - RegisterForAnActivity : S'inscrire à une activité (qui n'appartient pas à l'utilisateur)
+        - UnregisterForAnActivity : Se désinscrire à une activité (qui n'appartient pas à l'utilisateur)
+    - Message :
+        - CreateMessage : Créer un message
+        - GetLastMessagesByUserId : Récupérer le dernier message envoyé ou reçu de chaque activité de l'utilisateur (détenteur ou participant)
+        - GetMessagesByAcivityId : Récupérer tous les messages concernant une activité
 
-#### 3. Adaters
+- Scénarii d'usage clés :
+TODO : diagramme de séquence
+
+#### 3. Adapters
 Les _adapters_ contient les implémentations répondant aux contrats d'utilisation (_interfaces_) du coeur de notre application.
 Il existe deux catégories d'_adapters_ :
 - Driving : c'est ce qui réunit les points d'entrée d'une application. Donc on y retrouve dans notre cas les _routes_ de notre API et les _controllers_. Les _interfaces_ de ce cas ne sont pas définit concrètement mais on peut les voir comme les signatures des _use case_. 
