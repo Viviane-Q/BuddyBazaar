@@ -187,7 +187,7 @@ module.exports.seedDbProd = async () => {
   }));
 
   // Create every activities
-  let today = new Date();
+  const today = new Date();
 
   const activities = [
     {
@@ -288,30 +288,30 @@ module.exports.seedDbProd = async () => {
     latitude: 2.352222,
     category: 'Art',
   },
-    {
-      title: 'Un match de football improvisé',
-      description: 'Rejoignez-nous au parc Marseille pour une partie de football amicale et passionnée. Peu importe votre niveau de jeu, c\'est l\'occasion de s\'amuser et de profiter du grand air.',
-      startDate: new Date(today.getTime() + 2 * 60 * 60 * 1000), // Start date is 2 hours from now
-      endDate: new Date(today.getTime() + (2 * 60 * 60 * 1000) + Math.floor(Math.random() * (48 * 60 * 60 * 1000))), // End date is 2 hours plus a random duration between 1 and 48 hours
-      numberPersonMax: 2,
-      cost: 5,
-      place: 'Rue de la Plage, Marseille',
-      longitude: 43.296482,
-      latitude: 5.369780,
-      category: 'Sport',
-    },
-    {
-      title: 'Club de lecture : voyage littéraire',
-      description: 'Plongez-vous dans les pages d\'un roman captivant lors de notre club de lecture hebdomadaire. Rejoignez-nous au café Bordeaux pour discuter, échanger des idées et partager votre amour pour la littérature.',
-      startDate: new Date(today.getTime() + 3 * 60 * 60 * 1000), // Start date is 3 hours from now
-      endDate: new Date(today.getTime() + (3 * 60 * 60 * 1000) + Math.floor(Math.random() * (72 * 60 * 60 * 1000))), // End date is 3 hours plus a random duration between 1 and 72 hours
-      numberPersonMax: 2,
-      cost: 5,
-      place: 'Rue du Palais, Bordeaux',
-      longitude: 44.837789,
-      latitude: -0.579180,
-      category: 'Livre',
-    })
+  {
+    title: 'Un match de football improvisé',
+    description: 'Rejoignez-nous au parc Marseille pour une partie de football amicale et passionnée. Peu importe votre niveau de jeu, c\'est l\'occasion de s\'amuser et de profiter du grand air.',
+    startDate: new Date(today.getTime() + 2 * 60 * 60 * 1000), // Start date is 2 hours from now
+    endDate: new Date(today.getTime() + (2 * 60 * 60 * 1000) + Math.floor(Math.random() * (48 * 60 * 60 * 1000))), // End date is 2 hours plus a random duration between 1 and 48 hours
+    numberPersonMax: 2,
+    cost: 5,
+    place: 'Rue de la Plage, Marseille',
+    longitude: 43.296482,
+    latitude: 5.369780,
+    category: 'Sport',
+  },
+  {
+    title: 'Club de lecture : voyage littéraire',
+    description: 'Plongez-vous dans les pages d\'un roman captivant lors de notre club de lecture hebdomadaire. Rejoignez-nous au café Bordeaux pour discuter, échanger des idées et partager votre amour pour la littérature.',
+    startDate: new Date(today.getTime() + 3 * 60 * 60 * 1000), // Start date is 3 hours from now
+    endDate: new Date(today.getTime() + (3 * 60 * 60 * 1000) + Math.floor(Math.random() * (72 * 60 * 60 * 1000))), // End date is 3 hours plus a random duration between 1 and 72 hours
+    numberPersonMax: 2,
+    cost: 5,
+    place: 'Rue du Palais, Bordeaux',
+    longitude: 44.837789,
+    latitude: -0.579180,
+    category: 'Livre',
+  });
   today.setDate(today.getDate() + 1);
   activities.push(
     {
@@ -352,30 +352,30 @@ module.exports.seedDbProd = async () => {
     latitude: 7.261953,
     category: 'Art',
   },
-    {
-      title: 'Découverte des bars cachés',
-      description: 'Plongez dans l\'ambiance animée de la vie nocturne locale lors de notre visite des bars secrets de Lille. Suivez notre guide passionné qui vous fera découvrir des endroits uniques et des cocktails spéciaux, pour une soirée inoubliable entre amis.',
-      startDate: new Date(today.getTime() + 7 * 60 * 60 * 1000), // Start date is 7 hours from now
-      endDate: new Date(today.getTime() + (7 * 60 * 60 * 1000) + Math.floor(Math.random() * (168 * 60 * 60 * 1000))), // End date is 7 hours plus a random duration between 1 and 168 hours
-      numberPersonMax: 2,
-      cost: 5,
-      place: 'Rue des Fêtards, Lille',
-      longitude: 50.629250,
-      latitude: 3.057256,
-      category: 'Bar',
-    },
-    {
-      title: 'Concert acoustique intime',
-      description: 'Venez écouter des artistes talentueux dans une ambiance intime lors de notre concert acoustique dans le charmant café Strasbourg. Laissez-vous emporter par les mélodies et profitez d\'une soirée musicale unique en son genre.',
-      startDate: new Date(today.getTime() + 8 * 60 * 60 * 1000), // Start date is 8 hours from now
-      endDate: new Date(today.getTime() + (8 * 60 * 60 * 1000) + Math.floor(Math.random() * (192 * 60 * 60 * 1000))), // End date is 8 hours plus a random duration between 1 and 192 hours
-      numberPersonMax: 2,
-      cost: 5,
-      place: 'Rue de la Musique, Strasbourg',
-      longitude: 48.58392,
-      latitude: 7.74553,
-      category: 'Musique',
-    });
+  {
+    title: 'Découverte des bars cachés',
+    description: 'Plongez dans l\'ambiance animée de la vie nocturne locale lors de notre visite des bars secrets de Lille. Suivez notre guide passionné qui vous fera découvrir des endroits uniques et des cocktails spéciaux, pour une soirée inoubliable entre amis.',
+    startDate: new Date(today.getTime() + 7 * 60 * 60 * 1000), // Start date is 7 hours from now
+    endDate: new Date(today.getTime() + (7 * 60 * 60 * 1000) + Math.floor(Math.random() * (168 * 60 * 60 * 1000))), // End date is 7 hours plus a random duration between 1 and 168 hours
+    numberPersonMax: 2,
+    cost: 5,
+    place: 'Rue des Fêtards, Lille',
+    longitude: 50.629250,
+    latitude: 3.057256,
+    category: 'Bar',
+  },
+  {
+    title: 'Concert acoustique intime',
+    description: 'Venez écouter des artistes talentueux dans une ambiance intime lors de notre concert acoustique dans le charmant café Strasbourg. Laissez-vous emporter par les mélodies et profitez d\'une soirée musicale unique en son genre.',
+    startDate: new Date(today.getTime() + 8 * 60 * 60 * 1000), // Start date is 8 hours from now
+    endDate: new Date(today.getTime() + (8 * 60 * 60 * 1000) + Math.floor(Math.random() * (192 * 60 * 60 * 1000))), // End date is 8 hours plus a random duration between 1 and 192 hours
+    numberPersonMax: 2,
+    cost: 5,
+    place: 'Rue de la Musique, Strasbourg',
+    longitude: 48.58392,
+    latitude: 7.74553,
+    category: 'Musique',
+  });
   today.setDate(today.getDate() + 1);
   activities.push({
     title: 'Une balade artistique dans le quartier',
@@ -389,30 +389,30 @@ module.exports.seedDbProd = async () => {
     latitude: 2.352222,
     category: 'Art',
   },
-    {
-      title: 'Un match de football improvisé',
-      description: 'Rejoignez-nous au parc Marseille pour une partie de football amicale et passionnée. Peu importe votre niveau de jeu, c\'est l\'occasion de s\'amuser et de profiter du grand air.',
-      startDate: new Date(today.getTime() + 2 * 60 * 60 * 1000), // Start date is 2 hours from now
-      endDate: new Date(today.getTime() + (2 * 60 * 60 * 1000) + Math.floor(Math.random() * (48 * 60 * 60 * 1000))), // End date is 2 hours plus a random duration between 1 and 48 hours
-      numberPersonMax: 2,
-      cost: 5,
-      place: 'Rue de la Plage, Marseille',
-      longitude: 43.296482,
-      latitude: 5.369780,
-      category: 'Sport',
-    },
-    {
-      title: 'Club de lecture : voyage littéraire',
-      description: 'Plongez-vous dans les pages d\'un roman captivant lors de notre club de lecture hebdomadaire. Rejoignez-nous au café Bordeaux pour discuter, échanger des idées et partager votre amour pour la littérature.',
-      startDate: new Date(today.getTime() + 3 * 60 * 60 * 1000), // Start date is 3 hours from now
-      endDate: new Date(today.getTime() + (3 * 60 * 60 * 1000) + Math.floor(Math.random() * (72 * 60 * 60 * 1000))), // End date is 3 hours plus a random duration between 1 and 72 hours
-      numberPersonMax: 2,
-      cost: 5,
-      place: 'Rue du Palais, Bordeaux',
-      longitude: 44.837789,
-      latitude: -0.579180,
-      category: 'Livre',
-    })
+  {
+    title: 'Un match de football improvisé',
+    description: 'Rejoignez-nous au parc Marseille pour une partie de football amicale et passionnée. Peu importe votre niveau de jeu, c\'est l\'occasion de s\'amuser et de profiter du grand air.',
+    startDate: new Date(today.getTime() + 2 * 60 * 60 * 1000), // Start date is 2 hours from now
+    endDate: new Date(today.getTime() + (2 * 60 * 60 * 1000) + Math.floor(Math.random() * (48 * 60 * 60 * 1000))), // End date is 2 hours plus a random duration between 1 and 48 hours
+    numberPersonMax: 2,
+    cost: 5,
+    place: 'Rue de la Plage, Marseille',
+    longitude: 43.296482,
+    latitude: 5.369780,
+    category: 'Sport',
+  },
+  {
+    title: 'Club de lecture : voyage littéraire',
+    description: 'Plongez-vous dans les pages d\'un roman captivant lors de notre club de lecture hebdomadaire. Rejoignez-nous au café Bordeaux pour discuter, échanger des idées et partager votre amour pour la littérature.',
+    startDate: new Date(today.getTime() + 3 * 60 * 60 * 1000), // Start date is 3 hours from now
+    endDate: new Date(today.getTime() + (3 * 60 * 60 * 1000) + Math.floor(Math.random() * (72 * 60 * 60 * 1000))), // End date is 3 hours plus a random duration between 1 and 72 hours
+    numberPersonMax: 2,
+    cost: 5,
+    place: 'Rue du Palais, Bordeaux',
+    longitude: 44.837789,
+    latitude: -0.579180,
+    category: 'Livre',
+  });
   today.setDate(today.getDate() + 1);
   activities.push(
     {
@@ -453,30 +453,30 @@ module.exports.seedDbProd = async () => {
     latitude: 7.261953,
     category: 'Art',
   },
-    {
-      title: 'Découverte des bars cachés',
-      description: 'Plongez dans l\'ambiance animée de la vie nocturne locale lors de notre visite des bars secrets de Lille. Suivez notre guide passionné qui vous fera découvrir des endroits uniques et des cocktails spéciaux, pour une soirée inoubliable entre amis.',
-      startDate: new Date(today.getTime() + 7 * 60 * 60 * 1000), // Start date is 7 hours from now
-      endDate: new Date(today.getTime() + (7 * 60 * 60 * 1000) + Math.floor(Math.random() * (168 * 60 * 60 * 1000))), // End date is 7 hours plus a random duration between 1 and 168 hours
-      numberPersonMax: 2,
-      cost: 5,
-      place: 'Rue des Fêtards, Lille',
-      longitude: 50.629250,
-      latitude: 3.057256,
-      category: 'Bar',
-    },
-    {
-      title: 'Concert acoustique intime',
-      description: 'Venez écouter des artistes talentueux dans une ambiance intime lors de notre concert acoustique dans le charmant café Strasbourg. Laissez-vous emporter par les mélodies et profitez d\'une soirée musicale unique en son genre.',
-      startDate: new Date(today.getTime() + 8 * 60 * 60 * 1000), // Start date is 8 hours from now
-      endDate: new Date(today.getTime() + (8 * 60 * 60 * 1000) + Math.floor(Math.random() * (192 * 60 * 60 * 1000))), // End date is 8 hours plus a random duration between 1 and 192 hours
-      numberPersonMax: 2,
-      cost: 5,
-      place: 'Rue de la Musique, Strasbourg',
-      longitude: 48.58392,
-      latitude: 7.74553,
-      category: 'Musique',
-    });
+  {
+    title: 'Découverte des bars cachés',
+    description: 'Plongez dans l\'ambiance animée de la vie nocturne locale lors de notre visite des bars secrets de Lille. Suivez notre guide passionné qui vous fera découvrir des endroits uniques et des cocktails spéciaux, pour une soirée inoubliable entre amis.',
+    startDate: new Date(today.getTime() + 7 * 60 * 60 * 1000), // Start date is 7 hours from now
+    endDate: new Date(today.getTime() + (7 * 60 * 60 * 1000) + Math.floor(Math.random() * (168 * 60 * 60 * 1000))), // End date is 7 hours plus a random duration between 1 and 168 hours
+    numberPersonMax: 2,
+    cost: 5,
+    place: 'Rue des Fêtards, Lille',
+    longitude: 50.629250,
+    latitude: 3.057256,
+    category: 'Bar',
+  },
+  {
+    title: 'Concert acoustique intime',
+    description: 'Venez écouter des artistes talentueux dans une ambiance intime lors de notre concert acoustique dans le charmant café Strasbourg. Laissez-vous emporter par les mélodies et profitez d\'une soirée musicale unique en son genre.',
+    startDate: new Date(today.getTime() + 8 * 60 * 60 * 1000), // Start date is 8 hours from now
+    endDate: new Date(today.getTime() + (8 * 60 * 60 * 1000) + Math.floor(Math.random() * (192 * 60 * 60 * 1000))), // End date is 8 hours plus a random duration between 1 and 192 hours
+    numberPersonMax: 2,
+    cost: 5,
+    place: 'Rue de la Musique, Strasbourg',
+    longitude: 48.58392,
+    latitude: 7.74553,
+    category: 'Musique',
+  });
   today.setDate(today.getDate() + 1);
   activities.push({
     title: 'Une balade artistique dans le quartier',
@@ -490,30 +490,30 @@ module.exports.seedDbProd = async () => {
     latitude: 2.352222,
     category: 'Art',
   },
-    {
-      title: 'Un match de football improvisé',
-      description: 'Rejoignez-nous au parc Marseille pour une partie de football amicale et passionnée. Peu importe votre niveau de jeu, c\'est l\'occasion de s\'amuser et de profiter du grand air.',
-      startDate: new Date(today.getTime() + 2 * 60 * 60 * 1000), // Start date is 2 hours from now
-      endDate: new Date(today.getTime() + (2 * 60 * 60 * 1000) + Math.floor(Math.random() * (48 * 60 * 60 * 1000))), // End date is 2 hours plus a random duration between 1 and 48 hours
-      numberPersonMax: 2,
-      cost: 5,
-      place: 'Rue de la Plage, Marseille',
-      longitude: 43.296482,
-      latitude: 5.369780,
-      category: 'Sport',
-    },
-    {
-      title: 'Club de lecture : voyage littéraire',
-      description: 'Plongez-vous dans les pages d\'un roman captivant lors de notre club de lecture hebdomadaire. Rejoignez-nous au café Bordeaux pour discuter, échanger des idées et partager votre amour pour la littérature.',
-      startDate: new Date(today.getTime() + 3 * 60 * 60 * 1000), // Start date is 3 hours from now
-      endDate: new Date(today.getTime() + (3 * 60 * 60 * 1000) + Math.floor(Math.random() * (72 * 60 * 60 * 1000))), // End date is 3 hours plus a random duration between 1 and 72 hours
-      numberPersonMax: 2,
-      cost: 5,
-      place: 'Rue du Palais, Bordeaux',
-      longitude: 44.837789,
-      latitude: -0.579180,
-      category: 'Livre',
-    })
+  {
+    title: 'Un match de football improvisé',
+    description: 'Rejoignez-nous au parc Marseille pour une partie de football amicale et passionnée. Peu importe votre niveau de jeu, c\'est l\'occasion de s\'amuser et de profiter du grand air.',
+    startDate: new Date(today.getTime() + 2 * 60 * 60 * 1000), // Start date is 2 hours from now
+    endDate: new Date(today.getTime() + (2 * 60 * 60 * 1000) + Math.floor(Math.random() * (48 * 60 * 60 * 1000))), // End date is 2 hours plus a random duration between 1 and 48 hours
+    numberPersonMax: 2,
+    cost: 5,
+    place: 'Rue de la Plage, Marseille',
+    longitude: 43.296482,
+    latitude: 5.369780,
+    category: 'Sport',
+  },
+  {
+    title: 'Club de lecture : voyage littéraire',
+    description: 'Plongez-vous dans les pages d\'un roman captivant lors de notre club de lecture hebdomadaire. Rejoignez-nous au café Bordeaux pour discuter, échanger des idées et partager votre amour pour la littérature.',
+    startDate: new Date(today.getTime() + 3 * 60 * 60 * 1000), // Start date is 3 hours from now
+    endDate: new Date(today.getTime() + (3 * 60 * 60 * 1000) + Math.floor(Math.random() * (72 * 60 * 60 * 1000))), // End date is 3 hours plus a random duration between 1 and 72 hours
+    numberPersonMax: 2,
+    cost: 5,
+    place: 'Rue du Palais, Bordeaux',
+    longitude: 44.837789,
+    latitude: -0.579180,
+    category: 'Livre',
+  });
   today.setDate(today.getDate() + 1);
   activities.push(
     {
@@ -554,30 +554,30 @@ module.exports.seedDbProd = async () => {
     latitude: 7.261953,
     category: 'Art',
   },
-    {
-      title: 'Découverte des bars cachés',
-      description: 'Plongez dans l\'ambiance animée de la vie nocturne locale lors de notre visite des bars secrets de Lille. Suivez notre guide passionné qui vous fera découvrir des endroits uniques et des cocktails spéciaux, pour une soirée inoubliable entre amis.',
-      startDate: new Date(today.getTime() + 7 * 60 * 60 * 1000), // Start date is 7 hours from now
-      endDate: new Date(today.getTime() + (7 * 60 * 60 * 1000) + Math.floor(Math.random() * (168 * 60 * 60 * 1000))), // End date is 7 hours plus a random duration between 1 and 168 hours
-      numberPersonMax: 2,
-      cost: 5,
-      place: 'Rue des Fêtards, Lille',
-      longitude: 50.629250,
-      latitude: 3.057256,
-      category: 'Bar',
-    },
-    {
-      title: 'Concert acoustique intime',
-      description: 'Venez écouter des artistes talentueux dans une ambiance intime lors de notre concert acoustique dans le charmant café Strasbourg. Laissez-vous emporter par les mélodies et profitez d\'une soirée musicale unique en son genre.',
-      startDate: new Date(today.getTime() + 8 * 60 * 60 * 1000), // Start date is 8 hours from now
-      endDate: new Date(today.getTime() + (8 * 60 * 60 * 1000) + Math.floor(Math.random() * (192 * 60 * 60 * 1000))), // End date is 8 hours plus a random duration between 1 and 192 hours
-      numberPersonMax: 2,
-      cost: 5,
-      place: 'Rue de la Musique, Strasbourg',
-      longitude: 48.58392,
-      latitude: 7.74553,
-      category: 'Musique',
-    });
+  {
+    title: 'Découverte des bars cachés',
+    description: 'Plongez dans l\'ambiance animée de la vie nocturne locale lors de notre visite des bars secrets de Lille. Suivez notre guide passionné qui vous fera découvrir des endroits uniques et des cocktails spéciaux, pour une soirée inoubliable entre amis.',
+    startDate: new Date(today.getTime() + 7 * 60 * 60 * 1000), // Start date is 7 hours from now
+    endDate: new Date(today.getTime() + (7 * 60 * 60 * 1000) + Math.floor(Math.random() * (168 * 60 * 60 * 1000))), // End date is 7 hours plus a random duration between 1 and 168 hours
+    numberPersonMax: 2,
+    cost: 5,
+    place: 'Rue des Fêtards, Lille',
+    longitude: 50.629250,
+    latitude: 3.057256,
+    category: 'Bar',
+  },
+  {
+    title: 'Concert acoustique intime',
+    description: 'Venez écouter des artistes talentueux dans une ambiance intime lors de notre concert acoustique dans le charmant café Strasbourg. Laissez-vous emporter par les mélodies et profitez d\'une soirée musicale unique en son genre.',
+    startDate: new Date(today.getTime() + 8 * 60 * 60 * 1000), // Start date is 8 hours from now
+    endDate: new Date(today.getTime() + (8 * 60 * 60 * 1000) + Math.floor(Math.random() * (192 * 60 * 60 * 1000))), // End date is 8 hours plus a random duration between 1 and 192 hours
+    numberPersonMax: 2,
+    cost: 5,
+    place: 'Rue de la Musique, Strasbourg',
+    longitude: 48.58392,
+    latitude: 7.74553,
+    category: 'Musique',
+  });
   let userIndex = 0;
   let activityIndex = 0;
   while (activityIndex < activities.length) {
@@ -608,9 +608,9 @@ module.exports.seedDbProd = async () => {
   }
   await Promise.all(activities.map(async (activity) => {
     let numberOfParticipants = Math.floor(1 + Math.random() * (activity.object.numberPersonMax - 1));
-    let userIndexes = [];
+    const userIndexes = [];
     while (numberOfParticipants > 0) {
-      let userIndex = Math.floor(Math.random() * users.length);
+      const userIndex = Math.floor(Math.random() * users.length);
       if (userIndexes.indexOf(userIndex) === -1) {
         userIndexes.push(userIndex);
         numberOfParticipants--;
@@ -657,10 +657,10 @@ module.exports.seedDbProd = async () => {
     'Je suis en train de planifier mes prochaines vacances.',
   ];
   activities.map(async (activity) => {
-    let numberOfParticipants = activity.registeredUsers.length;
+    const numberOfParticipants = activity.registeredUsers.length;
     let numberTotalMessages = Math.floor(numberOfParticipants * Math.random() * 2); // Between 0 and 2 messages per participant
     while (numberTotalMessages > 0) {
-      let userIndex = Math.floor(Math.random() * numberOfParticipants);
+      const userIndex = Math.floor(Math.random() * numberOfParticipants);
       const aMessage = await models.messages.create({
         content: messages[Math.floor(Math.random() * messages.length)],
         userId: activity.registeredUsers[userIndex].id,
@@ -670,4 +670,4 @@ module.exports.seedDbProd = async () => {
       numberTotalMessages--;
     }
   });
-};  
+};

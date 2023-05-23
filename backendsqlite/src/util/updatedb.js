@@ -9,9 +9,6 @@ const cleanDb = require('./dbUtils').cleanDb;
   await cleanDb();
   console.log('Base de données créée.');
   // Initialise la base avec quelques données
-  if(process.env.NODE_ENV === 'production')
-    await seeDbProd();
-  else
-    await seedDb();
+  if (process.env.NODE_ENV === 'production') { await seeDbProd(); } else { await seedDb(); }
   // Ajouter ici le code permettant d'initialiser par défaut la base de donnée
 })();
