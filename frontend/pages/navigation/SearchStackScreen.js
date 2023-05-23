@@ -18,7 +18,7 @@ export default function SearchStackScreen({route}) {
     >
       <SearchStack.Screen
         name="Search"
-        component={() => <SearchPage parentRoute={route}/>}
+        component={(props) => <SearchPage {...props} parentRoute={route}/>}
         options={{ headerShown: false }}
       />
       <SearchStack.Screen
