@@ -14,7 +14,7 @@ import { getFilteredActivities } from '../../store/thunks/activitiesThunk';
 import theme from '../../theme';
 import Filters from '../../components/activity/Filters';
 
-const SearchPage = ({ navigation, route, parentRoute }) => {
+const SearchPage = ({ navigation, parentRoute }) => {
   const appActivities = useSelector(
     (state) => state.activities.searchedActivities
   );
