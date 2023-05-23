@@ -22,7 +22,7 @@
           {
             "name": "obj",
             "in": "body",
-            "description": "Name and email",
+            "description": "Name, email and password",
             "schema": {
               "type": "object",
               "properties": {
@@ -49,13 +49,58 @@
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User registered"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "400": {
-            "description": "Bad Request"
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "You must specify the name, email and password"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "409": {
-            "description": "Conflict"
+            "description": "Conflict",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Email already registered"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "500": {
             "description": "Internal Server Error"
@@ -74,6 +119,7 @@
           {
             "name": "obj",
             "in": "body",
+            "description": "Email and password",
             "schema": {
               "type": "object",
               "properties": {
@@ -95,10 +141,63 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User signed in"
+                },
+                "token": {
+                  "type": "string",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                }
+              },
+              "required": [
+                "message",
+                "token"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "You must specify the email and password"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Bad Request"
           },
           "403": {
-            "description": "Forbidden"
+            "description": "Forbidden",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Wrong email or password"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "500": {
             "description": "Internal Server Error"
@@ -108,6 +207,10 @@
     },
     "/api/users/me": {
       "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Get user information",
         "description": "",
         "parameters": [
           {
@@ -118,10 +221,81 @@
         ],
         "responses": {
           "200": {
-            "description": "OK"
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User found"
+                },
+                "user": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "number",
+                      "example": 1
+                    },
+                    "name": {
+                      "type": "string",
+                      "example": "John Doe"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "John.Doe@acme.com"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "email"
+                  ]
+                }
+              },
+              "required": [
+                "message",
+                "user"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "You are not authorized to do this action"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User not found"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Not Found"
           }
         }
       }
@@ -220,7 +394,40 @@
             "description": "Bad Request"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "You are not authorized to do this action"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User not found"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -243,7 +450,40 @@
             "description": "OK"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "You are not authorized to do this action"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User not found"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -272,10 +512,40 @@
             "description": "OK"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "You are not authorized to do this action"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "404": {
-            "description": "Not Found"
+            "description": "Not Found",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User not found"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "500": {
             "description": "Internal Server Error"
@@ -347,7 +617,40 @@
             "description": "Bad Request"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "You are not authorized to do this action"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User not found"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -377,7 +680,40 @@
             "description": "Bad Request"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "You are not authorized to do this action"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User not found"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -409,7 +745,40 @@
             "description": "Bad Request"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "You are not authorized to do this action"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User not found"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -441,7 +810,40 @@
             "description": "Bad Request"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "You are not authorized to do this action"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User not found"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -470,7 +872,40 @@
             "description": "OK"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "You are not authorized to do this action"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User not found"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -493,7 +928,40 @@
             "description": "OK"
           },
           "401": {
-            "description": "Unauthorized"
+            "description": "Unauthorized",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "You are not authorized to do this action"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "404": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User not found"
+                }
+              },
+              "required": [
+                "message"
+              ],
+              "xml": {
+                "name": "main"
+              }
+            },
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
