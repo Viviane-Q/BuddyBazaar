@@ -14,7 +14,7 @@ import { getFilteredActivities } from '../../store/thunks/activitiesThunk';
 import theme from '../../theme';
 import Filters from '../../components/activity/Filters';
 
-const SearchPage = ({ navigation }) => {
+const SearchPage = ({ navigation, route, parentRoute }) => {
   const appActivities = useSelector(
     (state) => state.activities.searchedActivities
   );
@@ -29,6 +29,12 @@ const SearchPage = ({ navigation }) => {
   const [displayFilter, setDisplayFilter] = useState(false);
   const dispatch = useDispatch();
   const fadeAnim = useRef(new Animated.Value(0)).current;
+  
+  useEffect(() => {
+    if(parentRoute?.params?.category) {
+      setCategory(parentRoute.params.category);
+    }
+  }, [parentRoute?.params?.category]);
 
   useEffect(() => {
     dispatch(

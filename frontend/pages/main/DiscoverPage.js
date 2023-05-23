@@ -76,7 +76,7 @@ const DiscoverPage = ({ navigation }) => {
 
   const searchCategory = (category) => {
     dispatch(getActivitiesByCategory({ category }));
-    navigation.navigate('SearchScreen');
+    navigation.navigate('SearchScreen', { category });
   };
 
   return (
