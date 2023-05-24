@@ -13,6 +13,7 @@ import {
 import theme from '../../theme';
 import TitleSmall from '../../components/shared/typography/TitleSmall';
 import { navigationStyles } from '../navigation/Navigation';
+import Map from '../../components/activity/Map';
 
 const ActivityDetails = ({ navigation, route }) => {
   const [activity, setActivity] = useState(route.params.activity);
@@ -194,8 +195,8 @@ const ActivityDetails = ({ navigation, route }) => {
                 ...styles.registerButton,
                 display:
                   activity.participants?.length < activity.numberPersonMax &&
-                  userId &&
-                  !ownsActivity
+                    userId &&
+                    !ownsActivity
                     ? 'flex'
                     : 'none',
               }}
@@ -230,6 +231,7 @@ const ActivityDetails = ({ navigation, route }) => {
         >
           {snackbarMessage}
         </Snackbar>
+        <Map address={activity.place} />
       </ScrollView>
     </View>
   );
