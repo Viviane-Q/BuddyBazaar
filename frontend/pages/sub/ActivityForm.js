@@ -164,9 +164,7 @@ const ActivityForm = ({ navigation, route }) => {
       endDate: endDateToSend,
       numberPersonMax,
       cost,
-      place: place.label,
-      longitude: place.coordinates[0],
-      latitude: place.coordinates[1],
+      place: { 'label':place.label, 'longitude': place.coordinates[0], 'latitude': place.coordinates[1] },
       category,
     };
     if (
@@ -182,6 +180,12 @@ const ActivityForm = ({ navigation, route }) => {
       setSnackbarVisible(true);
       setSnackbarType('error');
       setSnackbarMessage('Tous les champs doivent être remplis');
+      return;
+    }
+    if(activity.startDate > activity.endDate) {
+      setSnackbarVisible(true);
+      setSnackbarType('error');
+      setSnackbarMessage('La date de début doit être avant la date de fin');
       return;
     }
     const res = isUpdate
