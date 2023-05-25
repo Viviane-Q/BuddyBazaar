@@ -22,7 +22,7 @@ TODO : à faire
     - Créer une activité : 
         - Appel api adresse
     - Editer une activité
-    - S'inscrire à une activité :
+    - Consulter et s'inscrire à une activité :
         - Envoyer un message
     - Supprimer une activité
     - Afficher page profil
@@ -107,11 +107,10 @@ Le _core_ contient le coeur de l'application, là où se trouve toute la logique
         - GetLastMessagesByUserId : Récupérer le dernier message envoyé ou reçu de chaque activité de l'utilisateur (détenteur ou participant)
         - GetMessagesByAcivityId : Récupérer tous les messages concernant une activité
 
-- Scénario d'usage clés :
-TODO : diagramme de séquence
+- Diagramme de cas d'utilisation :\
+![useCasesDiagram](./docs/useCasesDiagram.jpg)
 
-- Gestion des utilisateurs :
-Dans _security_ on retrouve :
+- Gestion des utilisateurs dans _security_ :
     - les _Actions_ possible pour l'utilisateur : create, read, update, readone, delete
     - les _Resources_ disponibles sur l'application : activity, user, message
     - les _rbacCheckFunctions_ qui contiennent un ensemble de fonctions de vérification de droit d'accès
@@ -136,7 +135,7 @@ Comme l'indique le nom, ce sont des tests bout en bout qui vérifient que l'API 
 
 ## C. Webservices utilisés
 - API adresse du gouvernement (https://adresse.data.gouv.fr/api-doc/adresse)\
-Cette API nous permet de trouver l'emplacement réel à partir d'une adresse ou d'un nom de lieu. Elle est utilisée pour la création d'activité afin d'enregistrer les coordonnées GPS de l'activité.
+Cette API nous permet de trouver l'emplacement réel à partir d'une adresse ou d'un nom de lieu. Elle est utilisée pour la création d'activité afin d'enregistrer les coordonnées GPS de l'activité pour permettre l'affichage sur une carte.
 L'appel à cet API ce fait directement dans le front (dans /store/thunks/franceAPIThunk.js) lorsque l'utilisateur rentre une adresse dans le formulaire de création d'activité.
 - API de photos (https://picsum.photos)
 Cette API nous permet de récupérer une image aléatoire à partir d'un identifiant. Elle est utilisée pour afficher une image aléatoire pour chaque activité. C'est surtout pour des raisons esthétiques et pour ne pas avoir à stocker des images sur notre serveur. Les appels sont directement fait dans les composant nécessitant une image aléatoire (dans /components/ActivityCard.js, /pages/sub/ActivityDetails.js et /pages/main/MessagesPage.js).
