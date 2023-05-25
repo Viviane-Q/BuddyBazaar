@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import React, { useEffect, useState, lazy, Suspense } from 'react';
+import { View, StyleSheet, ScrollView, Platform, Text } from 'react-native';
 import { Image } from 'expo-image';
 import TitleMedium from '../../components/shared/typography/TitleMedium';
 import BodyMedium from '../../components/shared/typography/BodyMedium';
-import { IconButton, Snackbar, Divider, Button } from 'react-native-paper';
+import { IconButton, Snackbar, Divider, Button, ActivityIndicator } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   deleteActivity,
@@ -13,9 +13,10 @@ import {
 import theme from '../../theme';
 import TitleSmall from '../../components/shared/typography/TitleSmall';
 import { navigationStyles } from '../navigation/Navigation';
-import Map from '../../components/activity/Map';
 
 const ActivityDetails = ({ navigation, route }) => {
+  const Map = Platform.OS === "web" ? lazy(() => import('../../components/activity/Map')) : lazy(() => import('../../components/activity/MapMobile'));
+
   const [activity, setActivity] = useState(route.params.activity);
   const userId = useSelector((state) => state.auth.id);
   const ownsActivity = activity.userId === userId;
@@ -165,14 +166,18 @@ const ActivityDetails = ({ navigation, route }) => {
             style={{ backgroundColor: theme.colors.tertiaryContainer }}
           />
           <View>
-            <TitleSmall style={{ fontWeight: 'bold' }}>Description</TitleSmall>
+            <TitleSmall style={{ fontWeight: 'bold' }}>
+              Description
+            </TitleSmall>
             <BodyMedium>{activity.description}</BodyMedium>
           </View>
           <Divider
             style={{ backgroundColor: theme.colors.tertiaryContainer }}
           />
           <View style={styles.participantContainer}>
-            <TitleSmall style={{ fontWeight: 'bold' }}>Participants</TitleSmall>
+            <TitleSmall style={{ fontWeight: 'bold' }}>
+              Participants
+            </TitleSmall>
             <View style={styles.numberPersonContainer}>
               <IconButton
                 icon="account-group"
@@ -181,7 +186,8 @@ const ActivityDetails = ({ navigation, route }) => {
                 size={24}
               />
               <BodyMedium style={{ fontWeight: 'bold', fontSize: 18 }}>
-                {activity.participants?.length ?? 0}/{activity.numberPersonMax}
+                {activity.participants?.length ?? 0}/
+                {activity.numberPersonMax}
               </BodyMedium>
             </View>
           </View>
@@ -231,9 +237,11 @@ const ActivityDetails = ({ navigation, route }) => {
         >
           {snackbarMessage}
         </Snackbar>
-        <Map address={activity.place} />
-      </ScrollView>
-    </View>
+        <Suspense fallback={<ActivityIndicator />}>
+          <Map latitude={activity.latitude} longitude={activity.longitude} />
+        </Suspense>
+      </ScrollView >
+    </View >
   );
 };
 

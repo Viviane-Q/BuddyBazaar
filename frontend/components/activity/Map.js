@@ -1,28 +1,40 @@
 import React from 'react';
-import { StyleSheet, Platform } from 'react-native';
+import { StyleSheet, Platform, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 import Constants from 'expo-constants';
 const GOOGLE_KEY = Constants.expoConfig.extra.googleKey;
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import "leaflet/dist/leaflet.css" ;
+import L from 'leaflet';
 
-const Map = ({ address }) => {
-    if (Platform.OS === 'ios' || Platform.OS === 'android')
-        return (
-            <WebView
-                javaScriptEnabled={true}
+delete L.Icon.Default.prototype._getIconUrl;
 
-                style={styles.map}
-                source={{
-                    html: '<iframe src="https://www.google.com/maps/embed/v1/place?key='+GOOGLE_KEY+'&q='+ address + '" width=\'100%\' height=\'100%\'"/>'}}
-                    // html: '<!DOCTYPE html><html><head>    <meta name="viewport" content="width=device-width, initial-scale=1.0">\</head><body><iframe src="https://www.google.com/maps/embed/v1/place?key='+GOOGLE_KEY+'&q='+ address + '"/><style>*{margin:0;padding:0;width:"100%";height:"100%"}</style></body>    </html>'}}
-            />
-        )
-    else
-        return (
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+    iconUrl: require('leaflet/dist/images/marker-icon.png'),
+    shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+});
+
+const YOUR_LATITUDE_DELTA = 0.0922; // The desired latitude span (adjust as needed)
+const YOUR_LONGITUDE_DELTA = 0.0421; // The desired longitude span (adjust as needed)
+
+
+const Map = ({ latitude, longitude }) => {
+        /*return (
             <iframe
                 style={styles.map}
                 src={`https://www.google.com/maps/embed/v1/place?key=${GOOGLE_KEY}&q=${address}`}
                 allowFullScreen={true}
             />
+        )*/return (
+            <MapContainer center={[longitude, latitude]} zoom={13} style={{ height: '300px', width: '100%' }}>
+                <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                <Marker position={[longitude, latitude]}>
+                    <Popup>
+                        A pretty CSS3 popup. <br /> Easily customizable.
+                    </Popup>
+                </Marker>
+            </MapContainer>
         )
 };
 
