@@ -1,9 +1,6 @@
 import React from 'react';
-import { StyleSheet, Platform, View } from 'react-native';
-import { WebView } from 'react-native-webview';
-import Constants from 'expo-constants';
-const GOOGLE_KEY = Constants.expoConfig.extra.googleKey;
-import MapView , { Marker } from 'react-native-maps';
+import { View } from 'react-native';
+import MapView , { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 
 const YOUR_LATITUDE_DELTA = 0.0922; // The desired latitude span (adjust as needed)
 const YOUR_LONGITUDE_DELTA = 0.0421; // The desired longitude span (adjust as needed)
@@ -32,6 +29,7 @@ const MapMobile = () => {
                         latitudeDelta: YOUR_LATITUDE_DELTA,
                         longitudeDelta: YOUR_LONGITUDE_DELTA,
                     }}
+                    provider={PROVIDER_GOOGLE}
                 >
                     <Marker
                         coordinate={{ latitude: latitude, longitude: longitude }}
@@ -44,13 +42,5 @@ const MapMobile = () => {
 
         )
 };
-
-const styles = StyleSheet.create({
-    map: {
-        width: '100%',
-        height: 300,
-        border: 'none'
-    },
-});
 
 export default MapMobile;

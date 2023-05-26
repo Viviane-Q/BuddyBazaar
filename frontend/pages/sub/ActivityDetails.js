@@ -1,5 +1,5 @@
 import React, { useEffect, useState, lazy, Suspense } from 'react';
-import { View, StyleSheet, ScrollView, Platform, Text } from 'react-native';
+import { View, StyleSheet, ScrollView, Platform } from 'react-native';
 import { Image } from 'expo-image';
 import TitleMedium from '../../components/shared/typography/TitleMedium';
 import BodyMedium from '../../components/shared/typography/BodyMedium';

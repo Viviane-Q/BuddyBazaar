@@ -1,8 +1,4 @@
 import React from 'react';
-import { StyleSheet, Platform, View } from 'react-native';
-import { WebView } from 'react-native-webview';
-import Constants from 'expo-constants';
-const GOOGLE_KEY = Constants.expoConfig.extra.googleKey;
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import "leaflet/dist/leaflet.css" ;
 import L from 'leaflet';
@@ -10,13 +6,13 @@ import L from 'leaflet';
 delete L.Icon.Default.prototype._getIconUrl;
 
 L.Icon.Default.mergeOptions({
+    // eslint-disable-next-line no-undef
     iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+    // eslint-disable-next-line no-undef
     iconUrl: require('leaflet/dist/images/marker-icon.png'),
+    // eslint-disable-next-line no-undef
     shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 });
-
-const YOUR_LATITUDE_DELTA = 0.0922; // The desired latitude span (adjust as needed)
-const YOUR_LONGITUDE_DELTA = 0.0421; // The desired longitude span (adjust as needed)
 
 
 const Map = ({ latitude, longitude }) => {
@@ -38,12 +34,5 @@ const Map = ({ latitude, longitude }) => {
         )
 };
 
-const styles = StyleSheet.create({
-    map: {
-        width: '100%',
-        height: 300,
-        border: 'none'
-    },
-});
 
 export default Map;

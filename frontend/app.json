@@ -24,6 +24,11 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.ensimag.buddybazaar",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyAVMKHU94B0gtw62S9o68G9ZwD-V92XhS0"
+        }
+      },
       "versionCode": 1
     },
     "web": {
