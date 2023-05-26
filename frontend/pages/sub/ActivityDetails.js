@@ -15,7 +15,9 @@ import TitleSmall from '../../components/shared/typography/TitleSmall';
 import { navigationStyles } from '../navigation/Navigation';
 
 const ActivityDetails = ({ navigation, route }) => {
-  const Map = Platform.OS === "web" ? lazy(() => import('../../components/activity/Map')) : lazy(() => import('../../components/activity/MapMobile'));
+  const MapPreview = Platform.OS === "web" ?
+    lazy(() => import('../../components/activity/MapPreview')) :
+    lazy(() => import('../../components/activity/MapPreviewMobile'));
 
   const [activity, setActivity] = useState(route.params.activity);
   const userId = useSelector((state) => state.auth.id);
@@ -154,7 +156,7 @@ const ActivityDetails = ({ navigation, route }) => {
             style={{ backgroundColor: theme.colors.tertiaryContainer }}
           />
           <Suspense fallback={<ActivityIndicator />}>
-            <Map latitude={activity.latitude} longitude={activity.longitude} />
+            <MapPreview latitude={activity.latitude} longitude={activity.longitude} />
           </Suspense>
           <View>
             <TitleSmall style={{ fontWeight: 'bold' }}>Infos clés</TitleSmall>
@@ -240,9 +242,6 @@ const ActivityDetails = ({ navigation, route }) => {
         >
           {snackbarMessage}
         </Snackbar>
-        <Suspense fallback={<ActivityIndicator />}>
-          <Map latitude={activity.latitude} longitude={activity.longitude} />
-        </Suspense>
       </ScrollView >
     </View >
   );
