@@ -164,7 +164,9 @@ const ActivityForm = ({ navigation, route }) => {
       endDate: endDateToSend,
       numberPersonMax,
       cost,
-      place: { 'label':place.label, 'longitude': place.coordinates[0], 'latitude': place.coordinates[1] },
+      place: place.label,
+      longitude: place.coordinates[0],
+      latitude: place.coordinates[1],
       category,
     };
     if (
