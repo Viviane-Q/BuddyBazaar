@@ -31,7 +31,7 @@ const ActivityCard = ({
             compact="true"
             style={styled.icon}
           />
-          <BodyMedium>{activity.numberPersonMax}</BodyMedium>
+          <BodyMedium>{activity.participants.length}/{activity.numberPersonMax}</BodyMedium>
         </View>
         <View style={styled.categoryChip}>
           <BodyMedium style={{ color: 'white' }}>

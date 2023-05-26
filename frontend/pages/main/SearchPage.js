@@ -1,15 +1,15 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, lazy, Suspense } from 'react';
 import {
   ScrollView,
   View,
   StyleSheet,
-  Dimensions,
   Animated,
+  Platform,
 } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import ActivityCard from '../../components/activity/ActivityCard';
 import TitleMedium from '../../components/shared/typography/TitleMedium';
-import { IconButton, Searchbar } from 'react-native-paper';
+import { ActivityIndicator, IconButton, Searchbar } from 'react-native-paper';
 import { getFilteredActivities } from '../../store/thunks/activitiesThunk';
 import theme from '../../theme';
 import Filters from '../../components/activity/Filters';
@@ -29,9 +29,13 @@ const SearchPage = ({ navigation, parentRoute }) => {
   const [displayFilter, setDisplayFilter] = useState(false);
   const dispatch = useDispatch();
   const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const goToActivityDetails = (activity) => {
+    navigation.navigate('ActivityDetails', { activity });
+  };
   
   useEffect(() => {
-    if(parentRoute?.params?.category) {
+    if (parentRoute?.params?.category) {
       setCategory(parentRoute.params.category);
     }
   }, [parentRoute?.params?.category]);
@@ -67,82 +71,87 @@ const SearchPage = ({ navigation, parentRoute }) => {
       useNativeDriver: false,
     }).start();
   }, [displayFilter]);
+  const Map = Platform.OS === "web" ?
+    lazy(() => import('../../components/activity/Map')) :
+    lazy(() => import('../../components/activity/MapMobile'));
 
   return (
-    <ScrollView>
-      <View style={styles.viewContainer}>
-        <TitleMedium>Recherche</TitleMedium>
-        <View style={styles.searchBarContainer}>
-          <Searchbar
-            placeholder="Rechercher"
-            onChangeText={setSearchQuery}
-            value={querySearch}
-            style={styles.searchBar}
-            nativeID="searchBar"
-          />
-          <IconButton
-            icon={
-              displayFilter ? 'filter-variant-minus' : 'filter-variant-plus'
-            }
-            size={30}
-            onPress={() => setDisplayFilter(!displayFilter)}
-            nativeID="displayFilterButton"
-            iconColor={theme.colors.secondary}
-            style={{ margin: 0 }}
-          />
-        </View>
-        <Animated.View // Special animatable View
-          style={{
-            opacity: fadeAnim, // Bind opacity to animated value
-            height: fadeAnim.interpolate({
-              inputRange: [0,1],
-              outputRange: [0, 370],
-            }),
+    <View style={styles.viewContainer}>
+      <TitleMedium>Recherche</TitleMedium>
+      <View style={styles.searchBarContainer}>
+        <Searchbar
+          placeholder="Rechercher"
+          onChangeText={setSearchQuery}
+          value={querySearch}
+          style={styles.searchBar}
+          nativeID="searchBar"
+        />
+        <IconButton
+          icon={
+            displayFilter ? 'filter-variant-minus' : 'filter-variant-plus'
+          }
+          size={30}
+          onPress={() => setDisplayFilter(!displayFilter)}
+          nativeID="displayFilterButton"
+          iconColor={theme.colors.secondary}
+          style={{ margin: 0 }}
+        />
+      </View>
+      <Animated.View // Special animatable View
+        style={{
+          opacity: fadeAnim, // Bind opacity to animated value
+          height: fadeAnim.interpolate({
+            inputRange: [0, 1],
+            outputRange: [0, 370],
+          }),
+        }}
+      >
+        <Filters
+          {...{
+            setStartDate,
+            setStartTime,
+            setEndDate,
+            setEndTime,
+            category,
+            setCategory,
+            numberPersonMax,
+            setNumberPersonMax,
+            cost,
+            setCost,
           }}
-        >
-          <Filters
-            {...{
-              setStartDate,
-              setStartTime,
-              setEndDate,
-              setEndTime,
-              category,
-              setCategory,
-              numberPersonMax,
-              setNumberPersonMax,
-              cost,
-              setCost,
-            }}
-          />
-        </Animated.View>
+        />
+      </Animated.View>
+      <Suspense fallback={<ActivityIndicator />}>
+        <Map activities={appActivities} goToActivityDetails={goToActivityDetails} />
+      </Suspense>
+      <ScrollView horizontal={true} style={{ marginBottom: 20, maxHeight: 250 }}>
         <View style={styles.activitiesContainer}>
           {appActivities.map((activity) => (
             <ActivityCard
               key={activity.id}
               activity={activity}
-              imageHeight={150}
-              width={
-                Dimensions.get('window').width < 500 ? 'auto' : 300
-              }
+              imageHeight={120}
+              width={300}
               navigation={navigation}
             />
           ))}
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   viewContainer: {
-    gap: 18,
-    margin: 18,
+    gap: 10,
+    margin: 12,
+    height: '100%',
   },
   activitiesContainer: {
-    flexGrow: Dimensions.get('window').width < 500 ? 1 : 0,
     gap: 18,
-    flexDirection: Dimensions.get('window').width < 500 ? 'column' : 'row',
-    flexWrap: Dimensions.get('window').width < 500 ? 'nowrap' : 'wrap',
+    flexDirection: 'row',
+    marginBottom: 14,
+    marginHorizontal: 8,
   },
   searchBarContainer: {
     flexDirection: 'row',
