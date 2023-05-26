@@ -109,7 +109,7 @@ const DiscoverPage = ({ navigation }) => {
                   <ActivityCard
                     key={activity.id}
                     activity={activity}
-                    imageHeight={150}
+                    imageHeight={120}
                     width={300}
                     navigation={navigation}
                   />
@@ -126,7 +126,7 @@ const DiscoverPage = ({ navigation }) => {
                   <ActivityCard
                     key={activity.id}
                     activity={activity}
-                    imageHeight={150}
+                    imageHeight={120}
                     width={300}
                     navigation={navigation}
                   />

@@ -551,6 +551,12 @@
                     "latitude"
                   ]
                 },
+                "longitude": {
+                  "example": "any"
+                },
+                "latitude": {
+                  "example": "any"
+                },
                 "category": {
                   "type": "string",
                   "example": "category"

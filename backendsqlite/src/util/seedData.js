@@ -119,8 +119,8 @@ const activities = [
     numberPersonMax: 6,
     cost: 0,
     place: 'Étretat, Normandie',
-    longitude: 49.707219,
-    latitude: 0.206348,
+    latitude: 49.707219,
+    longitude: 0.206348,
     category: 'Sport',
   },
   {
@@ -131,8 +131,8 @@ const activities = [
     numberPersonMax: 4,
     cost: 3,
     place: 'Café Le Petit Littéraire, Lyon',
-    longitude: 45.757814,
-    latitude: 4.835293,
+    latitude: 45.757814,
+    longitude: 4.835293,
     category: 'Livre',
   },
   {
@@ -143,8 +143,8 @@ const activities = [
     numberPersonMax: 8,
     cost: 10,
     place: 'Parc du Château de Versailles, Versailles',
-    longitude: 48.804865,
-    latitude: 2.120355,
+    latitude: 48.804865,
+    longitude: 2.120355,
     category: 'Art',
   },
   {
@@ -155,8 +155,8 @@ const activities = [
     numberPersonMax: 10,
     cost: 0,
     place: 'Rue des Mésanges, Bordeaux',
-    longitude: 44.837912,
-    latitude: -0.579541,
+    latitude: 44.837912,
+    longitude: -0.579541,
     category: 'Jeux de société',
   },
   {
@@ -167,8 +167,8 @@ const activities = [
     numberPersonMax: 15,
     cost: 5,
     place: 'Rue des Violettes, Toulouse',
-    longitude: 43.615154,
-    latitude: 1.447546,
+    latitude: 43.615154,
+    longitude: 1.447546,
     category: 'Musique',
   },
   {
@@ -179,8 +179,8 @@ const activities = [
     numberPersonMax: 6,
     cost: 12,
     place: 'Atelier Terre et Créations, Marseille',
-    longitude: 43.296482,
-    latitude: 5.369780,
+    latitude: 43.296482,
+    longitude: 5.369780,
     category: 'Travaux manuels',
   },
   {
@@ -191,8 +191,8 @@ const activities = [
     numberPersonMax: 8,
     cost: 15,
     place: 'Caveau du Vignoble, Beaune',
-    longitude: 47.025150,
-    latitude: 4.840620,
+    latitude: 47.025150,
+    longitude: 4.840620,
     category: 'Autre',
   }
 ];
@@ -205,8 +205,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue de Rivoli, Paris',
-  longitude: 48.856614,
-  latitude: 2.352222,
+  latitude: 48.856614,
+  longitude: 2.352222,
   category: 'Art',
 },
 {
@@ -217,8 +217,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue de la Plage, Marseille',
-  longitude: 43.296482,
-  latitude: 5.369780,
+  latitude: 43.296482,
+  longitude: 5.369780,
   category: 'Sport',
 },
 {
@@ -229,8 +229,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue du Palais, Bordeaux',
-  longitude: 44.837789,
-  latitude: -0.579180,
+  latitude: 44.837789,
+  longitude: -0.579180,
   category: 'Livre',
 });
 today.setDate(today.getDate() + 1);
@@ -243,8 +243,8 @@ activities.push(
     numberPersonMax: 2,
     cost: 5,
     place: 'Rue des Cinéphiles, Lyon',
-    longitude: 45.75,
-    latitude: 4.85,
+    latitude: 45.75,
+    longitude: 4.85,
     category: 'Cinéma',
   },
   {
@@ -255,8 +255,8 @@ activities.push(
     numberPersonMax: 2,
     cost: 5,
     place: 'Rue des Joueurs, Toulouse',
-    longitude: 43.604652,
-    latitude: 1.444209,
+    latitude: 43.604652,
+    longitude: 1.444209,
     category: 'Jeux de société',
   },
 );
@@ -269,8 +269,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue des Artistes, Nice',
-  longitude: 43.710173,
-  latitude: 7.261953,
+  latitude: 43.710173,
+  longitude: 7.261953,
   category: 'Art',
 },
 {
@@ -281,8 +281,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue des Fêtards, Lille',
-  longitude: 50.629250,
-  latitude: 3.057256,
+  latitude: 50.629250,
+  longitude: 3.057256,
   category: 'Bar',
 },
 {
@@ -293,8 +293,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue de la Musique, Strasbourg',
-  longitude: 48.58392,
-  latitude: 7.74553,
+  latitude: 48.58392,
+  longitude: 7.74553,
   category: 'Musique',
 });
 today.setDate(today.getDate() + 1);
@@ -306,8 +306,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue de Rivoli, Paris',
-  longitude: 48.856614,
-  latitude: 2.352222,
+  latitude: 48.856614,
+  longitude: 2.352222,
   category: 'Art',
 },
 {
@@ -318,8 +318,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue de la Plage, Marseille',
-  longitude: 43.296482,
-  latitude: 5.369780,
+  latitude: 43.296482,
+  longitude: 5.369780,
   category: 'Sport',
 },
 {
@@ -330,8 +330,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue du Palais, Bordeaux',
-  longitude: 44.837789,
-  latitude: -0.579180,
+  latitude: 44.837789,
+  longitude: -0.579180,
   category: 'Livre',
 });
 today.setDate(today.getDate() + 1);
@@ -344,8 +344,8 @@ activities.push(
     numberPersonMax: 2,
     cost: 5,
     place: 'Rue des Cinéphiles, Lyon',
-    longitude: 45.75,
-    latitude: 4.85,
+    latitude: 45.75,
+    longitude: 4.85,
     category: 'Cinéma',
   },
   {
@@ -356,8 +356,8 @@ activities.push(
     numberPersonMax: 2,
     cost: 5,
     place: 'Rue des Joueurs, Toulouse',
-    longitude: 43.604652,
-    latitude: 1.444209,
+    latitude: 43.604652,
+    longitude: 1.444209,
     category: 'Jeux de société',
   },
 );
@@ -370,8 +370,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue des Artistes, Nice',
-  longitude: 43.710173,
-  latitude: 7.261953,
+  latitude: 43.710173,
+  longitude: 7.261953,
   category: 'Art',
 },
 {
@@ -382,8 +382,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue des Fêtards, Lille',
-  longitude: 50.629250,
-  latitude: 3.057256,
+  latitude: 50.629250,
+  longitude: 3.057256,
   category: 'Bar',
 },
 {
@@ -394,8 +394,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue de la Musique, Strasbourg',
-  longitude: 48.58392,
-  latitude: 7.74553,
+  latitude: 48.58392,
+  longitude: 7.74553,
   category: 'Musique',
 });
 today.setDate(today.getDate() + 1);
@@ -407,8 +407,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue de Rivoli, Paris',
-  longitude: 48.856614,
-  latitude: 2.352222,
+  latitude: 48.856614,
+  longitude: 2.352222,
   category: 'Art',
 },
 {
@@ -419,8 +419,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue de la Plage, Marseille',
-  longitude: 43.296482,
-  latitude: 5.369780,
+  latitude: 43.296482,
+  longitude: 5.369780,
   category: 'Sport',
 },
 {
@@ -431,8 +431,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue du Palais, Bordeaux',
-  longitude: 44.837789,
-  latitude: -0.579180,
+  latitude: 44.837789,
+  longitude: -0.579180,
   category: 'Livre',
 });
 today.setDate(today.getDate() + 1);
@@ -445,8 +445,8 @@ activities.push(
     numberPersonMax: 2,
     cost: 5,
     place: 'Rue des Cinéphiles, Lyon',
-    longitude: 45.75,
-    latitude: 4.85,
+    latitude: 45.75,
+    longitude: 4.85,
     category: 'Cinéma',
   },
   {
@@ -457,8 +457,8 @@ activities.push(
     numberPersonMax: 2,
     cost: 5,
     place: 'Rue des Joueurs, Toulouse',
-    longitude: 43.604652,
-    latitude: 1.444209,
+    latitude: 43.604652,
+    longitude: 1.444209,
     category: 'Jeux de société',
   },
 );
@@ -471,8 +471,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue des Artistes, Nice',
-  longitude: 43.710173,
-  latitude: 7.261953,
+  latitude: 43.710173,
+  longitude: 7.261953,
   category: 'Art',
 },
 {
@@ -483,8 +483,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue des Fêtards, Lille',
-  longitude: 50.629250,
-  latitude: 3.057256,
+  latitude: 50.629250,
+  longitude: 3.057256,
   category: 'Bar',
 },
 {
@@ -495,8 +495,8 @@ activities.push({
   numberPersonMax: 2,
   cost: 5,
   place: 'Rue de la Musique, Strasbourg',
-  longitude: 48.58392,
-  latitude: 7.74553,
+  latitude: 48.58392,
+  longitude: 7.74553,
   category: 'Musique',
 });
 
