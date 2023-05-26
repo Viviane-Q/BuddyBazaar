@@ -8,7 +8,12 @@ import ActivityForm from '../sub/ActivityForm';
 
 const SearchStack = createNativeStackNavigator();
 
-export default function SearchStackScreen({route}) {
+export default function SearchStackScreen({ route }) {
+  const SearchPageWrapper = (props) => {
+    return (
+      <SearchPage {...props} parentRoute={route} />
+    );
+  }
   return (
     <SearchStack.Navigator
       screenOptions={{
@@ -18,7 +23,7 @@ export default function SearchStackScreen({route}) {
     >
       <SearchStack.Screen
         name="Search"
-        component={(props) => <SearchPage {...props} parentRoute={route}/>}
+        component={SearchPageWrapper}
         options={{ headerShown: false }}
       />
       <SearchStack.Screen
