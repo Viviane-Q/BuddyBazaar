@@ -153,6 +153,9 @@ const ActivityDetails = ({ navigation, route }) => {
           <Divider
             style={{ backgroundColor: theme.colors.tertiaryContainer }}
           />
+          <Suspense fallback={<ActivityIndicator />}>
+            <Map latitude={activity.latitude} longitude={activity.longitude} />
+          </Suspense>
           <View>
             <TitleSmall style={{ fontWeight: 'bold' }}>Infos clés</TitleSmall>
             <BodyMedium style={{ fontWeight: 'bold' }}>
