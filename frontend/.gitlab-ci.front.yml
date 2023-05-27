@@ -49,7 +49,6 @@ build front:
   stage: build
   extends: .ci-front-read-cache
   script:
-  - npm install -g expo
   - ./genereapk.sh
   artifacts:
     paths:
