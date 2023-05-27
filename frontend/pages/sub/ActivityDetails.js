@@ -106,130 +106,130 @@ const ActivityDetails = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <ScrollView>
-          <View>
-            <Image
-              source={`https://picsum.photos/700?id=${activity.id}`}
-              style={styles.cover}
-            />
-          </View>
-          <View style={{ gap: 16, margin: 16 }}>
-            <View style={styles.titleContainer}>
-              <TitleMedium style={{ color: theme.colors.primary }}>
-                {activity.title}
-              </TitleMedium>
-              {ownsActivity && (
-                <View style={styles.buttonsGroup}>
-                  <IconButton
-                    icon="delete"
-                    onPress={deleteActivityHandler}
-                    nativeID="deleteActivityButton"
-                    iconColor={theme.colors.secondary}
-                    size={20}
-                    style={styles.icon}
-                  />
-                  <IconButton
-                    icon="pencil-outline"
-                    onPress={editActivityHandler}
-                    nativeID="editActivityButton"
-                    iconColor={theme.colors.secondary}
-                    size={20}
-                    style={styles.icon}
-                  />
-                </View>
-              )}
-            </View>
-            <View
-              style={{
-                ...styles.categoryContainer,
-                backgroundColor: theme.colors.categories[activity.category],
-              }}
-            >
-              <BodyMedium style={{ color: 'white' }}>
-                {activity.category}
-              </BodyMedium>
-            </View>
-            <Divider
-              style={{ backgroundColor: theme.colors.tertiaryContainer }}
-            />
-            <View>
-              <TitleSmall style={{ fontWeight: 'bold' }}>Infos clés</TitleSmall>
-              <BodyMedium style={{ fontWeight: 'bold' }}>
-                Coût : {activity.cost} €
-              </BodyMedium>
-              <BodyMedium>Lieu : {activity.place}</BodyMedium>
-              <BodyMedium>Début : {startDate}</BodyMedium>
-              <BodyMedium>Fin : {endDate}</BodyMedium>
-            </View>
-            <Divider
-              style={{ backgroundColor: theme.colors.tertiaryContainer }}
-            />
-            <View>
-              <TitleSmall style={{ fontWeight: 'bold' }}>
-                Description
-              </TitleSmall>
-              <BodyMedium>{activity.description}</BodyMedium>
-            </View>
-            <Divider
-              style={{ backgroundColor: theme.colors.tertiaryContainer }}
-            />
-            <View style={styles.participantContainer}>
-              <TitleSmall style={{ fontWeight: 'bold' }}>
-                Participants
-              </TitleSmall>
-              <View style={styles.numberPersonContainer}>
+        <View>
+          <Image
+            source={`https://picsum.photos/700?id=${activity.id}`}
+            style={styles.cover}
+          />
+        </View>
+        <View style={{ gap: 16, margin: 16 }}>
+          <View style={styles.titleContainer}>
+            <TitleMedium style={{ color: theme.colors.primary }}>
+              {activity.title}
+            </TitleMedium>
+            {ownsActivity && (
+              <View style={styles.buttonsGroup}>
                 <IconButton
-                  icon="account-group"
-                  compact="true"
+                  icon="delete"
+                  onPress={deleteActivityHandler}
+                  nativeID="deleteActivityButton"
                   iconColor={theme.colors.secondary}
-                  size={24}
+                  size={20}
+                  style={styles.icon}
                 />
-                <BodyMedium style={{ fontWeight: 'bold', fontSize: 18 }}>
-                  {activity.participants?.length ?? 0}/
-                  {activity.numberPersonMax}
-                </BodyMedium>
+                <IconButton
+                  icon="pencil-outline"
+                  onPress={editActivityHandler}
+                  nativeID="editActivityButton"
+                  iconColor={theme.colors.secondary}
+                  size={20}
+                  style={styles.icon}
+                />
               </View>
-            </View>
-            {!activity.participants?.includes(userId) ? (
-              <Button
-                icon="account-plus"
-                mode="contained"
-                onPress={registerActivityHandler}
-                nativeID="registerActivityButton"
-                style={{
-                  ...styles.registerButton,
-                  display: userId && !ownsActivity ? 'flex' : 'none',
-                }}
-              >
-                S&apos;inscrire
-              </Button>
-            ) : (
-              <Button
-                icon="account-minus"
-                mode="contained"
-                onPress={unregisterActivityHandler}
-                nativeID="unregisterActivityButton"
-                style={{
-                  ...styles.registerButton,
-                  display: userId && !ownsActivity ? 'flex' : 'none',
-                }}
-              >
-                Se désinscrire
-              </Button>
             )}
           </View>
-          <Snackbar
-            visible={snackbarVisible}
-            onDismiss={() => setSnackbarVisible(false)}
-            style={snackbarType === 'error' ? styles.error : styles.success}
-            action={{
-              label: '⨯',
-              onPress: () => {
-                setSnackbarVisible(false);
-              },
+          <View
+            style={{
+              ...styles.categoryContainer,
+              backgroundColor: theme.colors.categories[activity.category],
             }}
           >
-            {snackbarMessage}
-          </Snackbar>
+            <BodyMedium style={{ color: 'white' }}>
+              {activity.category}
+            </BodyMedium>
+          </View>
+          <Divider
+            style={{ backgroundColor: theme.colors.tertiaryContainer }}
+          />
+          <View>
+            <TitleSmall style={{ fontWeight: 'bold' }}>Infos clés</TitleSmall>
+            <BodyMedium style={{ fontWeight: 'bold' }}>
+              Coût : {activity.cost} €
+            </BodyMedium>
+            <BodyMedium>Lieu : {activity.place}</BodyMedium>
+            <BodyMedium>Début : {startDate}</BodyMedium>
+            <BodyMedium>Fin : {endDate}</BodyMedium>
+          </View>
+          <Divider
+            style={{ backgroundColor: theme.colors.tertiaryContainer }}
+          />
+          <View>
+            <TitleSmall style={{ fontWeight: 'bold' }}>Description</TitleSmall>
+            <BodyMedium>{activity.description}</BodyMedium>
+          </View>
+          <Divider
+            style={{ backgroundColor: theme.colors.tertiaryContainer }}
+          />
+          <View style={styles.participantContainer}>
+            <TitleSmall style={{ fontWeight: 'bold' }}>Participants</TitleSmall>
+            <View style={styles.numberPersonContainer}>
+              <IconButton
+                icon="account-group"
+                compact="true"
+                iconColor={theme.colors.secondary}
+                size={24}
+              />
+              <BodyMedium style={{ fontWeight: 'bold', fontSize: 18 }}>
+                {activity.participants?.length ?? 0}/{activity.numberPersonMax}
+              </BodyMedium>
+            </View>
+          </View>
+          {!activity.participants?.includes(userId) ? (
+            <Button
+              icon="account-plus"
+              mode="contained"
+              onPress={registerActivityHandler}
+              nativeID="registerActivityButton"
+              style={{
+                ...styles.registerButton,
+                display:
+                  activity.participants?.length < activity.numberPersonMax &&
+                  userId &&
+                  !ownsActivity
+                    ? 'flex'
+                    : 'none',
+              }}
+            >
+              S&apos;inscrire
+            </Button>
+          ) : (
+            <Button
+              icon="account-minus"
+              mode="contained"
+              onPress={unregisterActivityHandler}
+              nativeID="unregisterActivityButton"
+              style={{
+                ...styles.registerButton,
+                display: userId && !ownsActivity ? 'flex' : 'none',
+              }}
+            >
+              Se désinscrire
+            </Button>
+          )}
+        </View>
+        <Snackbar
+          visible={snackbarVisible}
+          onDismiss={() => setSnackbarVisible(false)}
+          style={snackbarType === 'error' ? styles.error : styles.success}
+          action={{
+            label: '⨯',
+            onPress: () => {
+              setSnackbarVisible(false);
+            },
+          }}
+        >
+          {snackbarMessage}
+        </Snackbar>
       </ScrollView>
     </View>
   );

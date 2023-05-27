@@ -9,6 +9,18 @@ import { Services } from '../../adapters/config/services';
 const can =
   (resource: Resources, action: Actions) =>
     async (req: Request, res: Response, next: NextFunction) => {
+      /*
+        #swagger.responses[404] = {
+          schema: {
+            $message: 'User not found'
+          }
+        }
+        #swagger.responses[401] = {
+          schema: {
+            $message: 'You are not authorized to do this action'
+          }
+        }
+      */
       const user = await getUserFromToken(
       req.headers.token as string,
       (req as CustomRequest).context.services

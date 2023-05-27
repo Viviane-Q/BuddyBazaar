@@ -12,6 +12,27 @@ router.get(
   '/',
   can(Resources.MESSAGE, Actions.READ),
   async (req: Request, res: Response) => {
+    /*
+      #swagger.tags = ['Messages']
+      #swagger.summary = 'Get all messages from an activity'
+      #swagger.parameters['obj'] = {
+        in: 'path', description:'Activity id',
+        type: 'integer',
+        required: true
+      }
+      #swagger.responses[200] = {
+        schema: {
+          $message: 'Messages retrieved',
+          $messages: [{
+            $id: 1,
+            $content: 'Content 1',
+            $userId: 1,
+            $activityId: 1,
+            $createdAt: '2021-01-01T00:00:00.000Z',
+          }]
+        }
+      }
+    */
     try {
       const messages = await MessageController.getMessages(
         req as CustomRequest

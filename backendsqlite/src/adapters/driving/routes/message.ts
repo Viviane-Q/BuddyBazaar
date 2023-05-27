@@ -11,6 +11,22 @@ router.get(
   '/last',
   can(Resources.MESSAGE, Actions.READONE),
   async (req: Request, res: Response) => {
+    /*
+      #swagger.tags = ['Messages']
+      #swagger.summary = 'Get last messages from all activities'
+      #swagger.responses[200] = {
+        schema: {
+          $message: 'Messages retrieved',
+          $messages: [{
+            $id: 1,
+            $content: 'Content 1',
+            $userId: 1,
+            $activityId: 1,
+            $createdAt: '2021-01-01T00:00:00.000Z',
+          }]
+        }
+      }
+    */
     try {
       const messages = await MessageController.getLastMessages(
         req as CustomRequest

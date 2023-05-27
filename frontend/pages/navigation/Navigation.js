@@ -16,8 +16,6 @@ import MessagesStackScreen from './MessagesStackScreen';
 import RNRestart from 'react-native-restart';
 import UserProfileStackScreen from './UserProfileStackScreen';
 
-// TODO move this to a separate file
-
 const Tab = createBottomTabNavigator();
 
 export default function Navigation() {

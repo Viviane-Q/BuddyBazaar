@@ -67,6 +67,20 @@ router.get(
   '/me',
   can(Resources.USER, Actions.READONE),
   async (req: Request, res: Response) => {
+    /*
+      #swagger.tags = ['Users']
+      #swagger.summary = 'Get user information'
+      #swagger.responses[200] = {
+        schema: {
+          $message: 'User found',
+          $user: {
+            $id: 1,
+            $name: 'John Doe',
+            $email: 'John.Doe@acme.com'
+          }
+        }
+      }
+    */
     res.status(200).json({
       message: 'User found',
       user: (req as CustomRequest).user,
