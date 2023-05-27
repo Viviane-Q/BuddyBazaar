@@ -13,6 +13,7 @@ import { ActivityIndicator, IconButton, Searchbar } from 'react-native-paper';
 import { getFilteredActivities } from '../../store/thunks/activitiesThunk';
 import theme from '../../theme';
 import Filters from '../../components/activity/Filters';
+import BodyMedium from '../../components/shared/typography/BodyMedium';
 
 const SearchPage = ({ navigation, parentRoute }) => {
   const appActivities = useSelector(
@@ -27,6 +28,7 @@ const SearchPage = ({ navigation, parentRoute }) => {
   const [numberPersonMax, setNumberPersonMax] = useState();
   const [cost, setCost] = useState();
   const [displayFilter, setDisplayFilter] = useState(false);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
@@ -41,7 +43,8 @@ const SearchPage = ({ navigation, parentRoute }) => {
   }, [parentRoute?.params?.category]);
 
   useEffect(() => {
-    dispatch(
+    setLoading(true);
+    const res = dispatch(
       getFilteredActivities({
         querySearch,
         startDate,
@@ -53,6 +56,9 @@ const SearchPage = ({ navigation, parentRoute }) => {
         numberPersonMax,
       })
     );
+    res.then(() => {
+      setLoading(false);
+    });
   }, [
     querySearch,
     startDate,
@@ -121,9 +127,12 @@ const SearchPage = ({ navigation, parentRoute }) => {
           }}
         />
       </Animated.View>
+      { loading && <ActivityIndicator />}
+      { appActivities.length === 0 && !loading && <BodyMedium>Aucun résultat</BodyMedium>}
+      { appActivities.length > 0 && 
       <Suspense fallback={<ActivityIndicator />}>
         <Map activities={appActivities} goToActivityDetails={goToActivityDetails} />
-      </Suspense>
+      </Suspense>}
       <ScrollView horizontal={true} style={{ marginBottom: 20, maxHeight: 250 }}>
         <View style={styles.activitiesContainer}>
           {appActivities.map((activity) => (
