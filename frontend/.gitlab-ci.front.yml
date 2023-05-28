@@ -31,7 +31,7 @@ install front dependencies:
   extends: .ci-front-write-cache
   stage: install dependencies
   script:
-    - npm ci --prefer-offline --legacy-peer-deps
+    - npm ci --prefer-offline
 
 lint front:
   extends: .ci-front-read-cache
@@ -67,7 +67,7 @@ test-e2e front:
   stage: test
   extends: .ci-front-read-cache
   script:
-    - npm ci --prefer-offline --legacy-peer-deps
+    - npm ci --prefer-offline
     - npm install -g wait-on
     - BACKEND_URL="" npm run web &
     - wait-on http://localhost:19006
