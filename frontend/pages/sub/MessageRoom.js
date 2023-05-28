@@ -12,7 +12,7 @@ import {
   listenToMessages,
   getMessages,
 } from '../../store/thunks/messagesThunk';
-import { navigationStyles } from '../navigation/Navigation';
+import navbarStyle from '../navigation/navbarStyle';
 
 const MessageRoom = ({ navigation, route }) => {
   const messagesList = useSelector((state) => state.messages.messages);
@@ -34,7 +34,7 @@ const MessageRoom = ({ navigation, route }) => {
     return () => {
       // show tab bar when leaving screen
       navigation.getParent().setOptions({
-        tabBarStyle: navigationStyles.navigationBar,
+        tabBarStyle: styles.navigationBar,
       });
     };
   }, []);
@@ -135,6 +135,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     margin: 6,
   },
+  navigationBar: navbarStyle
 });
 
 export default MessageRoom;

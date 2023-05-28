@@ -31,7 +31,7 @@ install front dependencies:
   extends: .ci-front-write-cache
   stage: install dependencies
   script:
-    - npm ci --prefer-offline --force
+    - npm ci --prefer-offline --legacy-peer-deps
 
 lint front:
   extends: .ci-front-read-cache

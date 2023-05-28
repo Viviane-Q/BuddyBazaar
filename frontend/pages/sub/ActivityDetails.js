@@ -12,7 +12,7 @@ import {
 } from '../../store/thunks/activitiesThunk';
 import theme from '../../theme';
 import TitleSmall from '../../components/shared/typography/TitleSmall';
-import { navigationStyles } from '../navigation/Navigation';
+import navbarStyle from '../navigation/navbarStyle';
 
 const ActivityDetails = ({ navigation, route }) => {
   const MapPreview = Platform.OS === "web" ?
@@ -43,7 +43,7 @@ const ActivityDetails = ({ navigation, route }) => {
     return () => {
       // show tab bar when leaving screen
       navigation.getParent().setOptions({
-        tabBarStyle: navigationStyles.navigationBar,
+        tabBarStyle: styles.navigationBar,
       });
     };
   }, []);
@@ -298,6 +298,7 @@ const styles = StyleSheet.create({
   success: {
     backgroundColor: '#479f76',
   },
+  navigationBar: navbarStyle
 });
 
 export default ActivityDetails;

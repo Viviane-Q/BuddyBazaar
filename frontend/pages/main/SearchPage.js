@@ -131,7 +131,7 @@ const SearchPage = ({ navigation, parentRoute }) => {
       { appActivities.length === 0 && !loading && <BodyMedium>Aucun résultat</BodyMedium>}
       { appActivities.length > 0 && 
       <Suspense fallback={<ActivityIndicator />}>
-        <Map activities={appActivities} goToActivityDetails={goToActivityDetails} />
+        <Map activities={appActivities} goToActivityDetails={goToActivityDetails} navigation={navigation} />
       </Suspense>}
       <ScrollView horizontal={true} style={{ marginBottom: 20, maxHeight: 250 }}>
         <View style={styles.activitiesContainer}>
