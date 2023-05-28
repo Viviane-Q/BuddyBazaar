@@ -35,7 +35,7 @@ export default function SearchStackScreen({ route }) {
         name="ActivityForm"
         component={ActivityForm}
         options={({ route }) => ({
-          title: route?.params?.activity
+          title: route?.params?.isUpdate
             ? 'Modifier une activité'
             : 'Créer une activité',
         })}

@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, StyleSheet } from 'react-native';
-import { Button, TextInput, Snackbar } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
+import { ScrollView, View, StyleSheet, Platform } from 'react-native';
+import { Button, TextInput, Snackbar, Text } from 'react-native-paper';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   postNewActivity,
   updateActivity,
 } from '../../store/thunks/activitiesThunk';
 import Category from '../../entities/Category';
 import theme from '../../theme';
+import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
 import Autocomplete from '../../components/shared/form/Autocomplete';
 import { checkAddress } from '../../store/thunks/franceAPIThunk';
 import CustomPicker from '../../components/shared/form/CustomPicker';
 import DateTimePicker from '../../components/shared/form/DateTimePicker';
+import { setSelectedActivity } from '../../store/slices/activitiesSlice';
+
 
 const ActivityForm = ({ navigation, route }) => {
   const [snackbarVisible, setSnackbarVisible] = useState(false);
@@ -19,22 +22,23 @@ const ActivityForm = ({ navigation, route }) => {
   const [snackbarMessage, setSnackbarMessage] = useState(
     'Une erreur est survenue'
   );
-  const isUpdate = route?.params?.activity?.id;
+  const selectedActivity = useSelector((state) => state.activities.selectedActivity);
+  const isUpdate = route?.params?.isUpdate;
   const today = isUpdate
-    ? new Date(route.params.activity.startDate)
-        .toLocaleDateString('fr-FR')
-        .split('/')
-        .join('-')
-        .replaceAll('-', '/')
+    ? new Date(selectedActivity.startDate)
+      .toLocaleDateString('fr-FR')
+      .split('/')
+      .join('-')
+      .replaceAll('-', '/')
     : new Date()
-        .toLocaleDateString('fr-FR')
-        .split('/')
-        .join('-')
-        .replaceAll('-', '/');
+      .toLocaleDateString('fr-FR')
+      .split('/')
+      .join('-')
+      .replaceAll('-', '/');
   const time = isUpdate
-    ? new Date(route.params.activity.endDate)
-        .toLocaleTimeString('fr-FR', { hour12: false })
-        .slice(0, -3)
+    ? new Date(selectedActivity.endDate)
+      .toLocaleTimeString('fr-FR', { hour12: false })
+      .slice(0, -3)
     : new Date().toLocaleTimeString('fr-FR', { hour12: false }).slice(0, -3);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -47,6 +51,7 @@ const ActivityForm = ({ navigation, route }) => {
   const [place, setPlace] = useState({ label: '', coordinates: [0, 0] });
   const [category, setCategory] = useState(Category.Sport);
   const [suggestions, setSuggestions] = useState([]);
+  const [suggestionsLabel, setSuggestionsLabel] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -63,6 +68,8 @@ const ActivityForm = ({ navigation, route }) => {
           setSnackbarMessage(data.payload.message);
           return;
         }
+        let i = 0;
+        setSuggestionsLabel(data.payload.res.map((suggestion) => ({ id: i++, title: suggestion.label })));
         setSuggestions(data.payload.res);
       });
     }
@@ -70,40 +77,41 @@ const ActivityForm = ({ navigation, route }) => {
 
   const initActivity = () => {
     if (isUpdate) {
-      const activity = route.params.activity;
-      setTitle(activity.title);
-      setDescription(activity.description);
+      setTitle(selectedActivity.title);
+      setDescription(selectedActivity.description);
       setStartDate(
-        new Date(activity.startDate)
+        new Date(selectedActivity.startDate)
           .toLocaleDateString('fr-FR')
           .split('/')
           .join('-')
           .replaceAll('-', '/')
       );
       setEndDate(
-        new Date(activity.endDate)
+        new Date(selectedActivity.endDate)
           .toLocaleDateString('fr-FR')
           .split('/')
           .join('-')
           .replaceAll('-', '/')
       );
       setStartTime(
-        new Date(activity.startDate)
+        new Date(selectedActivity.startDate)
           .toLocaleTimeString('fr-FR', { hour12: false })
           .slice(0, -3)
       );
       setEndTime(
-        new Date(activity.endDate)
+        new Date(selectedActivity.endDate)
           .toLocaleTimeString('fr-FR', { hour12: false })
           .slice(0, -3)
       );
-      setNumberPersonMax(activity.numberPersonMax);
-      setCost(activity.cost);
+      setNumberPersonMax(selectedActivity.numberPersonMax);
+      setCost(selectedActivity.cost);
       setPlace({
-        label: activity.place,
-        coordinates: [activity.longitude, activity.latitude],
+        label: selectedActivity.place,
+        coordinates: [selectedActivity.longitude, selectedActivity.latitude],
       });
-      setCategory(activity.category);
+      setSuggestions([{ label: selectedActivity.place, coordinates: [selectedActivity.longitude, selectedActivity.latitude] }]);
+      setSuggestionsLabel([{ id: 0, title: selectedActivity.place }]);
+      setCategory(selectedActivity.category);
     }
   };
 
@@ -184,7 +192,7 @@ const ActivityForm = ({ navigation, route }) => {
       setSnackbarMessage('Tous les champs doivent être remplis');
       return;
     }
-    if(activity.startDate > activity.endDate) {
+    if (activity.startDate > activity.endDate) {
       setSnackbarVisible(true);
       setSnackbarType('error');
       setSnackbarMessage('La date de début doit être avant la date de fin');
@@ -192,10 +200,10 @@ const ActivityForm = ({ navigation, route }) => {
     }
     const res = isUpdate
       ? dispatch(
-          updateActivity({
-            activity: { id: route.params.activity.id, ...activity },
-          })
-        )
+        updateActivity({
+          activity: { id: selectedActivity.id, ...activity },
+        })
+      )
       : dispatch(postNewActivity({ activity }));
     res.then((res) => {
       if (!res.payload || res.payload.error) {
@@ -204,8 +212,14 @@ const ActivityForm = ({ navigation, route }) => {
         setSnackbarMessage('Une erreur est survenue');
         return;
       }
+      dispatch(setSelectedActivity({
+        ...selectedActivity,
+        ...activity,
+        startDate: startDateToSend.toISOString(),
+        endDate: endDateToSend.toISOString(),
+      }));
       resetForm();
-      navigation.navigate('MyActivities');
+      navigation.goBack();
     });
   };
 
@@ -268,17 +282,42 @@ const ActivityForm = ({ navigation, route }) => {
           mode="outlined"
           onSubmitEditing={sendActivity}
         />
-        <Autocomplete
-          value={place.label}
-          style={[styles.textInput]}
-          setFormValue={setPlace}
-          containerStyle={{}}
-          cypressID="placeInput"
-          label="Lieu"
-          data={suggestions}
-          menuStyle={{ backgroundColor: 'white' }}
-          onChange={getSuggestions}
-        />
+        {
+          Platform.OS === "web" &&
+          <Autocomplete
+            value={place.label}
+            style={[styles.textInput]}
+            setFormValue={setPlace}
+            containerStyle={{}}
+            cypressID="placeInput"
+            label="Lieu"
+            data={suggestions}
+            menuStyle={{ backgroundColor: 'white' }}
+            onChange={getSuggestions}
+          />
+        }
+        {
+          Platform.OS !== "web" &&
+          <AutocompleteDropdown
+            onChangeText={getSuggestions}
+            dataSet={suggestionsLabel}
+            cypressID="placeInput"
+            inputContainerStyle={{ backgroundColor: theme.colors.primaryContainer, borderRadius: 5, borderWidth: 1, borderColor: 'grey' }}
+            onSelectItem={(item) => {
+              setPlace({ label: item?.title, coordinates: suggestions.find((suggestion) => suggestion.label === item?.title)?.coordinates });
+            }}
+            useFilter={false} // set false to prevent rerender twice
+            closeOnBlur={true}
+            EmptyResultComponent={<Text style={{ padding: 10, fontSize: 15 }}>Aucun résultat</Text>}
+            containerStyle={{ flexGrow: 1, flexShrink: 1 }}
+            inputHeight={50}
+            showChevron={true}
+            textInputProps={{
+              placeholder: place.label ?? "Lieu",
+              placeholderTextColor: '#000'
+            }}
+          />
+        }
         <CustomPicker
           label={'Catégorie'}
           placeholder={'Catégorie'}

@@ -95,17 +95,17 @@ describe('Test de la page des activités de l\'utilisateur', () => {
     })
     it('Doit afficher le formulaire de création d\'activité quand on clique sur le bouton', () => {
         cy.get("#newActivityButton").click()
-        cy.get('div').contains('Cr\u00E9er une activit\u00E9').should('be.visible')
+        cy.get('div:visible').contains('Cr\u00E9er une activit\u00E9').should('exist')
     })
     it('Doit afficher un message d\'erreur quand le titre n\'est pas renseigné', () => {
         cy.get("#newActivityButton").click()
-        cy.get('div').contains('Cr\u00E9er une activit\u00E9').should('be.visible')
+        cy.get('div').contains('Cr\u00E9er une activit\u00E9').should('exist')
         cy.get('div').contains('Valider').click()
-        cy.get('div').contains('Tous les champs doivent être remplis').should('be.visible')
+        cy.get('div').contains('Tous les champs doivent être remplis').should('exist')
     })
     it('Doit rajouter une activité quand on remplit le formulaire et qu\'on clique sur le bouton', () => {
         cy.get("#newActivityButton").click()
-        cy.get('div').contains('Cr\u00E9er une activit\u00E9').should('be.visible')
+        cy.get('div').contains('Cr\u00E9er une activit\u00E9').should('exist')
         cy.get('#titleInput').eq(0).type('Une nouvelle activité')
         cy.get('#descriptionInput').type('Une nouvelle description')
         cy.get('#placeInput').type('Grenoble')

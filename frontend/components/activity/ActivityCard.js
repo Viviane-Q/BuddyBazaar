@@ -5,6 +5,8 @@ import { Button, Card } from 'react-native-paper';
 import TitleSmall from '../shared/typography/TitleSmall';
 import theme from '../../theme';
 import BodyMedium from '../shared/typography/BodyMedium';
+import { useDispatch } from 'react-redux';
+import { setSelectedActivity } from '../../store/slices/activitiesSlice';
 
 const ActivityCard = ({
   activity,
@@ -16,9 +18,11 @@ const ActivityCard = ({
   const styled = styles(activity.category, imageWidth, imageHeight, width);
   const startDate = new Date(activity.startDate).toLocaleDateString('fr-FR');
   const endDate = new Date(activity.endDate).toLocaleDateString('fr-FR');
+  const dispatch = useDispatch();
 
   const showDetails = () => {
-    navigation.navigate('ActivityDetails', { activity });
+    dispatch(setSelectedActivity(activity));
+    navigation.navigate('ActivityDetails');
   };
 
   return (
