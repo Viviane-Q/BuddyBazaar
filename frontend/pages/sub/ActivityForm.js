@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, View, StyleSheet } from 'react-native';
-import { Button, TextInput, Snackbar } from 'react-native-paper';
+import { ScrollView, View, StyleSheet, Platform } from 'react-native';
+import { Button, TextInput, Snackbar, Text } from 'react-native-paper';
 import { useDispatch } from 'react-redux';
 import {
   postNewActivity,
@@ -8,6 +8,7 @@ import {
 } from '../../store/thunks/activitiesThunk';
 import Category from '../../entities/Category';
 import theme from '../../theme';
+import { AutocompleteDropdown } from 'react-native-autocomplete-dropdown';
 import Autocomplete from '../../components/shared/form/Autocomplete';
 import { checkAddress } from '../../store/thunks/franceAPIThunk';
 import CustomPicker from '../../components/shared/form/CustomPicker';
@@ -22,19 +23,19 @@ const ActivityForm = ({ navigation, route }) => {
   const isUpdate = route?.params?.activity?.id;
   const today = isUpdate
     ? new Date(route.params.activity.startDate)
-        .toLocaleDateString('fr-FR')
-        .split('/')
-        .join('-')
-        .replaceAll('-', '/')
+      .toLocaleDateString('fr-FR')
+      .split('/')
+      .join('-')
+      .replaceAll('-', '/')
     : new Date()
-        .toLocaleDateString('fr-FR')
-        .split('/')
-        .join('-')
-        .replaceAll('-', '/');
+      .toLocaleDateString('fr-FR')
+      .split('/')
+      .join('-')
+      .replaceAll('-', '/');
   const time = isUpdate
     ? new Date(route.params.activity.endDate)
-        .toLocaleTimeString('fr-FR', { hour12: false })
-        .slice(0, -3)
+      .toLocaleTimeString('fr-FR', { hour12: false })
+      .slice(0, -3)
     : new Date().toLocaleTimeString('fr-FR', { hour12: false }).slice(0, -3);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -47,6 +48,7 @@ const ActivityForm = ({ navigation, route }) => {
   const [place, setPlace] = useState({ label: '', coordinates: [0, 0] });
   const [category, setCategory] = useState(Category.Sport);
   const [suggestions, setSuggestions] = useState([]);
+  const [suggestionsLabel, setSuggestionsLabel] = useState([]);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -63,6 +65,8 @@ const ActivityForm = ({ navigation, route }) => {
           setSnackbarMessage(data.payload.message);
           return;
         }
+        let i = 0;
+        setSuggestionsLabel(data.payload.res.map((suggestion) => ({ id: i++, title: suggestion.label })));
         setSuggestions(data.payload.res);
       });
     }
@@ -103,6 +107,8 @@ const ActivityForm = ({ navigation, route }) => {
         label: activity.place,
         coordinates: [activity.longitude, activity.latitude],
       });
+      setSuggestions([{ label: activity.place, coordinates: [activity.longitude, activity.latitude] }]);
+      setSuggestionsLabel([{ id: 0, title: activity.place }]);
       setCategory(activity.category);
     }
   };
@@ -184,7 +190,7 @@ const ActivityForm = ({ navigation, route }) => {
       setSnackbarMessage('Tous les champs doivent être remplis');
       return;
     }
-    if(activity.startDate > activity.endDate) {
+    if (activity.startDate > activity.endDate) {
       setSnackbarVisible(true);
       setSnackbarType('error');
       setSnackbarMessage('La date de début doit être avant la date de fin');
@@ -192,10 +198,10 @@ const ActivityForm = ({ navigation, route }) => {
     }
     const res = isUpdate
       ? dispatch(
-          updateActivity({
-            activity: { id: route.params.activity.id, ...activity },
-          })
-        )
+        updateActivity({
+          activity: { id: route.params.activity.id, ...activity },
+        })
+      )
       : dispatch(postNewActivity({ activity }));
     res.then((res) => {
       if (!res.payload || res.payload.error) {
@@ -205,7 +211,7 @@ const ActivityForm = ({ navigation, route }) => {
         return;
       }
       resetForm();
-      navigation.navigate('MyActivities');
+      navigation.goBack();
     });
   };
 
@@ -268,17 +274,42 @@ const ActivityForm = ({ navigation, route }) => {
           mode="outlined"
           onSubmitEditing={sendActivity}
         />
-        <Autocomplete
-          value={place.label}
-          style={[styles.textInput]}
-          setFormValue={setPlace}
-          containerStyle={{}}
-          cypressID="placeInput"
-          label="Lieu"
-          data={suggestions}
-          menuStyle={{ backgroundColor: 'white' }}
-          onChange={getSuggestions}
-        />
+        {
+          Platform.OS === "web" &&
+          <Autocomplete
+            value={place.label}
+            style={[styles.textInput]}
+            setFormValue={setPlace}
+            containerStyle={{}}
+            cypressID="placeInput"
+            label="Lieu"
+            data={suggestions}
+            menuStyle={{ backgroundColor: 'white' }}
+            onChange={getSuggestions}
+          />
+        }
+        {
+          Platform.OS !== "web" &&
+          <AutocompleteDropdown
+            onChangeText={getSuggestions}
+            dataSet={suggestionsLabel}
+            cypressID="placeInput"
+            inputContainerStyle={{ backgroundColor: theme.colors.primaryContainer, borderRadius: 5, borderWidth: 1, borderColor: 'grey' }}
+            onSelectItem={(item) => {
+              setPlace({ label: item?.title, coordinates: suggestions.find((suggestion) => suggestion.label === item?.title)?.coordinates });
+            }}
+            useFilter={false} // set false to prevent rerender twice
+            closeOnBlur={true}
+            EmptyResultComponent={<Text style={{ padding: 10, fontSize: 15 }}>Aucun résultat</Text>}
+            containerStyle={{ flexGrow: 1, flexShrink: 1 }}
+            inputHeight={50}
+            showChevron={true}
+            textInputProps={{
+              placeholder: place.label ?? "Lieu",
+              placeholderTextColor: '#000'
+            }}
+          />
+        }
         <CustomPicker
           label={'Catégorie'}
           placeholder={'Catégorie'}

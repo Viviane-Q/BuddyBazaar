@@ -19,7 +19,7 @@ const ActivityDetails = ({ navigation, route }) => {
     lazy(() => import('../../components/activity/MapPreview')) :
     lazy(() => import('../../components/activity/MapPreviewMobile'));
 
-  const [activity, setActivity] = useState(route.params.activity);
+  const [activity, setActivity] = useState({});
   const userId = useSelector((state) => state.auth.id);
   const ownsActivity = activity.userId === userId;
   const dispatch = useDispatch();
@@ -47,6 +47,12 @@ const ActivityDetails = ({ navigation, route }) => {
       });
     };
   }, []);
+
+  useEffect(() => {
+    if (route.params.activity) {
+      setActivity(route.params.activity);
+    }
+  }, [route.params.activity]);
 
   const deleteActivityHandler = () => {
     const res = dispatch(

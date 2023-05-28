@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { ScrollView, StyleSheet, View, Dimensions } from 'react-native';
-import { IconButton, Divider } from 'react-native-paper';
+import { Button, Divider } from 'react-native-paper';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOwnActivities } from '../../store/thunks/activitiesThunk';
 import ActivityCard from '../../components/activity/ActivityCard';
@@ -46,6 +46,7 @@ const MyActivitiesPage = ({ navigation }) => {
           <TitleMedium>Mes activités</TitleMedium>
           <View style={styles.activitiesContainer}>
             <TitleSmall>Activités créées</TitleSmall>
+            <Button mode="contained" icon="clipboard-plus-outline" onPress={createActivity} nativeID="newActivityButton">Créer une activité</Button>
             <View style={styles.activitiesSubContainer}>
               {ownedActivities &&
                 ownedActivities.map((activity) => {
@@ -87,26 +88,11 @@ const MyActivitiesPage = ({ navigation }) => {
           </View>
         </View>
       </ScrollView>
-      <IconButton
-        icon="plus"
-        size={30}
-        onPress={createActivity}
-        style={styles.newActivityButton}
-        nativeID="newActivityButton"
-      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  newActivityButton: {
-    position: 'absolute',
-    backgroundColor: 'white',
-    bottom: 10,
-    right: 10,
-    shadowRadius: 5,
-    shadowOffset: { width: 0, height: 1 },
-  },
   activitiesSubContainer: {
     flexGrow: Dimensions.get('window').width < 500 ? 1 : 0,
     gap: 18,
