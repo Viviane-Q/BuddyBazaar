@@ -13,13 +13,14 @@ import {
 import theme from '../../theme';
 import TitleSmall from '../../components/shared/typography/TitleSmall';
 import navbarStyle from '../navigation/navbarStyle';
+import { setSelectedActivity } from '../../store/slices/activitiesSlice';
 
-const ActivityDetails = ({ navigation, route }) => {
+const ActivityDetails = ({ navigation }) => {
   const MapPreview = Platform.OS === "web" ?
     lazy(() => import('../../components/activity/MapPreview')) :
     lazy(() => import('../../components/activity/MapPreviewMobile'));
 
-  const [activity, setActivity] = useState({});
+  const activity = useSelector((state) => state.activities.selectedActivity);
   const userId = useSelector((state) => state.auth.id);
   const ownsActivity = activity.userId === userId;
   const dispatch = useDispatch();
@@ -48,12 +49,6 @@ const ActivityDetails = ({ navigation, route }) => {
     };
   }, []);
 
-  useEffect(() => {
-    if (route.params.activity) {
-      setActivity(route.params.activity);
-    }
-  }, [route.params.activity]);
-
   const deleteActivityHandler = () => {
     const res = dispatch(
       deleteActivity({
@@ -72,7 +67,7 @@ const ActivityDetails = ({ navigation, route }) => {
   };
 
   const editActivityHandler = () => {
-    navigation.navigate('ActivityForm', { activity });
+    navigation.navigate('ActivityForm', { isUpdate: true });
   };
 
   const registerActivityHandler = () => {
@@ -87,10 +82,10 @@ const ActivityDetails = ({ navigation, route }) => {
       setSnackbarVisible(true);
       setSnackbarType('success');
       setSnackbarMessage('Inscription réussie');
-      setActivity({
+      dispatch(setSelectedActivity({
         ...activity,
         participants: [...activity.participants, userId],
-      });
+      }));
     });
   };
 
@@ -106,10 +101,10 @@ const ActivityDetails = ({ navigation, route }) => {
       setSnackbarVisible(true);
       setSnackbarType('success');
       setSnackbarMessage('Désinscription réussie');
-      setActivity({
+      dispatch(setSelectedActivity({
         ...activity,
         participants: activity.participants.filter((p) => p !== userId),
-      });
+      }));
     });
   };
 

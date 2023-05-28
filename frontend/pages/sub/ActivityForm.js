@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { ScrollView, View, StyleSheet, Platform } from 'react-native';
 import { Button, TextInput, Snackbar, Text } from 'react-native-paper';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   postNewActivity,
   updateActivity,
@@ -13,6 +13,8 @@ import Autocomplete from '../../components/shared/form/Autocomplete';
 import { checkAddress } from '../../store/thunks/franceAPIThunk';
 import CustomPicker from '../../components/shared/form/CustomPicker';
 import DateTimePicker from '../../components/shared/form/DateTimePicker';
+import { setSelectedActivity } from '../../store/slices/activitiesSlice';
+
 
 const ActivityForm = ({ navigation, route }) => {
   const [snackbarVisible, setSnackbarVisible] = useState(false);
@@ -20,9 +22,10 @@ const ActivityForm = ({ navigation, route }) => {
   const [snackbarMessage, setSnackbarMessage] = useState(
     'Une erreur est survenue'
   );
-  const isUpdate = route?.params?.activity?.id;
+  const selectedActivity = useSelector((state) => state.activities.selectedActivity);
+  const isUpdate = route?.params?.isUpdate;
   const today = isUpdate
-    ? new Date(route.params.activity.startDate)
+    ? new Date(selectedActivity.startDate)
       .toLocaleDateString('fr-FR')
       .split('/')
       .join('-')
@@ -33,7 +36,7 @@ const ActivityForm = ({ navigation, route }) => {
       .join('-')
       .replaceAll('-', '/');
   const time = isUpdate
-    ? new Date(route.params.activity.endDate)
+    ? new Date(selectedActivity.endDate)
       .toLocaleTimeString('fr-FR', { hour12: false })
       .slice(0, -3)
     : new Date().toLocaleTimeString('fr-FR', { hour12: false }).slice(0, -3);
@@ -74,42 +77,41 @@ const ActivityForm = ({ navigation, route }) => {
 
   const initActivity = () => {
     if (isUpdate) {
-      const activity = route.params.activity;
-      setTitle(activity.title);
-      setDescription(activity.description);
+      setTitle(selectedActivity.title);
+      setDescription(selectedActivity.description);
       setStartDate(
-        new Date(activity.startDate)
+        new Date(selectedActivity.startDate)
           .toLocaleDateString('fr-FR')
           .split('/')
           .join('-')
           .replaceAll('-', '/')
       );
       setEndDate(
-        new Date(activity.endDate)
+        new Date(selectedActivity.endDate)
           .toLocaleDateString('fr-FR')
           .split('/')
           .join('-')
           .replaceAll('-', '/')
       );
       setStartTime(
-        new Date(activity.startDate)
+        new Date(selectedActivity.startDate)
           .toLocaleTimeString('fr-FR', { hour12: false })
           .slice(0, -3)
       );
       setEndTime(
-        new Date(activity.endDate)
+        new Date(selectedActivity.endDate)
           .toLocaleTimeString('fr-FR', { hour12: false })
           .slice(0, -3)
       );
-      setNumberPersonMax(activity.numberPersonMax);
-      setCost(activity.cost);
+      setNumberPersonMax(selectedActivity.numberPersonMax);
+      setCost(selectedActivity.cost);
       setPlace({
-        label: activity.place,
-        coordinates: [activity.longitude, activity.latitude],
+        label: selectedActivity.place,
+        coordinates: [selectedActivity.longitude, selectedActivity.latitude],
       });
-      setSuggestions([{ label: activity.place, coordinates: [activity.longitude, activity.latitude] }]);
-      setSuggestionsLabel([{ id: 0, title: activity.place }]);
-      setCategory(activity.category);
+      setSuggestions([{ label: selectedActivity.place, coordinates: [selectedActivity.longitude, selectedActivity.latitude] }]);
+      setSuggestionsLabel([{ id: 0, title: selectedActivity.place }]);
+      setCategory(selectedActivity.category);
     }
   };
 
@@ -199,7 +201,7 @@ const ActivityForm = ({ navigation, route }) => {
     const res = isUpdate
       ? dispatch(
         updateActivity({
-          activity: { id: route.params.activity.id, ...activity },
+          activity: { id: selectedActivity.id, ...activity },
         })
       )
       : dispatch(postNewActivity({ activity }));
@@ -210,6 +212,12 @@ const ActivityForm = ({ navigation, route }) => {
         setSnackbarMessage('Une erreur est survenue');
         return;
       }
+      dispatch(setSelectedActivity({
+        ...selectedActivity,
+        ...activity,
+        startDate: startDateToSend.toISOString(),
+        endDate: endDateToSend.toISOString(),
+      }));
       resetForm();
       navigation.goBack();
     });

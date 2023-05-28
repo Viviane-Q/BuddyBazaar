@@ -8,6 +8,7 @@ const activitiesSlice = createSlice({
   initialState: {
     userActivities: initialUserActivities,
     searchedActivities: initialSearchedActivities,
+    selectedActivity: null,
   },
   reducers: {
     addUserActivity: (state, action) => {
@@ -18,10 +19,13 @@ const activitiesSlice = createSlice({
     },
     setSearchedActivities: (state, action) => {
       state.searchedActivities = action.payload;
+    },
+    setSelectedActivity: (state, action) => {
+      state.selectedActivity = action.payload;
     }
   },
 });
 
-export const { addUserActivity, setUserActivities, setSearchedActivities } = activitiesSlice.actions;
+export const { addUserActivity, setUserActivities, setSearchedActivities, setSelectedActivity } = activitiesSlice.actions;
 
 export default activitiesSlice.reducer;
