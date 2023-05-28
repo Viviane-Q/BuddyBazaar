@@ -530,32 +530,16 @@
                   "example": 1
                 },
                 "place": {
-                  "type": "object",
-                  "properties": {
-                    "label": {
-                      "type": "string",
-                      "example": "Place 1"
-                    },
-                    "longitude": {
-                      "type": "number",
-                      "example": 1
-                    },
-                    "latitude": {
-                      "type": "number",
-                      "example": 1
-                    }
-                  },
-                  "required": [
-                    "label",
-                    "longitude",
-                    "latitude"
-                  ]
+                  "type": "string",
+                  "example": "Place 1"
                 },
                 "longitude": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 1
                 },
                 "latitude": {
-                  "example": "any"
+                  "type": "number",
+                  "example": 1
                 },
                 "category": {
                   "type": "string",
@@ -570,6 +554,8 @@
                 "numberPersonMax",
                 "cost",
                 "place",
+                "longitude",
+                "latitude",
                 "category"
               ]
             }
@@ -1023,26 +1009,16 @@
                   "example": 1
                 },
                 "place": {
-                  "type": "object",
-                  "properties": {
-                    "label": {
-                      "type": "string",
-                      "example": "Place 1"
-                    },
-                    "longitude": {
-                      "type": "number",
-                      "example": 1
-                    },
-                    "latitude": {
-                      "type": "number",
-                      "example": 1
-                    }
-                  },
-                  "required": [
-                    "label",
-                    "longitude",
-                    "latitude"
-                  ]
+                  "type": "string",
+                  "example": "Place 1"
+                },
+                "longitude": {
+                  "type": "number",
+                  "example": 1
+                },
+                "latitude": {
+                  "type": "number",
+                  "example": 1
                 },
                 "category": {
                   "type": "string",
@@ -1058,6 +1034,8 @@
                 "numberPersonMax",
                 "cost",
                 "place",
+                "longitude",
+                "latitude",
                 "category"
               ]
             }
