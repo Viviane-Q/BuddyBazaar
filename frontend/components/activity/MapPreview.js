@@ -17,7 +17,7 @@ L.Icon.Default.mergeOptions({
 
 const MapPreview = ({ latitude, longitude }) => {
     return (
-        <MapContainer center={[latitude, longitude]} zoom={13} style={{ height: '300px', width: '100%' }}>
+        <MapContainer center={[latitude, longitude]} zoom={13} style={{ height: '300px', width: '100%' }} key={new Date().getTime()}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             <Marker position={[latitude, longitude]}>
             </Marker>

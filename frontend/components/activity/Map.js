@@ -18,7 +18,7 @@ L.Icon.Default.mergeOptions({
 
 const Map = ({ activities, navigation }) => {
     return (
-        <MapContainer center={[48.86666, 2.33333]} zoom={6} style={{ flex: 1, width: '100%', zIndex: 0 }}>
+        <MapContainer center={[48.86666, 2.33333]} zoom={6} style={{ flex: 1, width: '100%', zIndex: 0 }} key={new Date().getTime()}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
             {activities.map((activity) => (
                 <Marker key={activity.id} position={[activity.latitude, activity.longitude,]}>
