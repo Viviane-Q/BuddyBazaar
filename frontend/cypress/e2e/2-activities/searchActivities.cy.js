@@ -8,8 +8,11 @@ const activities = [
     numberPersonMax: 5,
     cost: 5,
     place: 'Grenoble',
+    latitude: 45.757814,
+    longitude: 4.835293,
     category: 'Sport',
     userId: 1,
+    participants: [],
   },
   {
     id: 2,
@@ -20,8 +23,11 @@ const activities = [
     numberPersonMax: 4,
     cost: 10,
     place: 'Grenoble',
+    latitude: 45.757814,
+    longitude: 4.835293,
     category: 'Cinéma',
     userId: 1,
+    participants: [],
   },
 ];
 
