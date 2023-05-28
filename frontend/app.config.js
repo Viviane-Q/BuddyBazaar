@@ -3,7 +3,6 @@ export default ({config}) => {
     {
       extra: {
         backendUrl: process.env.BACKEND_URL || 'http://localhost:3000',
-        googleKey: process.env.GOOGLE_KEY || 'GOOGLE_KEY',
       }
     });
 };

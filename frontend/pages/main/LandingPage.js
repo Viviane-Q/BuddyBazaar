@@ -4,7 +4,6 @@ import { Text, Button } from 'react-native-paper';
 import Icon from 'react-native-paper/src/components/Icon';
 import { useSelector } from 'react-redux';
 import theme from '../../theme';
-import { Link } from '@react-navigation/native';
 
 const LandingPage = ({ navigation }) => {
   const { token } = useSelector((state) => state.auth);
@@ -18,7 +17,6 @@ const LandingPage = ({ navigation }) => {
       <Icon source="account-group" size={30} color={theme.colors.primary} />
       <Text style={styles.title}>BuddyBazaar</Text>
       <View style={styles.buttonsContainer}>
-        <Link to="/register">Better link</Link>
         <Button
           onPress={() => navigation.navigate('Register')}
           mode="outlined"
