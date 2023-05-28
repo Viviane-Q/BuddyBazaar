@@ -87,11 +87,9 @@ router.post(
           $endDate: '2021-01-01T00:08:00.000Z',
           $numberPersonMax: 1,
           $cost: 1,
-          $place: {
-            $label: 'Place 1',
-            $longitude: 1,
-            $latitude: 1
-          },
+          $place: 'Place 1',
+          $longitude: 1,
+          $latitude: 1,
           $category: 'category'
         }
       }
@@ -262,11 +260,9 @@ router.put(
           $endDate: '2021-01-01T00:08:00.000Z',
           $numberPersonMax: 1,
           $cost: 1,
-          $place: {
-            $label: 'Place 1',
-            $longitude: 1,
-            $latitude: 1
-          },
+          $place: 'Place 1',
+          $longitude: 1,
+          $latitude: 1,
           $category: 'category'
         }
       }

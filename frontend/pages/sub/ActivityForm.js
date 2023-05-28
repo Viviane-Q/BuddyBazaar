@@ -184,6 +184,12 @@ const ActivityForm = ({ navigation, route }) => {
       setSnackbarMessage('Tous les champs doivent être remplis');
       return;
     }
+    if(activity.startDate > activity.endDate) {
+      setSnackbarVisible(true);
+      setSnackbarType('error');
+      setSnackbarMessage('La date de début doit être avant la date de fin');
+      return;
+    }
     const res = isUpdate
       ? dispatch(
           updateActivity({

@@ -15,6 +15,7 @@ import MyActivitiesStackScreen from './MyActivitiesStackScreen';
 import MessagesStackScreen from './MessagesStackScreen';
 import RNRestart from 'react-native-restart';
 import UserProfileStackScreen from './UserProfileStackScreen';
+import navbarStyle from './navbarStyle';
 
 const Tab = createBottomTabNavigator();
 
@@ -39,7 +40,7 @@ export default function Navigation() {
         if (res.payload.error) {
           AsyncStorage.removeItem('token');
           dispatch(setToken(null));
-          if(Platform.OS === 'ios' || Platform.OS === 'android')
+          if (Platform.OS === 'ios' || Platform.OS === 'android')
             RNRestart.restart(); // in order to redirect to landing page
           else
             window.location.reload();
@@ -149,13 +150,8 @@ export default function Navigation() {
   );
 }
 
-const navigationStyles = StyleSheet.create({
-  navigationBar: {
-    backgroundColor: theme.colors.primary,
-    height: 60,
-  },
-});
-
-export {
-  navigationStyles
-}
+const navigationStyles = StyleSheet.create(
+  {
+    navigationBar: navbarStyle
+  }
+);

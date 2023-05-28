@@ -12,6 +12,8 @@ describe("Test de la page de détails d'une activité", () => {
         numberPersonMax: 5,
         cost: 10,
         place: 'Grenoble',
+        latitude: 45.757814,
+        longitude: 4.835293,
         category: 'Sport',
         userId: 1,
         participants: [],
