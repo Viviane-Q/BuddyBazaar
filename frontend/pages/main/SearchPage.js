@@ -14,6 +14,7 @@ import { getFilteredActivities } from '../../store/thunks/activitiesThunk';
 import theme from '../../theme';
 import Filters from '../../components/activity/Filters';
 import BodyMedium from '../../components/shared/typography/BodyMedium';
+import { setSelectedActivity } from '../../store/slices/activitiesSlice';
 
 const SearchPage = ({ navigation, parentRoute }) => {
   const appActivities = useSelector(
@@ -33,7 +34,8 @@ const SearchPage = ({ navigation, parentRoute }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const goToActivityDetails = (activity) => {
-    navigation.navigate('ActivityDetails', { activity });
+    dispatch(setSelectedActivity(activity));
+    navigation.navigate('ActivityDetails');
   };
   
   useEffect(() => {
