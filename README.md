@@ -10,23 +10,7 @@ Les objectifs du projets sont de :
 # II. Démo 
 - L'apk est disponible parmis les artéfacts Gitlab : [apk](https://gitlab.com/grenoble-inp-ensimag/4MM1CAW/ProjetCAW/BuddyBazaar_antoine_klein3_david_gelinotte_viviane_qian/-/jobs/artifacts/main/download?job=build+front)
 
-(screencast)
-TODO : à faire
-
-Étapes :
-- Découvrir : 
-    - Liste des activités : montrer les activités ce soir et ce weekend + recherche via les boutons catégories
-    - Recherche d'activités : montrer la recherche par nom, par catégorie, par date, par lieu... (à voir si on fait plus ou moins court)
-- Inscription
-- Connexion :
-    - Créer une activité : 
-        - Appel api adresse
-    - Editer une activité
-    - Consulter et s'inscrire à une activité :
-        - Envoyer un message
-    - Supprimer une activité
-    - Afficher page profil
-- Notification
+- [Screencast](./docs/demo-buddybazaar.mp4)
 
 # III. Installation, exécution des tests et documentation de l'API
 - Backend : [README du backend](./backendsqlite/README.md)
